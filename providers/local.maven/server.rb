@@ -1,11 +1,13 @@
 require "socket"
 require "json"
 
+mvn_root = ('~/.m2' if [nil, ''].include?(ENV['M2_HOME'])) + '/repository/'
+
 webserver = TCPServer.new('localhost', 2000)
 base_dir = Dir.new(".")
 while (session = webserver.accept)
   request = session.gets
-  resource = File.expand_path('~/.m2/repository/' + request.gsub(/GET\ \//, '').gsub(/\ HTTP.*/, '').chomp)
+  resource = File.expand_path( mvn_root + request.gsub(/GET\ \//, '').gsub(/\ HTTP.*/, '').chomp)
 
   if !File.exists?(resource)
     session.print "HTTP/1.1 404/Object Not Found\r\nkodomondo Server\r\n\r\n"
