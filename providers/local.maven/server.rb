@@ -7,6 +7,11 @@ webserver = TCPServer.new('localhost', 2000)
 base_dir = Dir.new(".")
 while (session = webserver.accept)
   request = session.gets
+
+  if request == nil then
+    next
+  end
+
   resource = File.expand_path( mvn_root + request.gsub(/GET\ \//, '').gsub(/\ HTTP.*/, '').chomp)
 
   if !File.exists?(resource)
@@ -24,26 +29,27 @@ while (session = webserver.accept)
       base_dir = Dir.new(resource)
     end
 
+    array = []
+
     base_dir.entries.each do |f|
+
+      if f.start_with?(".")
+        next
+      end
+
       dir_sign = ""
       base_path = resource + "/"
       base_path = "" if resource == ""
       resource_path = base_path + f
-#    session.print('{' + resource_path + '}');
 
       if File.directory?(resource_path)
-        dir_sign = "/"
-      end
-      if f == ".."
-        upper_dir = base_path.split("/")[0..-2].join("/")
-        # session.print("<a href=\"xxx\"></a>")
+        array.push({ :dir => f })
       else
-        # session.print("<a href=\"xxx\"></a>")
+        array.push({ :file => f })
       end
     end
 
-    @b = base_dir.entries.map { |e| {'file' => e} }
-    session.print( @b );
+    session.print( JSON.generate(array) );
 
   else
     session.print( JSON.generate({'file' => resource}) );
