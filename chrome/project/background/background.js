@@ -19,20 +19,42 @@ chrome.alarms.onAlarm.addListener( function(alarm) {
 
 function pullDataSources() {
 	console.log('pullDataSources:', new Date());
+	fetchDir('http://localhost:2000');
+}
 
-	$.get("http://localhost:2000/com/codahale/metrics/metrics-core/3.0.1/metrics-core-3.0.1-sources.jar")
+function fetchDir(inDir) {
+	$.get(inDir)
 			.error( function(xhr) { /* Anything? */ } )
 			.success( function(obj) {
 					try {
-					console.log(obj);
-							if ( obj.file != null) {
-									console.log('File', obj.file);
+							if ( obj.dirs != null) {
+									for ( i = 0; i < obj.dirs.length; i++) {
+										fetchDir( inDir + obj.dirs[i].dir );
+									}
 							}
-							else if ( obj.dir != null) {
-									console.log('Dir', obj.dir);
+							else if ( obj.version != null) {
+									fetchJar( inDir + '/' + obj.version);
 							}
 					} catch (e) { /* Just ignore */ }
 			});
+}
+
+function fetchJar(inUrl) {
+	$.get(inUrl)
+			.error( function(xhr) { /* Anything? */ } )
+			.success( function(obj) {
+					try {
+							if ( obj.jar != null) {
+									console.log( obj.classes.length + ' classes for: ' + obj.jar);
+									for ( i = 0; i < obj.classes.length; i++) {
+										recordClass( obj.classes[i].class );
+									}
+							}
+					} catch (e) { /* Just ignore */ }
+			});
+}
+
+function recordClass(inClazz) {
 }
 
 ////////////////////////////////
