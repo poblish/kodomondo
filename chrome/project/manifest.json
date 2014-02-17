@@ -27,8 +27,9 @@
     ],
     "web_accessible_resources": ["img/blank.png"],
     "permissions": [
-        "tabs",
-        "notifications"
+        "alarms",
+        "notifications",
+        "http://localhost:2000/"  // FIXME: do I really need this?
     ],
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }

@@ -8,6 +8,35 @@ _gaq.push(['_trackPageview']);
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 
+////////////////////////////////
+
+pullDataSources();
+
+chrome.alarms.create('Pull DataSources', {periodInMinutes: 5}); // every n mins
+chrome.alarms.onAlarm.addListener( function(alarm) {
+  pullDataSources();
+})
+
+function pullDataSources() {
+	console.log('pullDataSources:', new Date());
+
+	$.get("http://localhost:2000/com/codahale/metrics/metrics-core/3.0.1/metrics-core-3.0.1-sources.jar")
+			.error( function(xhr) { /* Anything? */ } )
+			.success( function(obj) {
+					try {
+					console.log(obj);
+							if ( obj.file != null) {
+									console.log('File', obj.file);
+							}
+							else if ( obj.dir != null) {
+									console.log('Dir', obj.dir);
+							}
+					} catch (e) { /* Just ignore */ }
+			});
+}
+
+////////////////////////////////
+
 // See: http://www.w3.org/TR/IndexedDB/
 // Pull from http://localhost:2000/org/apache/lucene/lucene-core/4.3.1/lucene-core-4.3.1.jar
 
