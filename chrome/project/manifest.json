@@ -6,7 +6,7 @@
     "homepage_url": "http://www.andrewregan.com",
     "options_page": "options/options.html",
     "background": {
-        "scripts": ["background/background.js"]
+        "scripts": ["js/jquery-2.1.0.min.js", "background/background.js"]
     },
     "icons": {},
     "browser_action": {
