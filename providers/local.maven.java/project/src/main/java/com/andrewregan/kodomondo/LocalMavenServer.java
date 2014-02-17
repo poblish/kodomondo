@@ -49,13 +49,10 @@ public class LocalMavenServer
 
 			final String path = t.getRequestURI().getPath().substring(1);
 			File f = new File( mvnRoot, path);
-			System.out.println(f);
 
 			if (!f.exists()) {
-				t.sendResponseHeaders( 404, 0); // response.length());
-				OutputStream os = t.getResponseBody();
-//				os.write(response.getBytes());
-				os.close();
+				t.sendResponseHeaders( 404, 0);
+				t.getResponseBody().close();
 				return;
 			}
 
