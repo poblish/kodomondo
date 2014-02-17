@@ -61,6 +61,8 @@ public class LocalMavenServer
 
 
 			if (f.isDirectory()) {
+				List<DirEntry> dirsList = Lists.newArrayList();
+
 				File[] files = f.listFiles( new FileFilter() {
 
 					public boolean accept( File pathname) {
@@ -68,12 +70,14 @@ public class LocalMavenServer
 					}} );
 
 				for ( File each : files) {
-					System.out.println(each);
+					dirsList.add( new DirEntry( "/" + each.getName() ) );
 				}
 
-				t.sendResponseHeaders(200, "This is the response".length());
+				final String output = MAPPER.writeValueAsString( new DirResponse( f.getAbsolutePath(), dirsList) );
+
+				t.sendResponseHeaders(200, output.length());
 				OutputStream os = t.getResponseBody();
-				os.write("This is the response".getBytes());
+				os.write( output.getBytes() );
 				os.close();
 			}
 			else {
@@ -115,6 +119,39 @@ public class LocalMavenServer
 				os.close();
 			}
 
+		}
+	}
+
+	private static class DirResponse {
+		final String name;
+		final List<DirEntry> dirs;
+
+		public DirResponse( String inName, List<DirEntry> inClasses) {
+			this.name = inName;
+			this.dirs = inClasses;
+		}
+
+//		@JsonProperty("name")
+//		public String getJarName() {
+//			return name;
+//		}
+
+		@JsonProperty("dirs")
+		public List<DirEntry> getClasses() {
+			return dirs;
+		}
+	}
+
+	private static class DirEntry {
+		final String dirName;
+
+		public DirEntry(String inDirName) {
+			this.dirName = inDirName;
+		}
+
+		@JsonProperty("dir")
+		public String getClassName() {
+			return dirName;
 		}
 	}
 
