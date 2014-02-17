@@ -63,6 +63,7 @@ public class LocalMavenServer
 			if (f.isDirectory()) {
 				List<DirEntry> dirsList = Lists.newArrayList();
 				Collection<String> versions = Lists.newArrayList();
+				Collection<File> jars = Lists.newArrayList();
 
 				File[] files = f.listFiles( new FileFilter() {
 
@@ -80,16 +81,27 @@ public class LocalMavenServer
 						}
 					}
 					else {
-						if (!each.getName().endsWith(".jar")) {
+						if (!each.getName().endsWith(".jar") || each.getName().endsWith("-sources.jar") || each.getName().endsWith("-shaded.jar") || each.getName().endsWith("-javadoc.jar") || each.getName().endsWith("-tests.jar")) {
 							continue;
 						}
-						System.out.println( each.getName() );
+
+						jars.add(each);
 					}
 				}
 
 				final String output;
 
-				if (!versions.isEmpty()) {
+				if (!jars.isEmpty()) {
+					if (jars.size() == 1) {
+						handleFile( t, jars.iterator().next());
+					}
+					else {
+						System.err.println("> 1 match: " + jars);
+						handleFile( t, jars.iterator().next());
+					}
+					return;
+				}
+				else if (!versions.isEmpty()) {
 					String highest = Ordering.from( new VersionComparator() ).max(versions);
 					output = MAPPER.writeValueAsString( new VersionResponse( f.getAbsolutePath(), highest) );
 				}
@@ -97,48 +109,53 @@ public class LocalMavenServer
 					output = MAPPER.writeValueAsString( new DirResponse( f.getAbsolutePath(), dirsList) );
 				}
 
+				t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
 				t.sendResponseHeaders(200, output.length());
 				OutputStream os = t.getResponseBody();
 				os.write( output.getBytes() );
 				os.close();
 			}
 			else {
-				List<ClassEntry> classesList = Lists.newArrayList();
+				handleFile( t, f);
+			}
+		}
 
-				JarFile jf = new JarFile(f);
-				try {
-					Enumeration<JarEntry> theEntries = jf.entries();
-					while (theEntries.hasMoreElements()) {
-						JarEntry eachEntry = theEntries.nextElement();
-						if (eachEntry.isDirectory()) {
-							continue;
-						}
-	
-						String	eachName = eachEntry.getName();
-	
-						if (!eachName.endsWith(".class") || eachName.contains("$")) {
-							continue;
-						}
-	
-						classesList.add( new ClassEntry( eachName.substring( 0, eachName.length() - 6) .replace('/', '.')) );
-	//					InputStream theStream = jf.getInputStream(eachEntry);
-	//					ClassReader cr = new ClassReader( Files.toByteArray(f) );
-	//					String[] ifs = cr.getInterfaces();
-	//					System.out.println( Arrays.toString(ifs) );
+		private void handleFile( final HttpExchange t, final File f) throws IOException {
+			List<ClassEntry> classesList = Lists.newArrayList();
+
+			JarFile jf = new JarFile(f);
+			try {
+				Enumeration<JarEntry> theEntries = jf.entries();
+				while (theEntries.hasMoreElements()) {
+					JarEntry eachEntry = theEntries.nextElement();
+					if (eachEntry.isDirectory()) {
+						continue;
 					}
-				}
-				finally {
-					jf.close();
-				}
 
-				final String output = MAPPER.writeValueAsString( new ClassResponse( f.getAbsolutePath(), classesList) );
+					String	eachName = eachEntry.getName();
 
-				t.sendResponseHeaders(200, output.length());
-				OutputStream os = t.getResponseBody();
-				os.write( output.getBytes() );
-				os.close();
+					if (!eachName.endsWith(".class") || eachName.contains("$")) {
+						continue;
+					}
+
+					classesList.add( new ClassEntry( eachName.substring( 0, eachName.length() - 6) .replace('/', '.')) );
+//					InputStream theStream = jf.getInputStream(eachEntry);
+//					ClassReader cr = new ClassReader( Files.toByteArray(f) );
+//					String[] ifs = cr.getInterfaces();
+//					System.out.println( Arrays.toString(ifs) );
+				}
+			}
+			finally {
+				jf.close();
 			}
 
+			final String output = MAPPER.writeValueAsString( new ClassResponse( f.getAbsolutePath(), classesList) );
+
+			t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
+			t.sendResponseHeaders(200, output.length());
+			OutputStream os = t.getResponseBody();
+			os.write( output.getBytes() );
+			os.close();
 		}
 	}
 
@@ -194,7 +211,7 @@ public class LocalMavenServer
 			this.classes = inClasses;
 		}
 
-		@JsonProperty("name")
+		@JsonProperty("jar")
 		public String getJarName() {
 			return name;
 		}
@@ -221,9 +238,9 @@ public class LocalMavenServer
 	// From http://stackoverflow.com/a/10034633/954442
 	private static class VersionComparator implements Comparator<String> {
 
-		public boolean equals(String o1, String o2) {
-			return compare(o1, o2) == 0;
-		}
+//		public boolean equals(String o1, String o2) {
+//			return compare(o1, o2) == 0;
+//		}
 
 		public int compare(String version1, String version2) {
 
