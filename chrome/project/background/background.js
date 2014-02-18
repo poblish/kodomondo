@@ -13,44 +13,18 @@ _gaq.push(['_trackPageview']);
 // See: http://www.w3.org/TR/IndexedDB/
 // Pull from http://localhost:2000/org/apache/lucene/lucene-core/4.3.1/lucene-core-4.3.1.jar
 
-var openReq = indexedDB.open("library");
-// console.log('openReq', openReq);
+// indexedDB.deleteDatabase("visitedLinks");
+var visitedLinksReq = indexedDB.open("visitedLinks");
 
-openReq.onupgradeneeded = function(evt) {
-  // The database did not previously exist, so create object stores and indexes.
-  var db = evt.target.result;
-  var store = db.createObjectStore("books", {keyPath: "isbn"});
-  var titleIndex = store.createIndex("by_title", "title", {unique: true});
-  var authorIndex = store.createIndex("by_author", "author");
-
-  // Populate with initial data.
-  store.put({title: "Quarry Memories", author: "Fred", isbn: 123456});
-  store.put({title: "Water Buffaloes", author: "Fred", isbn: 234567});
-  store.put({title: "Bedrock Nights", author: "Barney", isbn: 345678});
-  console.log('Stored OK');
-};
-
-openReq.onsuccess = function(evt) {
+visitedLinksReq.onupgradeneeded = function(evt) {
 	var db = evt.target.result;
-	var tx = db.transaction("books", "readonly");
-	var store = tx.objectStore("books");
-	var index = store.index("by_title");
+  console.log('Create store');
+	store = db.createObjectStore("urls", {keyPath: "url"});
+}
 
-	var request = index.get("Bedrock Nights");
-	request.onsuccess = function() {
-		var matching = request.result;
-		if (matching !== undefined) {
-			// A match was found.
-			console.log('REPORT', matching.isbn, matching.title, matching.author);
-		} else {
-			// No match was found.
-			console.log('REPORT', null);
-		}
-	};
-
-	// Now we have IndexedDB, pull DataSources
-
-	pullDataSources(db);
+visitedLinksReq.onsuccess = function(evt) {
+	var db = evt.target.result;
+	pullDataSources(db);  // Now we have IndexedDB, pull DataSources
 
 	chrome.alarms.create('Pull DataSources', {periodInMinutes: 5}); // every n mins
 	chrome.alarms.onAlarm.addListener( function(alarm) {
@@ -59,34 +33,45 @@ openReq.onsuccess = function(evt) {
 
 	function pullDataSources(inDB) {
 		console.log('pullDataSources:', new Date());
-		fetchDir('http://localhost:2000', inDB);
+		fetchDir('http://localhost:2000', inDB, function(finishedDir) {
+			// Now we can say we've visited that URL
+			// *FIXME* This does not quite work - some parent dirs are still left behind (FWIW...)
+			inDB.transaction("urls", "readwrite").objectStore("urls").put({url: finishedDir});
+			// console.log('STORE ' + finishedDir);
+		} );
 	}
-};
-
-openReq.onerror = function() {
-  report(openReq.error);
 }
 
-function fetchDir(inDir, inDB) {
-	console.log('DB: ', inDB);
-	$.get(inDir)
-			.error( function(xhr) { /* Anything? */ } )
-			.success( function(obj) {
-					try {
-							if ( obj.dirs != null) {
+function fetchDir(inDir, inDB, dirDoneHandler) {
+	var lookupReq = inDB.transaction("urls", "readonly").objectStore("urls").get(inDir);
+	lookupReq.onsuccess = function() {
+		if (lookupReq.result !== undefined) {
+			// console.log('Skip visited ' + inDir);
+			return;
+		}
+
+		$.get(inDir)
+				.error( function(xhr) { /* Anything? */ } )
+				.success( function(obj) {
+						try {
+								if ( obj.dirs != null && obj.dirs.length > 0) {
 									for ( i = 0; i < obj.dirs.length; i++) {
-										fetchDir( inDir + obj.dirs[i].dir, inDB);
+										fetchDir( inDir + obj.dirs[i].dir, inDB, dirDoneHandler);
 									}
-							}
-							else if ( obj.version != null) {
+								}
+								else if ( obj.version != null) {
 									fetchJar( inDir + '/' + obj.version, inDB);
-							}
-					} catch (e) { /* Just ignore */ }
-			});
+									dirDoneHandler(inDir);
+								}
+								else /* Is this possible? */ {
+									dirDoneHandler(inDir);
+								}
+						} catch (e) { alert(e) /* Just ignore */ }
+				});
+	};
 }
 
 function fetchJar(inUrl, inDB) {
-	console.log('Jar DB: ', inDB);
 	$.get(inUrl)
 			.error( function(xhr) { /* Anything? */ } )
 			.success( function(obj) {
