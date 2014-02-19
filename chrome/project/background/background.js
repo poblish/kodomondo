@@ -18,8 +18,8 @@ var visitedLinksReq = indexedDB.open("visitedLinks");
 
 visitedLinksReq.onupgradeneeded = function(evt) {
 	var db = evt.target.result;
-  console.log('Create store');
-	store = db.createObjectStore("urls", {keyPath: "url"});
+	db.createObjectStore("urls", {keyPath: "url"});
+	db.createObjectStore("data", {keyPath: "id"});
 }
 
 visitedLinksReq.onsuccess = function(evt) {
@@ -39,6 +39,11 @@ visitedLinksReq.onsuccess = function(evt) {
 			inDB.transaction("urls", "readwrite").objectStore("urls").put({url: finishedDir});
 			// console.log('STORE ' + finishedDir);
 		} );
+
+		var getReq = inDB.transaction("data", "readonly").objectStore("data").get('org.hibernate.LazyInitializationException');
+		getReq.onsuccess = function(e) {
+			console.log('FOUND: ', getReq.result.className);
+		}
 	}
 }
 
@@ -77,14 +82,28 @@ function fetchJar(inUrl, inDB) {
 			.success( function(obj) {
 					try {
 							if ( obj.jar != null) {
-									console.log( obj.classes.length + ' classes for: ' + obj.jar);
-									for ( i = 0; i < obj.classes.length; i++) {
-										recordClass( obj.classes[i].class );
-									}
+									recordClasses( obj.classes, obj.jar, inDB, 0);
 							}
 					} catch (e) { /* Just ignore */ }
 			});
 }
 
-function recordClass(inClazz, inDB) {
+function recordClasses(inClasses, inParent, inDB, idx) {
+	// console.log( inClasses.length + ' classes for: ' + inParent);
+
+	var store = inDB.transaction("data", "readwrite").objectStore("data");
+	idx = 0;
+
+	putNext();
+
+	function putNext() {
+			// console.log('>>> ', inParent,idx,inClasses.length);
+			if ( idx < inClasses.length) {
+				store.put({ id: inClasses[idx].class, className: inClasses[idx].class, parent: inParent}).onsuccess = putNext;
+				idx++;
+			}
+			else {
+				console.log('recordClasses() DONE for ' + inParent);
+			}
+	}
 }
