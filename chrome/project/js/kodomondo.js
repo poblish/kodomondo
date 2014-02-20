@@ -89,6 +89,10 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 }
 
 function visitTerm(term, inDocUrl, ioStats, ioHistory, inOptions) {  // FIXME Needs to be async!!!
+	if (term.endsWith('.')) {  // Yuk
+		term = term.substring( 0, term.length - 1);
+	}
+
 	if (!( term in set)) {
 		chrome.runtime.sendMessage({ method: "lookupTerm", term: term}, function(resp) {
 			// console.log('RETURNED', resp.classDetails.name );
@@ -139,3 +143,7 @@ function adjustAssocArrayKeyCase( inArray, inKeyToFind) {
 
 	return inKeyToFind;
 }
+
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
