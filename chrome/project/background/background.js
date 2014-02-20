@@ -19,9 +19,7 @@ var visitedLinksReq = indexedDB.open("visitedLinks");
 visitedLinksReq.onupgradeneeded = function(evt) {
 	var db = evt.target.result;
 	db.createObjectStore("urls", {keyPath: "url"});
-
-	var dataStore = db.createObjectStore("data", {keyPath: "id"});
-  dataStore.createIndex( "idIndex", "id", {unique: true});
+	db.createObjectStore("data", {keyPath: "id"});
 }
 
 var globalDb;
@@ -49,15 +47,6 @@ visitedLinksReq.onsuccess = function(evt) {
 		getReq.onsuccess = function(e) {
 			console.log('FOUND: ', getReq.result.className);
 		}
-
-/*	inDB.transaction("data", "readonly").objectStore("data").index('idIndex').openKeyCursor().onsuccess = function(event) {
-			var cursor = event.target.result;
-			if (cursor) {
-				console.log("Name: " + cursor.key + ", SSN: " + cursor.value);
-				cursor.continue();
-			}
-		};
-*/
 	}
 }
 
