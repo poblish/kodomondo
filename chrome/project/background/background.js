@@ -122,15 +122,20 @@ $(document).ready(function () {
 
 						sendResponse({method: "getOptions", /* url: sender.tab.url, */ options: localStorage});
 				}
-				else if (request.method == "lookupTerm") {
-					var lookupReq = globalDb.transaction("data", "readonly").objectStore("data").get(request.term);
-					lookupReq.onsuccess = function(e) {
-						if ( lookupReq.result != null) {
-							sendResponse({method: "termLookup", classDetails: {name: lookupReq.result.className}});
-						}
-					}
-        }
-
 				return true;  // See: http://stackoverflow.com/a/18484709/954442
 			});
+
+		chrome.runtime.onConnect.addListener( function(port) {
+				console.assert(port.name == "termLookupPort");
+				port.onMessage.addListener( function(msg) {
+					if ( msg.term != null) {
+						var lookupReq = globalDb.transaction("data", "readonly").objectStore("data").get(msg.term);
+						lookupReq.onsuccess = function(e) {
+							if ( lookupReq.result != null) {
+								port.postMessage({ /* So sender can match response to request */ origTerm: msg.term, classDetails: {name: lookupReq.result.className}});
+							}
+						}
+					}
+				});
 		});
+});
