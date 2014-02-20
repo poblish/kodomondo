@@ -24,8 +24,11 @@ visitedLinksReq.onupgradeneeded = function(evt) {
   dataStore.createIndex( "idIndex", "id", {unique: true});
 }
 
+var globalDb;
+
 visitedLinksReq.onsuccess = function(evt) {
 	var db = evt.target.result;
+	globalDb = db;
 	pullDataSources(db);  // Now we have IndexedDB, pull DataSources
 
 	chrome.alarms.create('Pull DataSources', {periodInMinutes: 5}); // every n mins
@@ -118,3 +121,27 @@ function recordClasses(inClasses, inParent, inDB, idx) {
 			}
 	}
 }
+
+////////////////////////////////
+
+$(document).ready(function () {
+		chrome.extension.onMessage.addListener( function( request, sender, sendResponse) {
+				if (request.method == "getOptions") {
+						if ( localStorage.length == 0) {		// Set defaults!
+								localStorage["foo"] = true;
+						}
+
+						sendResponse({method: "getOptions", /* url: sender.tab.url, */ options: localStorage});
+				}
+				else if (request.method == "lookupTerm") {
+					var lookupReq = globalDb.transaction("data", "readonly").objectStore("data").get(request.term);
+					lookupReq.onsuccess = function(e) {
+						if ( lookupReq.result != null) {
+							sendResponse({method: "termLookup", classDetails: {name: lookupReq.result.className}});
+						}
+					}
+        }
+
+				return true;  // See: http://stackoverflow.com/a/18484709/954442
+			});
+		});

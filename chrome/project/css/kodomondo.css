@@ -1,0 +1,16 @@
+.highlightCore, .highlightExtra {
+    font-weight: bold;
+    padding: .2em .5em;
+    border: 1px solid #CCC;
+    border-radius: 8px;
+}
+
+.highlightCore {
+    background-color: rgb(255,91,87);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255,91,87)), to(rgb(255,130,127)));
+}
+
+.highlightExtra {
+    background-color: rgb(255,187,186);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255,187,186)), to(rgb(255,209,208)));
+}

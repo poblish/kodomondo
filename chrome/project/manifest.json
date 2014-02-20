@@ -21,7 +21,9 @@
                 "css/kodomondo.css"
             ],
             "js": [
-                "js/kodomondo.js"
+                "js/jquery-2.1.0.min.js",
+                "js/kodomondo.js",
+                "js/content/highlight.js"
             ]
         }
     ],
