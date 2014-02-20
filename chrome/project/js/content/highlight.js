@@ -181,7 +181,7 @@ jQuery.fn.removeHighlight = function(inStyleRule) {
             }
 
             if ( inStyleRule == 'span.highlightReplaced') {
-    		chrome.extension.sendRequest({ method: "notify", heading: "Settings changed", msg: "Sorry, we can't restore words that have already been replaced. Please refresh the page to restore them."}, function(inResp) {});
+    		chrome.runtime.sendRequest({ method: "notify", heading: "Settings changed", msg: "Sorry, we can't restore words that have already been replaced. Please refresh the page to restore them."}, function(inResp) {});
             	shownWarning = true;
             	return;
             }
@@ -250,7 +250,7 @@ jQuery.fn.findMultiNodeText = function( inRec ) {
 					var theMsg = inRec.fName + ' submitted by ' + inRec.submitter + ' @ ' + /* date only will be fine */ new Date( inRec.time ).toDateString();
 
 					var fallacyImg = document.createElement('img');
-					fallacyImg.src = chrome.extension.getURL('img/blank.png');
+					fallacyImg.src = chrome.runtime.getURL('img/blank.png');
 					fallacyImg.title = ( inRec.comment !== '') ? ( theMsg  + ': "' + inRec.comment + '"') : theMsg;
 					fallacyImg.className = 'highlightFallacyImg';
 					$(fallacyImg).css('background-position',( -44 * parseInt(inRec.fIdx)) + 'px 0');

@@ -114,7 +114,7 @@ function recordClasses(inClasses, inParent, inDB, idx) {
 ////////////////////////////////
 
 $(document).ready(function () {
-		chrome.extension.onMessage.addListener( function( request, sender, sendResponse) {
+		chrome.runtime.onMessage.addListener( function( request, sender, sendResponse) {
 				if (request.method == "getOptions") {
 						if ( localStorage.length == 0) {		// Set defaults!
 								localStorage["foo"] = true;

@@ -1,10 +1,10 @@
 $(function() {
-	chrome.extension.sendMessage({ method: "getOptions"}, function(inResp) {
+	chrome.runtime.sendMessage({ method: "getOptions"}, function(inResp) {
 		processPage( inResp.options );
 	});
 });
 
-chrome.extension.onMessage.addListener(
+chrome.runtime.onMessage.addListener(
 	function( inReq, inSender, inSendResponse) {
 		if ( inReq.method == "getOptions") {
 				$('body').removeHighlights();
@@ -24,7 +24,7 @@ function processPage( inOptions ) {
 
 	// var unqs = theStats['$meta'].uniqueTerms;
 	// var score = ( unqs == 0) ? 0 : Math.round( Math.pow( unqs, 1.4) * Math.pow( theStats['$meta'].totalMatches / unqs, 0.7) );
-	chrome.extension.sendMessage({ method: "setBadge", score: 3.14, url: document.URL});
+	chrome.runtime.sendMessage({ method: "setBadge", score: 3.14, url: document.URL});
 
 	// submitAnonymousStats( theStats, score);
 
@@ -76,7 +76,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 
 function visitTerm(term, inDocUrl, ioStats, ioHistory, inOptions) {  // FIXME Needs to be async!!!
     if (!( term in set)) {
-				chrome.extension.sendMessage({ method: "lookupTerm", term: term}, function(resp) {
+				chrome.runtime.sendMessage({ method: "lookupTerm", term: term}, function(resp) {
 					// console.log('RETURNED', resp.classDetails.name );
 					$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [ resp.classDetails.name ], className:'highlightCore'}), inOptions);
 				});
