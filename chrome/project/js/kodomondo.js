@@ -49,7 +49,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	var minIndividualWordLength = 4;
 	var numWords = 5;  // Show statistics for one to .. words
 	var ignoreCase = false;  // Case-sensitivity
-	var REallowedChars = /[^a-zA-Z\.\-]+/g;  // RE pattern to select valid characters. Invalid characters are replaced with a whitespace. Allow '.' because we need it for pkg names
+	var REallowedChars = /[^a-zA-Z0-9\.\-]+/g;  // RE pattern to select valid characters. Invalid characters are replaced with a whitespace. Allow '.' because we need it for pkg names
 
 	var i, j, textlen, s;
 
