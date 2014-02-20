@@ -80,7 +80,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 						s += text[i + j - 1];
 					}
 
-					visitTerm(s, ioStats, ioHistory, inOptions);
+					visitTerm(s, inDocUrl, ioStats, ioHistory, inOptions);
 				}
 			}
 			else break;
