@@ -7,10 +7,10 @@ $(function() {
 chrome.runtime.onMessage.addListener(
 	function( inReq, inSender, inSendResponse) {
 		if ( inReq.method == "getOptions") {
-				$('body').removeHighlights();
-				var theHistory = {};
-				refreshTerms( inReq.options, null, null, theHistory);
-				insertTermCounts( theHistory, inReq.options);
+			$('body').removeHighlights();
+			var theHistory = {};
+			refreshTerms( inReq.options, null, null, theHistory);
+			insertTermCounts( theHistory, inReq.options);
 		}
 	}
 );
@@ -62,44 +62,44 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	text = text.split(/\s+/);
 
 	for (i = 0, textlen = text.length; i < textlen; i++) {
-			s = text[i];
-			visitTerm(s, inDocUrl, ioStats, ioHistory, inOptions);
-			for (j = 2; j <= numWords; j++) {
-					if (i + j <= textlen) {
-							s += " " + text[i + j - 1];
-							visitTerm(s, ioStats, ioHistory, inOptions);
-					}
-					else break;
+		s = text[i];
+		visitTerm(s, inDocUrl, ioStats, ioHistory, inOptions);
+		for (j = 2; j <= numWords; j++) {
+			if (i + j <= textlen) {
+				s += " " + text[i + j - 1];
+				visitTerm(s, ioStats, ioHistory, inOptions);
 			}
+			else break;
+		}
 	}
 }
 
 function visitTerm(term, inDocUrl, ioStats, ioHistory, inOptions) {  // FIXME Needs to be async!!!
-    if (!( term in set)) {
-				chrome.runtime.sendMessage({ method: "lookupTerm", term: term}, function(resp) {
-					// console.log('RETURNED', resp.classDetails.name );
-					$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [ resp.classDetails.name ], className:'highlightCore'}), inOptions);
-				});
+	if (!( term in set)) {
+		chrome.runtime.sendMessage({ method: "lookupTerm", term: term}, function(resp) {
+			// console.log('RETURNED', resp.classDetails.name );
+			$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [ resp.classDetails.name ], className:'highlightCore'}), inOptions);
+		});
 
-				set[term] = 1;
+		set[term] = 1;
     }
 }
 
 var HighlightClass = (function() {
-    var ctor = function( inAttrs ) {
-        var theJoined = '(' + inAttrs.terms.join('|') + ')';
-        this.regex = new RegExp( inAttrs.ignoreWordBoundaries ? theJoined : ('\\b' + theJoined + '\\b'), ( inAttrs.caseInsensitive == null || inAttrs.caseInsensitive) ? "i" : "");
-        this.className = inAttrs.className;
-        this.title = inAttrs.title;
-    };
+	var ctor = function( inAttrs ) {
+		var theJoined = '(' + inAttrs.terms.join('|') + ')';
+		this.regex = new RegExp( inAttrs.ignoreWordBoundaries ? theJoined : ('\\b' + theJoined + '\\b'), ( inAttrs.caseInsensitive == null || inAttrs.caseInsensitive) ? "i" : "");
+		this.className = inAttrs.className;
+		this.title = inAttrs.title;
+	};
 
-    ctor.prototype = {
-        getRegex: function() { return this.regex; },
-        getSpanTitle: function() { return this.title; },
-        getHighlightClass: function() { return this.className; }
-    };
+	ctor.prototype = {
+		getRegex: function() { return this.regex; },
+		getSpanTitle: function() { return this.title; },
+		getHighlightClass: function() { return this.className; }
+	};
 
-    return ctor;
+	return ctor;
 })();
 
 /////////////////////////////////////////////////////
@@ -114,14 +114,14 @@ function getPageTitle() {
 }
 
 function adjustAssocArrayKeyCase( inArray, inKeyToFind) {
-    var theLCaseMatch = inKeyToFind.toLowerCase();
+	var theLCaseMatch = inKeyToFind.toLowerCase();
 
-    for ( eachExistingTerm in inArray) {
-        if (eachExistingTerm.toLowerCase() === theLCaseMatch) {
-            // console.log("Use '" + theLCaseMatch + "' instead of '" + inKeyToFind + "'");
-            return eachExistingTerm;
-        }
-    }
+	for ( eachExistingTerm in inArray) {
+		if (eachExistingTerm.toLowerCase() === theLCaseMatch) {
+			// console.log("Use '" + theLCaseMatch + "' instead of '" + inKeyToFind + "'");
+			return eachExistingTerm;
+		}
+	}
 
-    return inKeyToFind;
+	return inKeyToFind;
 }
