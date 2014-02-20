@@ -75,7 +75,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 }
 
 function visitTerm(term, inDocUrl, ioStats, ioHistory, inOptions) {  // FIXME Needs to be async!!!
-	if (!( term in set)) {
+	if (term.length >= 5 && !( term in set)) {
 		chrome.runtime.sendMessage({ method: "lookupTerm", term: term}, function(resp) {
 			// console.log('RETURNED', resp.classDetails.name );
 			$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [ resp.classDetails.name ], className:'highlightCore'}), inOptions);
