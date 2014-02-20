@@ -46,6 +46,7 @@ var text = $('body').text();
 function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
 
+	var minIndividualWordLength = 4;
 	var numWords = 5;  // Show statistics for one to .. words
 	var ignoreCase = false;  // Case-sensitivity
 	var REallowedChars = /[^a-zA-Z\.\-]+/g;  // RE pattern to select valid characters. Invalid characters are replaced with a whitespace. Allow '.' because we need it for pkg names
@@ -62,12 +63,25 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	text = text.split(/\s+/);
 
 	for (i = 0, textlen = text.length; i < textlen; i++) {
-		s = text[i];
-		visitTerm(s, inDocUrl, ioStats, ioHistory, inOptions);
+
+		if (text[i].length >= minIndividualWordLength) {
+			s = text[i];
+			visitTerm(s, inDocUrl, ioStats, ioHistory, inOptions);
+		}
+		else s = '';
+
 		for (j = 2; j <= numWords; j++) {
 			if (i + j <= textlen) {
-				s += " " + text[i + j - 1];
-				visitTerm(s, ioStats, ioHistory, inOptions);
+				if (text[i + j - 1].length >= minIndividualWordLength) {
+					if (s.length > 0) {
+						s += " " + text[i + j - 1];
+					}
+					else {
+						s += text[i + j - 1];
+					}
+
+					visitTerm(s, ioStats, ioHistory, inOptions);
+				}
 			}
 			else break;
 		}
@@ -75,7 +89,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 }
 
 function visitTerm(term, inDocUrl, ioStats, ioHistory, inOptions) {  // FIXME Needs to be async!!!
-	if (term.length >= 5 && !( term in set)) {
+	if (!( term in set)) {
 		chrome.runtime.sendMessage({ method: "lookupTerm", term: term}, function(resp) {
 			// console.log('RETURNED', resp.classDetails.name );
 			$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [ resp.classDetails.name ], className:'highlightCore'}), inOptions);
