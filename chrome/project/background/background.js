@@ -19,7 +19,9 @@ var visitedLinksReq = indexedDB.open("visitedLinks");
 visitedLinksReq.onupgradeneeded = function(evt) {
 	var db = evt.target.result;
 	db.createObjectStore("urls", {keyPath: "url"});
-	db.createObjectStore("data", {keyPath: "id"});
+
+	var dataStore = db.createObjectStore("data", {keyPath: "id"});
+	dataStore.createIndex( "simpleNameIndex", "simpleName", {unique: false});
 }
 
 var globalDb;
@@ -97,7 +99,9 @@ function recordClasses(inClasses, inParent, inDB, idx) {
 	function putNext() {
 			// console.log('>>> ', inParent,idx,inClasses.length);
 			if ( idx < inClasses.length) {
-				store.put({ id: inClasses[idx].class, className: inClasses[idx].class, parent: inParent}).onsuccess = putNext;
+				var clazzName = inClasses[idx].class;
+				var simpleName = clazzName.substring( clazzName.lastIndexOf('.') + 1);
+				store.put({ id: clazzName, className: clazzName, simpleName: simpleName, parent: inParent}).onsuccess = putNext;
 				idx++;
 			}
 			else {
