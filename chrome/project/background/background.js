@@ -42,11 +42,6 @@ visitedLinksReq.onsuccess = function(evt) {
 			inDB.transaction("urls", "readwrite").objectStore("urls").put({url: finishedDir});
 			// console.log('STORE ' + finishedDir);
 		} );
-
-		var getReq = inDB.transaction("data", "readonly").objectStore("data").get('org.hibernate.LazyInitializationException');
-		getReq.onsuccess = function(e) {
-			console.log('FOUND: ', getReq.result.className);
-		}
 	}
 }
 
