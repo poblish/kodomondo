@@ -33,13 +33,6 @@ function processPage( inOptions ) {
 
 /////////////////////////////////////////////////////
 
-var theIdbDb;
-
-var visitedLinksReq = indexedDB.open("visitedLinks");  // FIXME Need to rename this if we use it for everything!
-visitedLinksReq.onsuccess = function(evt) {
-	theIdbDb = visitedLinksReq.result;
-}
-
 var set = {};
 var text = $('body').text();
 
