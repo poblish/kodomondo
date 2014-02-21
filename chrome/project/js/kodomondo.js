@@ -22,9 +22,9 @@ function processPage( inOptions ) {
 	theStats['$meta'] = {url: document.URL, title: getPageTitle(), uniqueTerms: 0, totalMatches: 0};
 	refreshTerms( inOptions, document.URL, theStats, theHistory);
 
-	// var unqs = theStats['$meta'].uniqueTerms;
+	var unqs = theStats['$meta'].uniqueTerms;
 	// var score = ( unqs == 0) ? 0 : Math.round( Math.pow( unqs, 1.4) * Math.pow( theStats['$meta'].totalMatches / unqs, 0.7) );
-	chrome.runtime.sendMessage({ method: "setBadge", score: 3.14, url: document.URL});
+	chrome.runtime.sendMessage({ method: "setBadge", score: unqs, url: document.URL});
 
 	// submitAnonymousStats( theStats, score);
 

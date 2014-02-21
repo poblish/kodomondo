@@ -121,6 +121,33 @@ $(document).ready(function () {
 
 						sendResponse({method: "getOptions", /* url: sender.tab.url, */ options: localStorage});
 				}
+				else if (request.method == "setBadge") {
+				console.log('here');
+					if ( request.score <= 0) {
+						resetBadge(sender);
+					}
+					else {
+						if ( request.score <= 3) {
+							chrome.browserAction.setBadgeBackgroundColor({ color: [255,127,0, 255], tabId: sender.tab.id});
+						}
+						else if ( request.score <= 8) {
+							chrome.browserAction.setBadgeBackgroundColor({ color: [255,70,70, 255], tabId: sender.tab.id});
+						}
+						else {
+							chrome.browserAction.setBadgeBackgroundColor({ color: [220,0,0, 255], tabId: sender.tab.id});
+						}
+
+						localStorage['$stats.' + sender.tab.id + '.score'] = request.score;
+						localStorage['$stats.' + sender.tab.id + '.url'] = request.url;
+
+						// chrome.browserAction.setBadgeText({ text: '' + request.score, tabId: sender.tab.id});
+						// chrome.browserAction.setTitle({ title: 'BannedList Score for this page: ' + request.score, tabId: sender.tab.id});
+					}
+				}
+				else if (request.method == "resetBadge") {
+					resetBadge(sender);
+				}
+
 				return true;  // See: http://stackoverflow.com/a/18484709/954442
 			});
 
@@ -138,3 +165,10 @@ $(document).ready(function () {
 				});
 		});
 });
+
+function resetBadge(inSender) {
+	chrome.browserAction.setBadgeText({ text: '', tabId: inSender.tab.id});
+	// chrome.browserAction.setTitle({ title: 'BannedList Score for this page: 0', tabId: inSender.tab.id});
+	localStorage.removeItem('$stats.' + inSender.tab.id + '.score');
+	localStorage.removeItem('$stats.' + inSender.tab.id + '.url');
+}
