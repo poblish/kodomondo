@@ -93,7 +93,7 @@ function visitTerm(term, inDocUrl, ioStats, ioHistory, inOptions) {  // FIXME Ne
 		termLookupPort.postMessage({ method: "lookupTerm", term: term});
 		termLookupPort.onMessage.addListener( function(resp) {
 			if (/* Match response to request */ resp.origTerm == term) {
-				$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [ resp.classDetails.name ], className:'highlightCore'}), inOptions);
+				$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [ resp.classDetails.name ], foundClass: resp.classDetails.name, jarFQN: resp.jarFQN, artifact: resp.artifact, className:'highlightCore'}), inOptions);
 			}
 		});
 

@@ -38,7 +38,7 @@ visitedLinksReq.onsuccess = function(evt) {
 
 	function pullDataSources(inDB) {
 		console.log('pullDataSources:', new Date());
-		fetchDir('http://localhost:2000', inDB, function(finishedDir) {
+		fetchDir('http://localhost:2000', '', inDB, function(finishedDir) {
 			// Now we can say we've visited that URL
 			// *FIXME* This does not quite work - some parent dirs are still left behind (FWIW...)
 			inDB.transaction("urls", "readwrite").objectStore("urls").put({url: finishedDir});
@@ -47,7 +47,7 @@ visitedLinksReq.onsuccess = function(evt) {
 	}
 }
 
-function fetchDir(inDir, inDB, dirDoneHandler) {
+function fetchDir(inDir, inArtifact, inDB, dirDoneHandler) {
 	var lookupReq = inDB.transaction("urls", "readonly").objectStore("urls").get(inDir);
 	lookupReq.onsuccess = function() {
 		if (lookupReq.result !== undefined) {
@@ -61,11 +61,11 @@ function fetchDir(inDir, inDB, dirDoneHandler) {
 						try {
 								if ( obj.dirs != null && obj.dirs.length > 0) {
 									for ( i = 0; i < obj.dirs.length; i++) {
-										fetchDir( inDir + obj.dirs[i].dir, inDB, dirDoneHandler);
+										fetchDir( inDir + obj.dirs[i].dir, inArtifact + obj.dirs[i].dir, inDB, dirDoneHandler);
 									}
 								}
 								else if ( obj.version != null) {
-									fetchJar( inDir + '/' + obj.version, inDB);
+									fetchJar( inDir + '/' + obj.version, inArtifact + '/' + obj.version, inDB);
 									dirDoneHandler(inDir);
 								}
 								else /* Is this possible? */ {
@@ -76,19 +76,19 @@ function fetchDir(inDir, inDB, dirDoneHandler) {
 	};
 }
 
-function fetchJar(inUrl, inDB) {
+function fetchJar(inUrl, inArtifact, inDB) {
 	$.get(inUrl)
 			.error( function(xhr) { /* Anything? */ } )
 			.success( function(obj) {
 					try {
 							if ( obj.jar != null) {
-									recordClasses( obj.classes, obj.jar, inDB, 0);
+									recordClasses( obj.classes, inArtifact, obj.jar, inDB, 0);
 							}
 					} catch (e) { /* Just ignore */ }
 			});
 }
 
-function recordClasses(inClasses, inParent, inDB, idx) {
+function recordClasses(inClasses, inArtifact, inJarFQN, inDB, idx) {
 	// console.log( inClasses.length + ' classes for: ' + inParent);
 
 	var store = inDB.transaction("data", "readwrite").objectStore("data");
@@ -101,11 +101,11 @@ function recordClasses(inClasses, inParent, inDB, idx) {
 			if ( idx < inClasses.length) {
 				var clazzName = inClasses[idx].class;
 				var simpleName = clazzName.substring( clazzName.lastIndexOf('.') + 1);
-				store.put({ id: clazzName, className: clazzName, simpleName: simpleName, parent: inParent}).onsuccess = putNext;
+				store.put({ id: clazzName, className: clazzName, simpleName: simpleName, jarFQN: inJarFQN, artifact: inArtifact}).onsuccess = putNext;
 				idx++;
 			}
 			else {
-				console.log('recordClasses() DONE for ' + inParent);
+				console.log('recordClasses() DONE for ' + inArtifact);
 			}
 	}
 }
@@ -158,7 +158,7 @@ $(document).ready(function () {
 						var lookupReq = globalDb.transaction("data", "readonly").objectStore("data").get(msg.term);
 						lookupReq.onsuccess = function(e) {
 							if ( lookupReq.result != null) {
-								port.postMessage({ /* So sender can match response to request */ origTerm: msg.term, classDetails: {name: lookupReq.result.className}});
+								port.postMessage({ /* So sender can match response to request */ origTerm: msg.term, jarFQN: lookupReq.result.jarFQN, artifact: lookupReq.result.artifact, classDetails: {name: lookupReq.result.className}});
 							}
 						}
 					}
