@@ -107,12 +107,14 @@ var HighlightClass = (function() {
 		this.regex = new RegExp( inAttrs.ignoreWordBoundaries ? theJoined : ('\\b' + theJoined + '\\b'), ( inAttrs.caseInsensitive == null || inAttrs.caseInsensitive) ? "i" : "");
 		this.className = inAttrs.className;
 		this.title = inAttrs.title;
+		this.infoUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact;
 	};
 
 	ctor.prototype = {
 		getRegex: function() { return this.regex; },
 		getSpanTitle: function() { return this.title; },
-		getHighlightClass: function() { return this.className; }
+		getHighlightClass: function() { return this.className; },
+		getInfoUrl: function() { return this.infoUrl; }
 	};
 
 	return ctor;
