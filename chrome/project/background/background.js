@@ -122,7 +122,6 @@ $(document).ready(function () {
 						sendResponse({method: "getOptions", /* url: sender.tab.url, */ options: localStorage});
 				}
 				else if (request.method == "setBadge") {
-				console.log('here');
 					if ( request.score <= 0) {
 						resetBadge(sender);
 					}
