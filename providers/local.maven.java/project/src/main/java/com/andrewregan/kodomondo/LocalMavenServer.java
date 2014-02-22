@@ -228,7 +228,9 @@ public class LocalMavenServer
 				jf.close();
 			}
 
-			final String output = MAPPER.writeValueAsString( new ClassResponse( f.getAbsolutePath(), classesList) );
+			final String mavenRelJarPath = f.getAbsolutePath().startsWith(mvnRoot) ? f.getAbsolutePath().substring( mvnRoot.length() ) : f.getAbsolutePath();  // FIXME Ugh!
+
+			final String output = MAPPER.writeValueAsString( new ClassResponse( mavenRelJarPath, classesList) );
 
 			t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
 			t.sendResponseHeaders(200, output.length());
