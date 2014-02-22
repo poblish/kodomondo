@@ -20,9 +20,11 @@ import org.apache.http.client.utils.URLEncodedUtils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
@@ -51,64 +53,92 @@ public class LocalMavenServer
 	static class LaunchHandler implements HttpHandler {
 
 		private final String mvnRoot;
+		private File tempSrcDownloadDir;
 
 		public LaunchHandler(String mvnRoot) {
 			this.mvnRoot = mvnRoot;
+
+			tempSrcDownloadDir = Files.createTempDir();
+			tempSrcDownloadDir.deleteOnExit();
 		}
 
 		public void handle( final HttpExchange t) throws IOException {
 			final String clazz = t.getRequestURI().getPath().substring(8);  // '/launch/...'
 
+			File artifactDir = null;
+			boolean isJar = false;
+			boolean isSource = false;
+
 			for ( NameValuePair each : URLEncodedUtils.parse( t.getRequestURI(), "utf-8")) {
 				if (each.getName().equals("artifact")) {
-					File f = new File( mvnRoot, each.getValue());
-					System.out.println(f);
+					artifactDir = new File( mvnRoot, each.getValue());
+				}
+				else if (each.getName().equals("jar")) {
+					isJar = true;
+				}
+				else if (each.getName().equals("source")) {
+					isSource = true;
+				}
+			}
+			
+			if (artifactDir != null && ( isJar || isSource)) {
+				if (artifactDir.isDirectory()) {
+					File[] files = artifactDir.listFiles( new FileFilter() {
 
-					if (f.isDirectory()) {
-						File[] files = f.listFiles( new FileFilter() {
+						public boolean accept( File other) {
+							return !other.getName().startsWith(".") && other.getName().endsWith(".jar") && !other.getName().endsWith("-shaded.jar") && !other.getName().endsWith("-javadoc.jar") && !other.getName().endsWith("-tests.jar");
+						}} );
 
-							public boolean accept( File other) {
-								return !other.getName().startsWith(".") && other.getName().endsWith(".jar") && !other.getName().endsWith("-shaded.jar") && !other.getName().endsWith("-javadoc.jar") && !other.getName().endsWith("-tests.jar");
-							}} );
+					System.out.println( "LAUNCH: matching JARS: " + Arrays.toString(files));
 
-						System.out.println( "LAUNCH: matching JARS: " + Arrays.toString(files));
-
-						final String expectedSourceFileName = clazz.replace('.', '/') + ".java";
+					final String expectedSourceFileName = clazz.replace('.', '/') + ".java";
 //						System.out.println( "expectedSourceFileName: " + expectedSourceFileName);
 
-						for ( File eachJar : files) {
-							if (eachJar.getName().endsWith("-sources.jar")) {
-								JarFile jf = new JarFile(eachJar);
-								try {
-									Enumeration<JarEntry> theEntries = jf.entries();
-									while (theEntries.hasMoreElements()) {
-										JarEntry eachEntry = theEntries.nextElement();
-										if (eachEntry.isDirectory()) {
-											continue;
-										}
+					for ( File eachJar : files) {
+						if ( isSource && eachJar.getName().endsWith("-sources.jar")) {
+							JarFile jf = new JarFile(eachJar);
+							try {
+								Enumeration<JarEntry> theEntries = jf.entries();
+								while (theEntries.hasMoreElements()) {
+									JarEntry eachEntry = theEntries.nextElement();
+									if (eachEntry.isDirectory()) {
+										continue;
+									}
 
-										if (expectedSourceFileName.equals( eachEntry.getName() )) {
-											System.out.println( "SOURCES: found: " + expectedSourceFileName);
-											final String s = new String( ByteStreams.toByteArray( jf.getInputStream(eachEntry) ), Charset.forName("utf-8"));
-											System.out.println( "Java Source: " + s);
-											break;
+									if (expectedSourceFileName.equals( eachEntry.getName() )) {
+										System.out.println( "SOURCES: found: " + expectedSourceFileName);
+										final String javaSrc = new String( ByteStreams.toByteArray( jf.getInputStream(eachEntry) ), Charset.forName("utf-8"));
+
+										if (!tempSrcDownloadDir.exists()) {
+											tempSrcDownloadDir = Files.createTempDir();
+											tempSrcDownloadDir.deleteOnExit();
 										}
+										
+										File javaSrcFile = new File( tempSrcDownloadDir, expectedSourceFileName);
+										Files.createParentDirs(javaSrcFile);
+										Files.write( javaSrc, javaSrcFile, Charset.forName("utf-8"));
+										Desktop.getDesktop().open(javaSrcFile);  // Launch .java in whatever viewer/editor
+										break;
 									}
 								}
-								finally {
-									jf.close();
-								}
 							}
-							else if (eachJar.getName().endsWith("jar")) {
-								Desktop.getDesktop().open(eachJar);  // Launch JAR in whatever viewer/editor
+							catch (Throwable tt) {
+								tt.printStackTrace(); // Throwables.propagate(tt);
+							}
+							finally {
+								jf.close();
 							}
 						}
+						else if ( isJar && eachJar.getName().endsWith("jar")) {
+							Desktop.getDesktop().open(eachJar);  // Launch JAR in whatever viewer/editor
+						}
 					}
-					else {
-						t.sendResponseHeaders( 404, 0);
-						t.getResponseBody().close();
-						return;
-					}
+				}
+				else {
+					System.err.println( artifactDir + " is not a directory!");
+					t.sendResponseHeaders( 404, 0);
+					t.getResponseBody().close();
+					return;
 				}
 			}
 
