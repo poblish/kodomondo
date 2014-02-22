@@ -39,12 +39,9 @@ var text = $('body').text();
 function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
 
-	var minIndividualWordLength = 4;
-	var numWords = 5;  // Show statistics for one to .. words
+	var minIndividualWordLength = 5;
 	var ignoreCase = false;  // Case-sensitivity
 	var REallowedChars = /[^a-zA-Z0-9\.\-]+/g;  // RE pattern to select valid characters. Invalid characters are replaced with a whitespace. Allow '.' because we need it for pkg names
-
-	var i, j, textlen, s;
 
 	// Remove all irrelevant characters
 	text = text.replace(REallowedChars, " ").replace(/^\s+/, "").replace(/\s+$/, "");
@@ -55,28 +52,10 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 
 	text = text.split(/\s+/);
 
+	var i, textlen;
 	for (i = 0, textlen = text.length; i < textlen; i++) {
-
 		if (text[i].length >= minIndividualWordLength) {
-			s = text[i];
-			visitTerm(s, inDocUrl, ioStats, ioHistory, inOptions);
-		}
-		else s = '';
-
-		for (j = 2; j <= numWords; j++) {
-			if (i + j <= textlen) {
-				if (text[i + j - 1].length >= minIndividualWordLength) {
-					if (s.length > 0) {
-						s += " " + text[i + j - 1];
-					}
-					else {
-						s += text[i + j - 1];
-					}
-
-					visitTerm(s, inDocUrl, ioStats, ioHistory, inOptions);
-				}
-			}
-			else break;
+			visitTerm( text[i], inDocUrl, ioStats, ioHistory, inOptions);
 		}
 	}
 }
