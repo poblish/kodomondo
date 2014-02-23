@@ -238,6 +238,7 @@ public class LocalMavenServer
 		}
 
 		private static Pattern POM_PATTERN = Pattern.compile("META-INF/.*/pom.xml");
+		private static Pattern REPACKAGED_PATTERN = Pattern.compile("/repackaged/");
 
 		private void handleFile( final HttpExchange t, final File f) throws IOException {
 			List<ClassEntry> classesList = Lists.newArrayList();
@@ -266,7 +267,7 @@ public class LocalMavenServer
 						}
 					}
 
-					if (!eachName.endsWith(".class") || eachName.contains("$")) {
+					if (!eachName.endsWith(".class") || eachName.contains("$") || /* Skip 'com.google.appengine.labs.repackaged.org.json.JSONArray' etc. */ REPACKAGED_PATTERN.matcher(eachName).find()) {
 						continue;
 					}
 
