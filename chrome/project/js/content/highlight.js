@@ -16,6 +16,8 @@ Johann Burkard
 
 var theIgnoreClassesArray = ['highlightCore','highlightExtra','highlightReplaced','highlightIgnore','highlightMgmt','highlightShutUp','highlightHooray'];
 
+var idCount = 0;
+
 jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOptions) {
 
     var theWhiteList = getContentStatsWhiteListFor(inDocUrl);
@@ -107,6 +109,22 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
                             // parentNode ie. node, now has 3 nodes by 2 splitText()s, replace the middle with the highlighted spanNode:
                             middleBit.parentNode.replaceChild(spanNode, middleBit);
                         }
+
+			var jarInfoNode = document.createElement('a');
+			jarInfoNode.id = 'kodomondo_jar_' + idCount;
+			jarInfoNode.href = ''; // inTermsGroup.getJarUrl();
+			jarInfoNode.innerHTML = '[.jar]';
+			spanNode.parentNode.insertBefore(jarInfoNode, spanNode.nextSibling);
+
+			var srcInfoNode = document.createElement('a');
+			srcInfoNode.id = 'kodomondo_src_' + idCount;
+			srcInfoNode.href = ''; // inTermsGroup.getSourceUrl();
+			srcInfoNode.innerHTML = '[.source]';
+			spanNode.parentNode.insertBefore(srcInfoNode, spanNode.nextSibling);
+
+			$("#kodomondo_jar_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getJarUrl() ); });
+			$("#kodomondo_src_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getSourceUrl() ); });
+			idCount++;
                 }
 		skip = 1; // skip this middleBit, but still need to check endBit
             }

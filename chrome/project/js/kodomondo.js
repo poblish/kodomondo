@@ -86,14 +86,16 @@ var HighlightClass = (function() {
 		this.regex = new RegExp( inAttrs.ignoreWordBoundaries ? theJoined : ('\\b' + theJoined + '\\b'), ( inAttrs.caseInsensitive == null || inAttrs.caseInsensitive) ? "i" : "");
 		this.className = inAttrs.className;
 		this.title = inAttrs.title;
-		this.infoUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact;
+		this.jarUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
+		this.sourceUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&source=1';
 	};
 
 	ctor.prototype = {
 		getRegex: function() { return this.regex; },
 		getSpanTitle: function() { return this.title; },
 		getHighlightClass: function() { return this.className; },
-		getInfoUrl: function() { return this.infoUrl; }
+		getJarUrl: function() { return this.jarUrl; },
+		getSourceUrl: function() { return this.sourceUrl; }
 	};
 
 	return ctor;
@@ -126,3 +128,12 @@ function adjustAssocArrayKeyCase( inArray, inKeyToFind) {
 String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
+
+function getArtifactInfo(url) {
+	console.log(url);
+	$.get(url)
+		.error( function(xhr) { /* Anything? */ } )
+		.success( function(obj) {
+			console.log('Info requested OK');
+		});
+}
