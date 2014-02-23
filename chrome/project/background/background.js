@@ -21,7 +21,7 @@ visitedLinksReq.onupgradeneeded = function(evt) {
 	db.createObjectStore("urls", {keyPath: "url"});
 
 	var dataStore = db.createObjectStore("data", {keyPath: "id"});
-	dataStore.createIndex( "simpleNameIndex", "simpleName", {unique: false});
+	dataStore.createIndex( "simpleNameIndex", "simpleName", {unique: false, /* Really needed? */ multiEntry: true});
 }
 
 var globalDb;
@@ -154,10 +154,19 @@ $(document).ready(function () {
 				console.assert(port.name == "termLookupPort");
 				port.onMessage.addListener( function(msg) {
 					if ( msg.term != null) {
-						var lookupReq = globalDb.transaction("data", "readonly").objectStore("data").get(msg.term);
+						var dataStore = globalDb.transaction("data", "readonly").objectStore("data");
+						var lookupReq = dataStore.get(msg.term);
 						lookupReq.onsuccess = function(e) {
 							if ( lookupReq.result != null) {
 								port.postMessage({ /* So sender can match response to request */ origTerm: msg.term, jarFQN: lookupReq.result.jarFQN, artifact: lookupReq.result.artifact, classDetails: {name: lookupReq.result.className}});
+							}
+							else /* Try index... */ {
+								dataStore.index("simpleNameIndex").get(msg.term).onsuccess = function(event) {
+									var obj = event.target.result;
+									if ( obj != null) {
+										port.postMessage({ /* So sender can match response to request */ origTerm: msg.term, jarFQN: obj.jarFQN, artifact: obj.artifact, classDetails: {name: obj.className}});
+									}
+								};
 							}
 						}
 					}
