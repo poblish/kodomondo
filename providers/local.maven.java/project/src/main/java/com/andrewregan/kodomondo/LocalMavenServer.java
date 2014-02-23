@@ -14,6 +14,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.regex.Pattern;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -236,8 +237,12 @@ public class LocalMavenServer
 			}
 		}
 
+		private static Pattern POM_PATTERN = Pattern.compile("META-INF/.*/pom.xml");
+
 		private void handleFile( final HttpExchange t, final File f) throws IOException {
 			List<ClassEntry> classesList = Lists.newArrayList();
+
+			boolean gotClassAlready = false;
 
 			JarFile jf = new JarFile(f);
 			try {
@@ -250,6 +255,17 @@ public class LocalMavenServer
 
 					String	eachName = eachEntry.getName();
 
+					// Fairly lousy attempt to deal with shaded JARs. Essentially it boils down to using a discovered pom.xml as 
+					// a divider between the first set of classes (which we *assume* are the 'real' classes) and the next class
+					// hierarchy. This may all be ultimately fruitless...
+
+					if (POM_PATTERN.matcher(eachName).matches()) {
+						if (gotClassAlready) {
+							System.err.println("Already got classes, so skip shaded JARs: " + eachName + " in " + f);
+							break;
+						}
+					}
+
 					if (!eachName.endsWith(".class") || eachName.contains("$")) {
 						continue;
 					}
@@ -259,6 +275,8 @@ public class LocalMavenServer
 //					ClassReader cr = new ClassReader( Files.toByteArray(f) );
 //					String[] ifs = cr.getInterfaces();
 //					System.out.println( Arrays.toString(ifs) );
+
+					gotClassAlready = true;
 				}
 			}
 			finally {
