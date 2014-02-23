@@ -94,8 +94,11 @@ public class LocalMavenServer
 					final String expectedSourceFileName = clazz.replace('.', '/') + ".java";
 //						System.out.println( "expectedSourceFileName: " + expectedSourceFileName);
 
+					boolean sourceJarFound = false;
+
 					for ( File eachJar : files) {
 						if ( isSource && eachJar.getName().endsWith("-sources.jar")) {
+							sourceJarFound = true;
 							JarFile jf = new JarFile(eachJar);
 							try {
 								Enumeration<JarEntry> theEntries = jf.entries();
@@ -132,6 +135,10 @@ public class LocalMavenServer
 						else if ( isJar && eachJar.getName().endsWith("jar")) {
 							Desktop.getDesktop().open(eachJar);  // Launch JAR in whatever viewer/editor
 						}
+					}
+
+					if ( isSource && !sourceJarFound) {
+						System.err.println("Source JAR not found for " + artifactDir);
 					}
 				}
 				else {
