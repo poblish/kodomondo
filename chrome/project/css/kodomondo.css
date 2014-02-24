@@ -14,3 +14,32 @@
     background-color: rgb(255,187,186);
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255,187,186)), to(rgb(255,209,208)));
 }
+
+/**********/
+
+.highlightCore_ul, .highlightExtra_ul {
+    font-weight: bold;
+    border-bottom: 2px solid;
+}
+
+.highlightCore_ul {
+    border-bottom-color: rgb(255,91,87);
+}
+
+.highlightExtra_ul {
+    border-bottom-color: rgb(255,187,186);
+}
+
+/**********/
+
+.blob {
+    border-radius: 16px;
+    background-color: rgb(128,151,189);
+    color: white;
+    font-weight: bold;
+    font-style: normal;
+    margin: 0 0 0 6px;
+    padding: 2px 5px;
+    font-family: tahoma;
+    font-size: 11px;
+}

@@ -30,6 +30,7 @@
     "web_accessible_resources": ["img/blank.png"],
     "permissions": [
         "alarms",
+        "contextMenus",
         "notifications",
         "http://localhost:2000/"  // FIXME: do I really need this?
     ],

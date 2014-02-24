@@ -22,9 +22,9 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
 
     var theWhiteList = getContentStatsWhiteListFor(inDocUrl);
     var theBlackList = getContentStatsBlackListFor(inDocUrl);
-    var theHighlightOption = 'h_all'; // FIXME ... Should be inOptions['highlightOptions']
+    var theHighlightOption = inOptions['highlightOptions'];
     var isHighlightFirstMode = theHighlightOption === 'h_first';
-    var wantTermTracking = false; // FIXME ... ( ioHistory != null && ( inOptions['displayTermCount'] === 'true' || isHighlightFirstMode));
+    var wantTermTracking = ( ioHistory != null && ( inOptions['displayTermCount'] === 'true' || isHighlightFirstMode));
 
     function innerHighlight( node, ioStats, ioHistory, inHighlightOption) {
         var skip = 0;
@@ -114,13 +114,15 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
 			jarInfoNode.id = 'kodomondo_jar_' + idCount;
 			jarInfoNode.href = ''; // inTermsGroup.getJarUrl();
 			jarInfoNode.innerHTML = '[.jar]';
-			spanNode.parentNode.insertBefore(jarInfoNode, spanNode.nextSibling);
+			// spanNode.parentNode.insertBefore(jarInfoNode, spanNode.nextSibling);
+			$(jarInfoNode).insertAfter( $(spanNode) );
 
 			var srcInfoNode = document.createElement('a');
 			srcInfoNode.id = 'kodomondo_src_' + idCount;
 			srcInfoNode.href = ''; // inTermsGroup.getSourceUrl();
 			srcInfoNode.innerHTML = '[.source]';
-			spanNode.parentNode.insertBefore(srcInfoNode, spanNode.nextSibling);
+			// spanNode.parentNode.insertBefore(srcInfoNode, spanNode.nextSibling);
+			$(srcInfoNode).insertAfter( $(jarInfoNode) );
 
 			$("#kodomondo_jar_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getJarUrl() ); });
 			$("#kodomondo_src_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getSourceUrl() ); });

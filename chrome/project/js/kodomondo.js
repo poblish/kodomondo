@@ -12,7 +12,7 @@ chrome.runtime.onMessage.addListener(
 			$('body').removeHighlights();
 			var theHistory = {};
 			refreshTerms( inReq.options, null, null, theHistory);
-			insertTermCounts( theHistory, inReq.options);
+			// insertTermCounts( theHistory, inReq.options);
 		}
 	}
 );
@@ -29,7 +29,6 @@ function processPage( inOptions ) {
 	chrome.runtime.sendMessage({ method: "setBadge", score: unqs, url: document.URL});
 
 	// submitAnonymousStats( theStats, score);
-
 	// insertTermCounts( theHistory, inOptions);
 }
 

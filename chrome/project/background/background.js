@@ -112,11 +112,13 @@ function recordClasses(inClasses, inArtifact, inJarFQN, inDB, idx) {
 
 ////////////////////////////////
 
+var defaultHighlightOption = 'h_first';
+
 $(document).ready(function () {
 		chrome.runtime.onMessage.addListener( function( request, sender, sendResponse) {
 				if (request.method == "getOptions") {
 						if ( localStorage.length == 0) {		// Set defaults!
-								localStorage["foo"] = true;
+							localStorage['highlightOptions'] = defaultHighlightOption;
 						}
 
 						sendResponse({method: "getOptions", /* url: sender.tab.url, */ options: localStorage});
@@ -149,6 +151,19 @@ $(document).ready(function () {
 
 				return true;  // See: http://stackoverflow.com/a/18484709/954442
 			});
+
+		var theHOVal = localStorage['highlightOptions'] || defaultHighlightOption;
+		var optValues = ['h_all', 'h_first', 'u_all', 'disable'];
+
+		var firstHighlightMenuId = chrome.contextMenus.create({"title": 'Highlight all matches', "type": 'radio', "checked": (theHOVal === optValues[0]), "contexts":['page','selection'], "onclick": setHighlightOptions});
+		chrome.contextMenus.create({"title": 'Highlight first match, underline the rest', "type": 'radio', "checked": (theHOVal === optValues[1]), "contexts":['page','selection'], "onclick": setHighlightOptions});
+		chrome.contextMenus.create({"title": 'Underline all matches', "type": 'radio', "checked": (theHOVal === optValues[2]), "contexts":['page','selection'], "onclick": setHighlightOptions});
+		chrome.contextMenus.create({"title": 'Disable all highlighting', "type": 'radio', "checked": (theHOVal === optValues[3]), "contexts":['page','selection'], "onclick": setHighlightOptions});
+
+		function setHighlightOptions( inInfo, inTab) {
+			localStorage['highlightOptions'] = optValues[ inInfo.menuItemId - firstHighlightMenuId ];
+			chrome.tabs.sendMessage( inTab.id, {method: "getOptions", options: localStorage}, function (response) {});
+		}
 
 		chrome.runtime.onConnect.addListener( function(port) {
 				console.assert(port.name == "termLookupPort");
