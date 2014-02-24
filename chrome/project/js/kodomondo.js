@@ -35,7 +35,6 @@ function processPage( inOptions ) {
 /////////////////////////////////////////////////////
 
 var set = {};
-var text = $('body').text();
 
 function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
@@ -45,7 +44,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	var REallowedChars = /[^a-zA-Z0-9\.\-]+/g;  // RE pattern to select valid characters. Invalid characters are replaced with a whitespace. Allow '.' because we need it for pkg names
 
 	// Remove all irrelevant characters
-	text = text.replace(REallowedChars, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+	var text = $('body').text().replace(REallowedChars, " ").replace(/^\s+/, "").replace(/\s+$/, "");
 
 	if (ignoreCase) {
 		text = text.toLowerCase();
