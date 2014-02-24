@@ -47,8 +47,31 @@ public class LocalMavenServer
 		HttpServer server = HttpServer.create(new InetSocketAddress(2000), 0);
 		server.createContext("/", new ListingsHandler(mvnRoot));
 		server.createContext("/launch", new LaunchHandler(mvnRoot));
+		server.createContext("/datasource", new DataSourceHandler());
 		server.setExecutor(null); // creates a default executor
 		server.start();
+	}
+
+	static class DataSourceHandler implements HttpHandler {
+
+		/* (non-Javadoc)
+		 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
+		 */
+		public void handle( HttpExchange t) throws IOException {
+			final String dsName = t.getRequestURI().getPath().substring(12);  // '/datasource/...'
+
+			if (dsName.equals("local-maven")) {
+				final byte[] bs = MAPPER.writeValueAsBytes( new LocalMavenDataSource() );
+				t.sendResponseHeaders(200, bs.length);
+				OutputStream os = t.getResponseBody();
+				os.write(bs);
+				os.close();
+			}
+			else {
+				t.sendResponseHeaders( 404, 0);
+				t.getResponseBody().close();
+			}
+		}		
 	}
 
 	static class LaunchHandler implements HttpHandler {
