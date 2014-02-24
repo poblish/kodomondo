@@ -141,8 +141,8 @@ $(document).ready(function () {
 						localStorage['$stats.' + sender.tab.id + '.score'] = request.score;
 						localStorage['$stats.' + sender.tab.id + '.url'] = request.url;
 
-						// chrome.browserAction.setBadgeText({ text: '' + request.score, tabId: sender.tab.id});
-						// chrome.browserAction.setTitle({ title: 'BannedList Score for this page: ' + request.score, tabId: sender.tab.id});
+						chrome.browserAction.setBadgeText({ text: '' + request.score, tabId: sender.tab.id});
+						chrome.browserAction.setTitle({ title: request.score + ' matches', tabId: sender.tab.id});
 					}
 				}
 				else if (request.method == "resetBadge") {
