@@ -25,7 +25,7 @@ visitedLinksReq.onupgradeneeded = function(evt) {
 }
 
 var globalDb;
-var stopwords = {};
+var stopwords = new Array();
 
 visitedLinksReq.onsuccess = function(evt) {
 	var db = evt.target.result;
@@ -45,7 +45,7 @@ visitedLinksReq.onsuccess = function(evt) {
 			.success( function(obj) {
 					try {
 							if ( obj.stopwords != null) {
-								stopwords = obj.stopwords;  // FIXME Dumb to say the least!
+								stopwords = obj.stopwords.slice();  // FIXME Dumb to say the least!
 							}
 					} catch (e) { alert(e) /* Just ignore */ }
 			});

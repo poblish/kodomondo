@@ -1,10 +1,10 @@
-var stopwords = {};
+var stopwords = new Array();
 
 $(function() {
 	chrome.runtime.sendMessage({ method: "getOptions"}, function(resp) {
 		if (/^https?:\/\/(localhost:2000|www.google.).*/.test(document.URL) === false) {
 			chrome.runtime.sendMessage({ method: "getStopwords"}, function(stopwordsResp) {
-				stopwords = stopwordsResp.stopwords;
+				stopwords = stopwordsResp.stopwords.slice();
 				processPage( resp.options );
 			});
 		}
