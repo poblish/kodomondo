@@ -140,7 +140,7 @@ String.prototype.endsWith = function(suffix) {
 function getArtifactInfo(url) {
 	console.log(url);
 	$.get(url)
-		.error( function(xhr) { /* Anything? */ } )
+		.error( function(xhr) { alert('Sorry, a JAR/source download error occurred. Is the server running?') } )
 		.success( function(obj) {
 			console.log('Info requested OK');
 		});

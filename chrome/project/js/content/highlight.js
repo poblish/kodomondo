@@ -112,16 +112,24 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
 
 			var jarInfoNode = document.createElement('a');
 			jarInfoNode.id = 'kodomondo_jar_' + idCount;
-			jarInfoNode.href = ''; // inTermsGroup.getJarUrl();
-			jarInfoNode.innerHTML = '[.jar]';
-			// spanNode.parentNode.insertBefore(jarInfoNode, spanNode.nextSibling);
+			jarInfoNode.href = '';
+
+			var jarImgNode = document.createElement('img');
+			jarImgNode.src = chrome.runtime.getURL('img/jar.png');
+			jarImgNode.title = 'Open JAR';
+
+			jarInfoNode.appendChild(jarImgNode);
 			$(jarInfoNode).insertAfter( $(spanNode) );
 
 			var srcInfoNode = document.createElement('a');
 			srcInfoNode.id = 'kodomondo_src_' + idCount;
-			srcInfoNode.href = ''; // inTermsGroup.getSourceUrl();
-			srcInfoNode.innerHTML = '[.source]';
-			// spanNode.parentNode.insertBefore(srcInfoNode, spanNode.nextSibling);
+			srcInfoNode.href = '';
+
+			var srcImgNode = document.createElement('img');
+			srcImgNode.src = chrome.runtime.getURL('img/source.png');
+			srcImgNode.title = 'Open .java';
+
+			srcInfoNode.appendChild(srcImgNode);
 			$(srcInfoNode).insertAfter( $(jarInfoNode) );
 
 			$("#kodomondo_jar_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getJarUrl() ); });
