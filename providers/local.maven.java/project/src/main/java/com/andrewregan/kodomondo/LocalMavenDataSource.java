@@ -20,7 +20,8 @@ public class LocalMavenDataSource implements IDataSource {
 		return "local-maven";
 	}
 
+	// case-sensitive
 	public Set<String> getStopwords() {
-		return Sets.newHashSet("Java", "About");
+		return Sets.newHashSet("LICENSE", "Java", "About", "Default", "Library", "Maven", "Oracle","Project", "Sun", "Start", "String", "Search", "Check", "deprecated", "package", "param", "return", "switch", "goto", "continue", "break", "update", "language");
 	}
 }

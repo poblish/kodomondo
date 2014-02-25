@@ -1,7 +1,12 @@
+var stopwords = {};
+
 $(function() {
-	chrome.runtime.sendMessage({ method: "getOptions"}, function(inResp) {
-			processPage( inResp.options );
+	chrome.runtime.sendMessage({ method: "getOptions"}, function(resp) {
 		if (/^https?:\/\/(localhost:2000|www.google.).*/.test(document.URL) === false) {
+			chrome.runtime.sendMessage({ method: "getStopwords"}, function(stopwordsResp) {
+				stopwords = stopwordsResp.stopwords;
+				processPage( resp.options );
+			});
 		}
 	});
 });
@@ -57,7 +62,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 
 	var i, textlen;
 	for (i = 0, textlen = text.length; i < textlen; i++) {
-		if (text[i].length >= minIndividualWordLength) {
+		if (text[i].length >= minIndividualWordLength && stopwords.indexOf(text[i]) < 0) {
 			visitTerm( text[i], inDocUrl, ioStats, ioHistory, inOptions);
 		}
 	}

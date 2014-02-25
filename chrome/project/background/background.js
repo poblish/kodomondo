@@ -25,6 +25,7 @@ visitedLinksReq.onupgradeneeded = function(evt) {
 }
 
 var globalDb;
+var stopwords = {};
 
 visitedLinksReq.onsuccess = function(evt) {
 	var db = evt.target.result;
@@ -38,6 +39,17 @@ visitedLinksReq.onsuccess = function(evt) {
 
 	function pullDataSources(inDB) {
 		console.log('pullDataSources:', new Date());
+
+	$.get('http://localhost:2000/datasource/local-maven')
+			.error( function(xhr) { /* Anything? */ } )
+			.success( function(obj) {
+					try {
+							if ( obj.stopwords != null) {
+								stopwords = obj.stopwords;  // FIXME Dumb to say the least!
+							}
+					} catch (e) { alert(e) /* Just ignore */ }
+			});
+
 		fetchDir('http://localhost:2000', '', inDB, function(finishedDir) {
 			// Now we can say we've visited that URL
 			// *FIXME* This does not quite work - some parent dirs are still left behind (FWIW...)
@@ -122,6 +134,10 @@ $(document).ready(function () {
 						}
 
 						sendResponse({method: "getOptions", /* url: sender.tab.url, */ options: localStorage});
+				}
+				else if (request.method == "getStopwords") {
+					// If this was infrequent, could go straight to the server...?
+					sendResponse({stopwords: stopwords});
 				}
 				else if (request.method == "setBadge") {
 					if ( request.score <= 0) {

@@ -62,6 +62,7 @@ public class LocalMavenServer
 
 			if (dsName.equals("local-maven")) {
 				final byte[] bs = MAPPER.writeValueAsBytes( new LocalMavenDataSource() );
+				t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
 				t.sendResponseHeaders(200, bs.length);
 				OutputStream os = t.getResponseBody();
 				os.write(bs);
