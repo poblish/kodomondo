@@ -1,7 +1,7 @@
 $(function() {
 	chrome.runtime.sendMessage({ method: "getOptions"}, function(inResp) {
-		if (/^https?:\/\/localhost:2000.*/.test(document.URL) === false) {
 			processPage( inResp.options );
+		if (/^https?:\/\/(localhost:2000|www.google.).*/.test(document.URL) === false) {
 		}
 	});
 });
