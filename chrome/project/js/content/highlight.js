@@ -110,33 +110,35 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
                             middleBit.parentNode.replaceChild(spanNode, middleBit);
                         }
 
-			var srcInfoNode = document.createElement('a');
-			srcInfoNode.id = 'kodomondo_src_' + idCount;
-			srcInfoNode.href = '';
+			if (!spanNode.className.endsWith('_ul')) {
+				var srcInfoNode = document.createElement('a');
+				srcInfoNode.id = 'kodomondo_src_' + idCount;
+				srcInfoNode.href = '';
 
-			var srcImgNode = document.createElement('img');
-			srcImgNode.setAttribute('style', 'padding-left: 7px; margin-bottom: -2px');
-			srcImgNode.src = chrome.runtime.getURL('img/source.png');
-			srcImgNode.title = 'Open .java';
+				var srcImgNode = document.createElement('img');
+				srcImgNode.setAttribute('style', 'padding-left: 7px; margin-bottom: -2px');
+				srcImgNode.src = chrome.runtime.getURL('img/source.png');
+				srcImgNode.title = 'Open .java';
 
-			srcInfoNode.appendChild(srcImgNode);
-			spanNode.appendChild(srcInfoNode);
+				srcInfoNode.appendChild(srcImgNode);
+				spanNode.appendChild(srcInfoNode);
 
-			var jarInfoNode = document.createElement('a');
-			jarInfoNode.id = 'kodomondo_jar_' + idCount;
-			jarInfoNode.href = '';
+				var jarInfoNode = document.createElement('a');
+				jarInfoNode.id = 'kodomondo_jar_' + idCount;
+				jarInfoNode.href = '';
 
-			var jarImgNode = document.createElement('img');
-			jarImgNode.setAttribute('style', 'padding-left: 3px; margin-bottom: -2px');
-			jarImgNode.src = chrome.runtime.getURL('img/jar.png');
-			jarImgNode.title = 'Open JAR';
+				var jarImgNode = document.createElement('img');
+				jarImgNode.setAttribute('style', 'padding-left: 3px; margin-bottom: -2px');
+				jarImgNode.src = chrome.runtime.getURL('img/jar.png');
+				jarImgNode.title = 'Open JAR';
 
-			jarInfoNode.appendChild(jarImgNode);
-			spanNode.appendChild(jarInfoNode);
+				jarInfoNode.appendChild(jarImgNode);
+				spanNode.appendChild(jarInfoNode);
 
-			$("#kodomondo_jar_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getJarUrl() ); });
-			$("#kodomondo_src_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getSourceUrl() ); });
-			idCount++;
+				$("#kodomondo_jar_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getJarUrl() ); });
+				$("#kodomondo_src_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getSourceUrl() ); });
+				idCount++;
+			}
                 }
 		skip = 1; // skip this middleBit, but still need to check endBit
             }
