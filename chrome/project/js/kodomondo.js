@@ -1,10 +1,12 @@
-var stopwords = new Array();
+var g_Stopwords = new Array();
+var g_KeyTermRegexes = new Array();
 
 $(function() {
 	chrome.runtime.sendMessage({ method: "getOptions"}, function(resp) {
 		if (/^https?:\/\/(localhost:2000|www.google.).*/.test(document.URL) === false) {
 			chrome.runtime.sendMessage({ method: "getStopwords"}, function(stopwordsResp) {
-				stopwords = stopwordsResp.stopwords.slice();
+				g_Stopwords = stopwordsResp.stopwords.slice();
+				g_KeyTermRegexes = stopwordsResp.keyTermRegexes.slice();
 				processPage( resp.options );
 			});
 		}
@@ -62,7 +64,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 
 	var i, textlen;
 	for (i = 0, textlen = text.length; i < textlen; i++) {
-		if (text[i].length >= minIndividualWordLength && stopwords.indexOf(text[i]) < 0) {
+		if (text[i].length >= minIndividualWordLength && g_Stopwords.indexOf(text[i]) < 0) {
 			visitTerm( text[i], inDocUrl, ioStats, ioHistory, inOptions);
 		}
 	}

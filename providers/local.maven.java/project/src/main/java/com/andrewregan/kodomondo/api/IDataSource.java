@@ -13,6 +13,9 @@ import java.util.Set;
  */
 public interface IDataSource {
 
+	IDataSource getParent();
+
 	String getName();
 	Set<String> getStopwords();
+	Set<String> getKeyTerms();
 }

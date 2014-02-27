@@ -25,7 +25,8 @@ visitedLinksReq.onupgradeneeded = function(evt) {
 }
 
 var globalDb;
-var stopwords = new Array();
+var g_Stopwords = new Array();
+var g_KeyTermRegexes = new Array();
 
 visitedLinksReq.onsuccess = function(evt) {
 	var db = evt.target.result;
@@ -45,7 +46,8 @@ visitedLinksReq.onsuccess = function(evt) {
 			.success( function(obj) {
 					try {
 							if ( obj.stopwords != null) {
-								stopwords = obj.stopwords.slice();  // FIXME Dumb to say the least!
+								g_Stopwords = obj.stopwords.slice();  // FIXME Dumb to say the least!
+								g_KeyTermRegexes = obj.keyTerms.slice();
 							}
 					} catch (e) { alert(e) /* Just ignore */ }
 			});
@@ -137,7 +139,7 @@ $(document).ready(function () {
 				}
 				else if (request.method == "getStopwords") {
 					// If this was infrequent, could go straight to the server...?
-					sendResponse({stopwords: stopwords});
+					sendResponse({stopwords: g_Stopwords, keyTermRegexes: g_KeyTermRegexes});
 				}
 				else if (request.method == "setBadge") {
 					if ( request.score <= 0) {
