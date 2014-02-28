@@ -199,7 +199,6 @@ public class LocalMavenServer
 				return;
 			}
 
-
 			if (f.isDirectory()) {
 				List<DirEntry> dirsList = Lists.newArrayList();
 				Collection<String> versions = Lists.newArrayList();
@@ -208,7 +207,7 @@ public class LocalMavenServer
 				File[] files = f.listFiles( new FileFilter() {
 
 					public boolean accept( File pathname) {
-						return !pathname.getName().startsWith(".");
+						return !pathname.getName().startsWith(".") && !pathname.getAbsolutePath().contains("com/google/collections");
 					}} );
 
 				for ( File each : files) {
@@ -291,6 +290,10 @@ public class LocalMavenServer
 					}
 
 					if (!eachName.endsWith(".class") || eachName.contains("$") || /* Skip 'com.google.appengine.labs.repackaged.org.json.JSONArray' etc. */ REPACKAGED_PATTERN.matcher(eachName).find()) {
+						continue;
+					}
+
+					if (eachName.startsWith("scala/")) {  // FIXME Add restriction to DataSource def / handler
 						continue;
 					}
 
