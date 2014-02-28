@@ -24,9 +24,9 @@ public class LocalMavenDataSource implements IDataSource {
 		return null;
 	}
 
-	// case-sensitive
+	// case-sensitive - FIXME Just not sustainable
 	public Set<String> getStopwords() {
-		return Sets.newHashSet("LICENSE", "Java", "About", "After", "Default", "Library", "Maven", "Oracle","Project", "Sun", "Since", "Start", "String", "Search", "Check", "deprecated", "package", "param", "return", "switch", "goto", "continue", "break", "update", "language");
+		return Sets.newHashSet("LICENSE", "Java", "About", "After", "Default", "Library", "Maven", "Oracle","Project", "Sun", "Since", "Start", "String", "Search", "Check", "deprecated", "download", "Download", "package", "param", "remove", "rename", "Remove", "Rename", "return", "switch", "goto", "continue", "break", "update", "Update", "language");
 	}
 
 	// Case-insensitive regex
