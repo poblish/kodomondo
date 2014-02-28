@@ -66,7 +66,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	var i, textlen;
 	var totalNumTermsInDoc = 0, keyTermsMatched = 0;
 
-	var keyTermsRegex = new RegExp( '\\b' + '(' + g_KeyTermRegexes.join('|') + ')' + '\\b', "i");  // FIXME Why do we have to keep regenerating in content script?
+	var keyTermsRegex = g_KeyTermRegexes.length > 0 ? new RegExp( '\\b' + '(' + g_KeyTermRegexes.join('|') + ')' + '\\b', "i") : null;  // FIXME Why do we have to keep regenerating in content script?
 	// console.log('keyTermsRegex', keyTermsRegex);
 
 	for (i = 0, textlen = text.length; i < textlen; i++) {
@@ -85,7 +85,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 			continue;
 		}
 
-		if (keyTermsRegex.test(text[i])) {
+		if (keyTermsRegex && keyTermsRegex.test(text[i])) {
 			keyTermsMatched++;
 		}
 		else {
