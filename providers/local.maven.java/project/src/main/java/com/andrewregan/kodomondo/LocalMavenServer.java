@@ -21,7 +21,6 @@ import org.apache.http.client.utils.URLEncodedUtils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import com.google.common.io.ByteStreams;
@@ -244,10 +243,10 @@ public class LocalMavenServer
 				}
 				else if (!versions.isEmpty()) {
 					String highest = Ordering.from( new VersionComparator() ).max(versions);
-					output = MAPPER.writeValueAsString( new VersionResponse( f.getAbsolutePath(), highest) );
+					output = MAPPER.writeValueAsString( new VersionResponse(highest) );
 				}
 				else {
-					output = MAPPER.writeValueAsString( new DirResponse( f.getAbsolutePath(), dirsList) );
+					output = MAPPER.writeValueAsString( new DirResponse(dirsList) );
 				}
 
 				t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
@@ -321,11 +320,9 @@ public class LocalMavenServer
 	}
 
 	private static class VersionResponse {
-		final String name;
 		final String version;
 
-		public VersionResponse( String inName, String inVersion) {
-			this.name = inName;
+		public VersionResponse( String inVersion) {
 			this.version = inVersion;
 		}
 
@@ -336,11 +333,9 @@ public class LocalMavenServer
 	}
 
 	private static class DirResponse {
-		final String name;
 		final List<DirEntry> dirs;
 
-		public DirResponse( String inName, List<DirEntry> inClasses) {
-			this.name = inName;
+		public DirResponse( final List<DirEntry> inClasses) {
 			this.dirs = inClasses;
 		}
 
