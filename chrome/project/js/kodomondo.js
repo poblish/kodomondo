@@ -44,7 +44,8 @@ function processPage( inOptions ) {
 
 /////////////////////////////////////////////////////
 
-var set = {};
+var visitedTerms = {};
+var termsToHighlight = [];
 
 function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
@@ -63,31 +64,63 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	text = text.split(/\s+/);
 
 	var i, textlen;
+	var totalNumTermsInDoc = 0, keyTermsMatched = 0;
+
+	var keyTermsRegex = new RegExp( '\\b' + '(' + g_KeyTermRegexes.join('|') + ')' + '\\b', "i");  // FIXME Why do we have to keep regenerating in content script?
+	// console.log('keyTermsRegex', keyTermsRegex);
+
 	for (i = 0, textlen = text.length; i < textlen; i++) {
-		if (text[i].length >= minIndividualWordLength && g_Stopwords.indexOf(text[i]) < 0) {
+
+		if (text[i].endsWith('.')) {  // Yuk
+			text[i] = text[i].substring( 0, text[i].length - 1);
+		}
+
+		if (text[i].length < minIndividualWordLength) {
+			continue;
+		}
+
+		totalNumTermsInDoc++;
+
+		if (g_Stopwords.indexOf(text[i]) >= 0) {
+			continue;
+		}
+
+		if (keyTermsRegex.test(text[i])) {
+			keyTermsMatched++;
+		}
+		else {
 			visitTerm( text[i], inDocUrl, ioStats, ioHistory, inOptions);
 		}
 	}
+
+	window.setTimeout( function(e) {
+		var normalTermsFound = termsToHighlight.length;
+		var score = Math.sqrt(( 5 * keyTermsMatched + normalTermsFound) / totalNumTermsInDoc);
+		console.log('SCORE', score, ' > ', keyTermsMatched, normalTermsFound, '/', totalNumTermsInDoc);
+
+		if ( score > 0.2) {
+			for (i = 0; i < termsToHighlight.length; i++) {
+				var match = termsToHighlight[i];
+				$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [match.term], caseInsensitive: false, foundClass: match.resp.classDetails.name, jarFQN: match.resp.jarFQN, artifact: match.resp.artifact, className:'highlightCore'}), inOptions);
+			}
+		}
+	}, 1000);  // FIXME 1000 is too high for small pages, too small for big ones!
 }
 
 var termLookupPort = chrome.runtime.connect({name: "termLookupPort"});
 
 function visitTerm(term, inDocUrl, ioStats, ioHistory, inOptions) {  // FIXME Needs to be async!!!
-	if (term.endsWith('.')) {  // Yuk
-		term = term.substring( 0, term.length - 1);
-	}
-
-	if (!( term in set)) {
-		// console.log('SENT', term );
+	if (!( term in visitedTerms)) {
 		termLookupPort.postMessage({ method: "lookupTerm", term: term});
 		termLookupPort.onMessage.addListener( function(resp) {
 			if (/* Match response to request */ resp.origTerm == term) {
-				$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [ resp.origTerm ], caseInsensitive: false, foundClass: resp.classDetails.name, jarFQN: resp.jarFQN, artifact: resp.artifact, className:'highlightCore'}), inOptions);
+				termsToHighlight.push({ term: resp.origTerm, resp: resp});
+				// console.log(resp.origTerm + ' -> ' + resp.classDetails.name);
 			}
 		});
 
-		set[term] = 1;
-    }
+		visitedTerms[term] = 1;
+	}
 }
 
 var HighlightClass = (function() {
