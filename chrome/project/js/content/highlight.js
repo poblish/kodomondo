@@ -116,7 +116,7 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
 				srcInfoNode.href = '';
 
 				var srcImgNode = document.createElement('img');
-				srcImgNode.setAttribute('style', 'padding-left: 7px; margin-bottom: -2px');
+				srcImgNode.setAttribute('class', 'source');
 				srcImgNode.src = chrome.runtime.getURL('img/source.png');
 				srcImgNode.title = 'Open .java';
 
@@ -128,7 +128,7 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
 				jarInfoNode.href = '';
 
 				var jarImgNode = document.createElement('img');
-				jarImgNode.setAttribute('style', 'padding-left: 3px; margin-bottom: -2px');
+				jarImgNode.setAttribute('class', 'jar');
 				jarImgNode.src = chrome.runtime.getURL('img/jar.png');
 				jarImgNode.title = 'Open JAR';
 

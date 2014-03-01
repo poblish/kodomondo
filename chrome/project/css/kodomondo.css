@@ -1,14 +1,26 @@
 .highlightCore {
-    /* font-weight: bold;
-    padding: .2em .5em; */
-    padding: 0 .5em;
+    padding: 0 .3em 0 .5em;
     border-radius: 4px;
-}
-
-.highlightCore {
-    /* */ background-color: rgb(255,91,87);
+    background-color: rgb(255,91,87);
     background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255,191,187)), to(rgb(254,232,232)));
     border: 2px solid rgb(255,91,87);
+    color: black;
+}
+
+.highlightCore a {
+    display: inline !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+}
+
+.highlightCore  img.source {
+    padding: 0 0 0 7px !important;
+    margin: 0 0 -2px 0 !important;
+}
+
+.highlightCore  img.jar {
+    padding: 0 0 0 1px !important;
+    margin: 0 0 -2px 0 !important;
 }
 
 .highlightCore_ul {
