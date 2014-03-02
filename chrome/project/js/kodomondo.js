@@ -4,9 +4,9 @@ var g_KeyTermRegexes = new Array();
 $(function() {
 	chrome.runtime.sendMessage({ method: "getOptions"}, function(resp) {
 		if (/^https?:\/\/(localhost:2000|www.google.).*/.test(document.URL) === false) {
-			chrome.runtime.sendMessage({ method: "getStopwords"}, function(stopwordsResp) {
-				g_Stopwords = stopwordsResp.stopwords.slice();
-				g_KeyTermRegexes = stopwordsResp.keyTermRegexes.slice();
+			chrome.runtime.sendMessage({ method: "datasourceInfo"}, function(dsResp) {
+				g_Stopwords = dsResp.stopwords.slice();
+				g_KeyTermRegexes = dsResp.keyTermRegexes.slice();
 				processPage( resp.options );
 			});
 		}

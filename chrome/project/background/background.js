@@ -19,14 +19,13 @@ var visitedLinksReq = indexedDB.open("visitedLinks");
 visitedLinksReq.onupgradeneeded = function(evt) {
 	var db = evt.target.result;
 	db.createObjectStore("urls", {keyPath: "url"});
+	db.createObjectStore("datasource", {keyPath: "id"});
 
 	var dataStore = db.createObjectStore("data", {keyPath: "id"});
 	dataStore.createIndex( "simpleNameIndex", "simpleName", {unique: false, /* Really needed? */ multiEntry: true});
 }
 
 var globalDb;
-var g_Stopwords = new Array();
-var g_KeyTermRegexes = new Array();
 
 visitedLinksReq.onsuccess = function(evt) {
 	var db = evt.target.result;
@@ -44,12 +43,8 @@ visitedLinksReq.onsuccess = function(evt) {
 	$.get('http://localhost:2000/datasource/local-maven')
 			.error( function(xhr) { /* Anything? */ } )
 			.success( function(obj) {
-					try {
-							if ( obj.stopwords != null) {
-								g_Stopwords = obj.stopwords.slice();  // FIXME Dumb to say the least!
-								g_KeyTermRegexes = obj.keyTerms.slice();
-							}
-					} catch (e) { alert(e) /* Just ignore */ }
+				obj['id'] = 'local-maven';
+				inDB.transaction("datasource", "readwrite").objectStore("datasource").put(obj);
 			});
 
 		fetchDir('http://localhost:2000', '', inDB, function(finishedDir) {
@@ -137,9 +132,13 @@ $(document).ready(function () {
 
 						sendResponse({method: "getOptions", /* url: sender.tab.url, */ options: localStorage});
 				}
-				else if (request.method == "getStopwords") {
-					// If this was infrequent, could go straight to the server...?
-					sendResponse({stopwords: g_Stopwords, keyTermRegexes: g_KeyTermRegexes});
+				else if (request.method == "datasourceInfo") {
+					var dsLookupReq = globalDb.transaction("datasource", "readonly").objectStore("datasource").get('local-maven');
+					dsLookupReq.onsuccess = function(e) {
+						if ( dsLookupReq.result != null) {
+							sendResponse({stopwords: dsLookupReq.result.stopwords, keyTermRegexes: dsLookupReq.result.keyTerms});
+						}
+					};
 				}
 				else if (request.method == "setBadge") {
 					if ( request.score <= 0) {
