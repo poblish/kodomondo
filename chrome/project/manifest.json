@@ -28,6 +28,9 @@
         }
     ],
     "web_accessible_resources": ["img/blank.png", "img/source.png", "img/jar.png"],
+    "omnibox": {
+        "keyword" : "kodo"
+    },
     "permissions": [
         "alarms",
         "contextMenus",

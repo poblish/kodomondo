@@ -204,6 +204,17 @@ $(document).ready(function () {
 					}
 				});
 		});
+
+		chrome.omnibox.onInputChanged.addListener( function( text, callbackFunc) {
+			// IGNORE for now
+		} );
+
+		chrome.omnibox.onInputEntered.addListener( function( text, disposition) {
+			// alert(text + ' ' + disposition);
+			chrome.tabs.query({'active': true}, function(tabs) {
+				chrome.tabs.update( tabs[0].id, {url: 'http://localhost:2000/info/?class=' + text + '&jar=' + text});
+			});
+		});
 });
 
 function resetBadge(inSender) {
