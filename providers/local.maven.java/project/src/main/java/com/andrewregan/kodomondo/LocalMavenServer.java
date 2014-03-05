@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -12,6 +14,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
@@ -21,13 +24,18 @@ import org.apache.http.client.utils.URLEncodedUtils;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Ordering;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
+
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 
 /**
  * Hello world!
@@ -43,12 +51,58 @@ public class LocalMavenServer
 		final String mvnRoot = (( origMvnRoot != null && !origMvnRoot.isEmpty()) ? origMvnRoot : "~/.m2").replace("~",System.getProperty("user.home")) + "/repository/";
 		System.out.println(mvnRoot);
 
+		final Configuration theConfig = new Configuration();
+		theConfig.setDirectoryForTemplateLoading( new File("src/main/resources/templates"));
+
 		HttpServer server = HttpServer.create(new InetSocketAddress(2000), 0);
 		server.createContext("/", new ListingsHandler(mvnRoot));
 		server.createContext("/launch", new LaunchHandler(mvnRoot));
 		server.createContext("/datasource", new DataSourceHandler());
+		server.createContext("/info", new InfoHandler(theConfig));
 		server.setExecutor(null); // creates a default executor
 		server.start();
+	}
+
+	static class InfoHandler implements HttpHandler {
+
+		private final Configuration config;
+
+		public InfoHandler( final Configuration inConfig) {
+			config = inConfig;
+		}
+
+		/* (non-Javadoc)
+		 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
+		 */
+		public void handle( HttpExchange t) throws IOException {
+
+			for ( NameValuePair each : URLEncodedUtils.parse( t.getRequestURI(), "utf-8")) {
+				if (each.getName().equals("class")) {
+					System.out.println(each.getValue());
+				}
+				else if (each.getName().equals("jar")) {
+					System.out.println(each.getValue());
+				}
+			}
+
+			final Map<String,Object> resultsModel = Maps.newHashMap();
+			resultsModel.put("name", "" + new java.util.Date());
+
+			t.getResponseHeaders().put( "Content-type", Lists.newArrayList("text/html"));
+
+			StringWriter sw = new StringWriter();
+			try {
+				config.getTemplate("info_tmpl.ftl").process( resultsModel, sw);
+			} catch (TemplateException e) {
+				Throwables.propagate(e);
+			}
+
+			final String output = sw.toString();
+			t.sendResponseHeaders(200, output.length());
+			OutputStream os = t.getResponseBody();
+			os.write( output.getBytes("utf-8") );
+			os.close();
+		}		
 	}
 
 	static class DataSourceHandler implements HttpHandler {
