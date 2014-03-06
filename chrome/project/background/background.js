@@ -211,9 +211,18 @@ $(document).ready(function () {
 
 		chrome.omnibox.onInputEntered.addListener( function( text, disposition) {
 			// alert(text + ' ' + disposition);
-			chrome.tabs.query({'active': true}, function(tabs) {
-				chrome.tabs.update( tabs[0].id, {url: 'http://localhost:2000/info/?class=' + text + '&jar=' + text});
-			});
+			var dataStore = globalDb.transaction("data", "readonly").objectStore("data");
+			dataStore.index("simpleNameIndex").get(text).onsuccess = function(event) {
+				var obj = event.target.result;
+				if ( obj != null) {
+					chrome.tabs.query({'active': true}, function(tabs) {
+						chrome.tabs.update( tabs[0].id, {url: 'http://localhost:2000/info/?class=' + obj.className + '&jar=' + obj.jarFQN + '&artifact=' + obj.artifact});
+					});
+				}
+				else {
+					alert('Not found!'); // FIXME
+				}
+			};
 		});
 });
 

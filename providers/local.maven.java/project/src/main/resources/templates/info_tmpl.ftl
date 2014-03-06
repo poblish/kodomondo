@@ -1,6 +1,11 @@
 <html>
 <body>
 <h1>Test</h1>
-${name}
+${name}, ${classname}, ${superClass}
+
+<#list interfaces as interface>
+${interface}
+</#list>
+
 </body>
 </html>
