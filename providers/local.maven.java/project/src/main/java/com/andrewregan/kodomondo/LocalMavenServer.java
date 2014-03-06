@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
@@ -21,9 +20,12 @@ import java.util.regex.Pattern;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.yaml.snakeyaml.Yaml;
 
+import com.andrewregan.kodomondo.api.IDataSource;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -44,12 +46,16 @@ import freemarker.template.TemplateException;
 @SuppressWarnings("restriction")
 public class LocalMavenServer 
 {
+	private static final Map<String,IDataSource> dataSources = Maps.newHashMap();
+
 	private static final ObjectMapper MAPPER = new ObjectMapper();
 
 	public static void main(String[] args) throws Exception {
 		String origMvnRoot = System.getenv("M2_HOME");
 		final String mvnRoot = (( origMvnRoot != null && !origMvnRoot.isEmpty()) ? origMvnRoot : "~/.m2").replace("~",System.getProperty("user.home")) + "/repository/";
 		System.out.println(mvnRoot);
+
+		readConfig();
 
 		final Configuration theConfig = new Configuration();
 		theConfig.setDirectoryForTemplateLoading( new File("src/main/resources/templates"));
@@ -61,6 +67,34 @@ public class LocalMavenServer
 		server.createContext("/info", new InfoHandler(theConfig));
 		server.setExecutor(null); // creates a default executor
 		server.start();
+	}
+
+	@SuppressWarnings("unchecked")
+	private static void readConfig() {
+		try {
+			for ( Object eachEntry : new Yaml().loadAll( Files.toString( new File( "src/main/resources/conf", "ds.yaml"), Charset.forName("utf-8")))) {
+				Map<String,Object> eachDsEntry = (Map<String,Object>) eachEntry;
+
+				final String dsName = Strings.emptyToNull((String) eachDsEntry.get("name"));
+				final String className = Strings.emptyToNull((String) eachDsEntry.get("implClass"));
+
+				final IDataSource dsInst = ( className != null) ? (IDataSource) Class.forName(className).getConstructor( String.class ).newInstance(dsName) : new AbstractDataSource(dsName);
+				dsInst.setKeyTerms((List<String>) eachDsEntry.get("key-terms") );
+				dsInst.setStopwords((List<String>) eachDsEntry.get("stopwords") );
+
+				final String parentName = Strings.emptyToNull((String) eachDsEntry.get("inherit"));  // FIXME Should be *list* for multiple!
+				final IDataSource parent = ( parentName != null) ? /* FIXME error handling! */ dataSources.get(parentName) : null;
+				dsInst.setParent(parent);
+
+				dataSources.put( dsName, dsInst);
+			}
+		}
+		catch (IOException e) {
+			Throwables.propagate(e);
+		}
+		catch (ReflectiveOperationException e) {
+			Throwables.propagate(e);
+		}
 	}
 
 	static class InfoHandler implements HttpHandler {
@@ -112,9 +146,10 @@ public class LocalMavenServer
 		 */
 		public void handle( HttpExchange t) throws IOException {
 			final String dsName = t.getRequestURI().getPath().substring(12);  // '/datasource/...'
+			final IDataSource ds = dataSources.get(dsName);
 
-			if (dsName.equals("local-maven")) {
-				final byte[] bs = MAPPER.writeValueAsBytes( new LocalMavenDataSource() );
+			if ( ds != null) {
+				final byte[] bs = MAPPER.writeValueAsBytes(ds);
 				t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
 				t.sendResponseHeaders(200, bs.length);
 				OutputStream os = t.getResponseBody();

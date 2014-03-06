@@ -3,6 +3,7 @@
  */
 package com.andrewregan.kodomondo.api;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -13,9 +14,13 @@ import java.util.Set;
  */
 public interface IDataSource {
 
-	IDataSource getParent();
+	IDataSource getParent();  // FIXME Should be multiple, i.e. List
 
 	String getName();
 	Set<String> getStopwords();
 	Set<String> getKeyTerms();
+
+	void setKeyTerms( Collection<String> terms);
+	void setStopwords( Collection<String> terms);
+	void setParent( IDataSource parent);
 }

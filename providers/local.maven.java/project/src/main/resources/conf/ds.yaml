@@ -1,0 +1,42 @@
+---
+name: programming-language
+key-terms:
+  - Commits?
+  - Merge requests?
+stopwords:
+  - About
+  - After
+  - break
+  - Check
+  - continue
+  - Default
+  - deprecated
+  - "[Dd]ownload"
+  - goto
+  - language
+  - Library
+  - LICENSE
+  - Maven
+  - package
+  - param
+  - Project
+  - "[Rr]emove"
+  - rename
+  - Rename
+  - return
+  - Search
+  - Since
+  - Start
+  - String
+  - Sun
+  - switch
+  - "[Uu]pdate"
+---
+name: local-maven
+inherit: programming-language
+implClass: "com.andrewregan.kodomondo.LocalMavenDataSource"
+key-terms:
+  - Java
+stopwords:
+  - Java
+  - Oracle
