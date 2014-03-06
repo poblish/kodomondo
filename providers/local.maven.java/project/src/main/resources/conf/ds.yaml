@@ -34,7 +34,7 @@ stopwords:
 ---
 name: local-maven
 inherit: programming-language
-implClass: "com.andrewregan.kodomondo.LocalMavenDataSource"
+implClass: "com.andrewregan.kodomondo.ds.LocalMavenDataSource"
 key-terms:
   - Java
 stopwords:

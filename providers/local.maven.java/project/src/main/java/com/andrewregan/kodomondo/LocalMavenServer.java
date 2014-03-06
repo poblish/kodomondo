@@ -23,6 +23,7 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.yaml.snakeyaml.Yaml;
 
 import com.andrewregan.kodomondo.api.IDataSource;
+import com.andrewregan.kodomondo.ds.AbstractDataSource;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;

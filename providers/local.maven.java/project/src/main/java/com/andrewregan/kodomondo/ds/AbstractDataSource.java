@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo;
+package com.andrewregan.kodomondo.ds;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
