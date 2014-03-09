@@ -5,7 +5,8 @@ $(function() {
 	chrome.runtime.sendMessage({ method: "getOptions"}, function(resp) {
 		if (/^https?:\/\/(localhost:2000|www.google.).*/.test(document.URL) === false) {
 			chrome.runtime.sendMessage({ method: "datasourceInfo"}, function(dsResp) {
-				g_Stopwords = dsResp.stopwords.slice();
+				var stopwords = dsResp.stopwords.slice();
+				g_StopwordsRegex = stopwords.length > 0 ? new RegExp( '\\b' + '(' + stopwords.join('|') + ')' + '\\b') : null;  // FIXME Why do we have to keep regenerating in content script?
 				g_KeyTermRegexes = dsResp.keyTermRegexes.slice();
 				processPage( resp.options );
 			});
@@ -81,7 +82,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 
 		totalNumTermsInDoc++;
 
-		if (g_Stopwords.indexOf(text[i]) >= 0) {
+		if (g_StopwordsRegex.test(text[i])) {
 			continue;
 		}
 
