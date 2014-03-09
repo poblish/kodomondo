@@ -150,8 +150,6 @@ public class LocalMavenServer
 		}
 
 		private void populateModelFromInputs( Map<String, Object> resultsModel, String className, String artifactName, String jarName) {
-			resultsModel.put("name", "" + new java.util.Date());
-
 			try ( JarFile jf = new JarFile( new File( mvnRoot, jarName))) {
 				String classNameToMatch = className.replace( '.', '/') + ".class";
 
@@ -168,8 +166,11 @@ public class LocalMavenServer
 					ClassReader cr = new ClassReader(b);
 					String[] ifs = cr.getInterfaces();
 
+					String fqn = cr.getClassName();
+
 					resultsModel.put("interfaces", ifs);
-					resultsModel.put("classname", cr.getClassName());
+					resultsModel.put("classname", fqn.substring( fqn.lastIndexOf('/') + 1));
+					resultsModel.put("package", fqn.substring( 0, fqn.lastIndexOf('/') ).replace('/', '.'));
 					resultsModel.put("superClass", cr.getSuperName());
 
 					break;
