@@ -8,26 +8,36 @@ stopwords:
   - After
   - break
   - Check
+  - "[Cc]lass(es)?"
   - continue
   - Default
-  - deprecated
+  - "[Dd]etail"
+  - "[Dd]eprecated"
   - "[Dd]ownload"
+  - "[Ff]ilter"
   - goto
+  - "[Hh]elp"
+  - "[Ii]ndex"
   - language
   - Library
   - LICENSE
   - Maven
-  - package
+  - "[Mm]essages"
+  - "[Mm]ethod"
+  - "[Pp]ackage"
   - param
   - Project
   - "[Rr]emove"
   - rename
   - Rename
-  - return
+  - "[Rr]eturns?"
+  - "[Rr]ights?"
   - Search
+  - "[Ss]ettings"
   - Since
   - Start
   - String
+  - "[Ss]ubject"
   - Sun
   - switch
   - "[Uu]pdate"
