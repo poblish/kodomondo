@@ -123,7 +123,7 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
 				jarInfoNode.appendChild(infoImgNode);
 				spanNode.appendChild(jarInfoNode);
 
-				$("#kodomondo_info_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getInfoUrl() ); });
+				$("#kodomondo_info_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo(inTermsGroup); });
 				idCount++;
 			}
                 }

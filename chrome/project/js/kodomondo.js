@@ -128,6 +128,7 @@ var HighlightClass = (function() {
 	var ctor = function( inAttrs ) {
 		var theJoined = '(' + inAttrs.terms.join('|') + ')';
 		this.regex = new RegExp( inAttrs.ignoreWordBoundaries ? theJoined : ('\\b' + theJoined + '\\b'), ( inAttrs.caseInsensitive == null || inAttrs.caseInsensitive) ? "i" : "");
+		this.terms = inAttrs.terms;
 		this.className = inAttrs.className;
 		this.title = inAttrs.title;
 		this.jarUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
@@ -136,6 +137,7 @@ var HighlightClass = (function() {
 	};
 
 	ctor.prototype = {
+		getDisplayName: function() { return this.terms; },
 		getRegex: function() { return this.regex; },
 		getSpanTitle: function() { return this.title; },
 		getHighlightClass: function() { return this.className; },
@@ -175,11 +177,141 @@ String.prototype.endsWith = function(suffix) {
     return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
 
-function getArtifactInfo(url) {
-	console.log(url);
+function getArtifactInfo(inItem) {
+
+	var theHeaderElem = new FacebookStylePopupHeader('Kodomondo' + '&nbsp;&raquo;&nbsp;' + 'Java Class Info','myId');
+	var thePopup = new FacebookStylePopup( document.body, theHeaderElem, 800);
+
+	var overlay = document.createElement('div');
+	overlay.setAttribute('class', 'overlay');
+	document.body.appendChild(overlay);
+
+	$('body').bind('keyup', function(e) { if ( e.keyCode == 27) closeDialog() });
+
+	var introNode = document.createElement('p');
+	introNode.setAttribute('style', 'font-weight: bold; padding: 6px 0 0 7px; margin: 0');
+	introNode.innerHTML =  inItem.getDisplayName();
+	thePopup.appendChild(introNode);
+
+	var srcButton = document.createElement('a');
+	srcButton.setAttribute('href', '');
+	srcButton.innerHTML = 'View Source';
+	$(srcButton).click(function(e) { e.preventDefault(); asyncRequestUrl( inItem.getSourceUrl() ); });
+
+	var jarButton = document.createElement('a');
+	jarButton.setAttribute('href', '');
+	jarButton.innerHTML = 'Open JAR';
+	$(jarButton).click(function(e) { e.preventDefault(); asyncRequestUrl( inItem.getJarUrl() ); });
+
+	var buttonsDiv = document.createElement('div');
+	buttonsDiv.setAttribute('style', 'padding: 9px 0 9px 7px');
+	buttonsDiv.appendChild(srcButton);
+	buttonsDiv.appendChild(document.createTextNode('  |  ') );
+	buttonsDiv.appendChild(jarButton);
+	thePopup.appendChild(buttonsDiv);
+
+	var closeButton = document.createElement('button');
+	closeButton.setAttribute('style', "margin-right: 7px");
+	closeButton.innerHTML = 'Close';
+	$(closeButton).click(function(e) { e.preventDefault(); closeDialog(); });
+
+	var theCloseFormElem = document.createElement('form');
+	theCloseFormElem.setAttribute('style', "padding: 0 0 7px 10px; text-align: right");
+	theCloseFormElem.appendChild(closeButton);
+	thePopup.appendChild(theCloseFormElem);
+
+	thePopup.show();
+}
+
+function asyncRequestUrl(url) {
 	$.get(url)
 		.error( function(xhr) { alert('Sorry, a JAR/source download error occurred. Is the server running?') } )
 		.success( function(obj) {
-			console.log('Info requested OK');
+			// console.log('Info requested OK');
 		});
 }
+
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+function closeDialog() {
+	$('div.fbOutermost').each( function(i) { $(this).remove(); });
+	$('div.overlay').remove();
+}
+
+
+var FacebookStylePopup = (function() {
+	var ctor = function( inParentElem, inHeader, inWidth, inTopOffsetOverride) {
+		this.top = $(window).scrollTop();
+		this.topOffset = ( inTopOffsetOverride != null) ? parseInt(inTopOffsetOverride) : 125;
+
+		this.outerElem = document.createElement('div');
+		this.outerElem.setAttribute('class', 'userInfoPopup');
+		this.outerElem.setAttribute('style', "position: relative; margin: auto; height: 0; width: " + inWidth + "px; top: " + ( this.top + this.topOffset) + "px");
+
+		this.contentElem = document.createElement('div');
+		this.contentElem.setAttribute('style', "background-color: white; padding-bottom: 1px");
+		this.contentElem.appendChild( inHeader.getElem() );
+
+		var wrapper = document.createElement('div');
+		wrapper.setAttribute('class', 'fbContentWrapper');
+		wrapper.setAttribute('style', '-webkit-border-bottom-left-radius: 8px 8px; -webkit-border-bottom-right-radius: 8px 8px; -webkit-border-top-left-radius: 8px 8px; -webkit-border-top-right-radius: 8px  8px;');
+		wrapper.appendChild(this.contentElem);
+		this.outerElem.appendChild(wrapper);
+
+		this.outermostElem = document.createElement('div');
+		this.outermostElem.setAttribute('class', 'fbOutermost');
+		this.outermostElem.setAttribute('style', 'display: none');
+		this.outermostElem.appendChild(this.outerElem);
+
+		inParentElem.parentNode.insertBefore( this.outermostElem, inParentElem.nextSibling);
+	};
+
+	ctor.prototype = {
+		setTop: function( inTop ) {
+			this.top = inTop;
+			return this;
+		},
+
+		setTopOffset: function( inTopOffset ) {
+			this.topOffset = inTopOffset;
+			return this;
+		},
+
+		appendChild: function( inChildElem ) {
+			this.contentElem.appendChild(inChildElem);
+		},
+
+		show: function() {
+			this.outerElem.style.top = ( this.top + this.topOffset) + 'px';
+			$(this.outermostElem).fadeIn();
+		},
+
+		selectChildren: function( inSelector ) {
+			return this.contentElem.select(inSelector);	// Prototype
+		}
+	};
+
+	return ctor;
+})();
+
+var FacebookStylePopupHeader = (function() {
+	var ctor = function( inContent, inId ) {
+		this.elem = document.createElement('div');
+		this.elem.id = inId;
+		this.elem.setAttribute('class', 'fbPopupHeader');
+		this.elem.innerHTML = inContent;
+	};
+
+	ctor.prototype = {
+		getElem: function() {
+			return this.elem;
+		},
+
+		setContent: function( inContent ) {
+			this.elem.innerHTML = inContent;
+		}
+	};
+
+	return ctor;
+})();
