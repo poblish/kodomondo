@@ -136,7 +136,7 @@ function getArtifactInfo(inItem) {
 	$('body').bind('keyup', function(e) { if ( e.keyCode == 27) closeDialog() });
 
 	var introNode = document.createElement('p');
-	introNode.setAttribute('style', 'font-weight: bold; padding: 6px 0 0 7px; margin: 0');
+	introNode.setAttribute('style', 'padding: 12px 0 7px 7px; line-height: 18px; margin: 0');
 	introNode.innerHTML =  inItem.getDisplayName();
 	thePopup.appendChild(introNode);
 
@@ -151,7 +151,7 @@ function getArtifactInfo(inItem) {
 	$(jarButton).click(function(e) { e.preventDefault(); asyncRequestUrl( inItem.getJarUrl() ); });
 
 	var buttonsDiv = document.createElement('div');
-	buttonsDiv.setAttribute('style', 'padding: 9px 0 9px 7px');
+	buttonsDiv.setAttribute('style', 'padding: 9px 0 9px 16px');
 	buttonsDiv.appendChild(srcButton);
 	buttonsDiv.appendChild(document.createTextNode('  |  ') );
 	buttonsDiv.appendChild(jarButton);

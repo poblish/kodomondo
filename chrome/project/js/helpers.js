@@ -2,7 +2,8 @@ var HighlightClass = (function() {
 	var ctor = function( inAttrs ) {
 		var theJoined = '(' + inAttrs.terms.join('|') + ')';
 		this.regex = new RegExp( inAttrs.ignoreWordBoundaries ? theJoined : ('\\b' + theJoined + '\\b'), ( inAttrs.caseInsensitive == null || inAttrs.caseInsensitive) ? "i" : "");
-		this.terms = inAttrs.terms;
+		this.jarFQN = inAttrs.jarFQN;
+		this.foundClass = inAttrs.foundClass;
 		this.className = inAttrs.className;
 		this.title = inAttrs.title;
 		this.jarUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
@@ -11,7 +12,7 @@ var HighlightClass = (function() {
 	};
 
 	ctor.prototype = {
-		getDisplayName: function() { return this.terms; },
+		getDisplayName: function() { return '<strong>' + this.foundClass + '</strong>  <--  ' + this.jarFQN; },
 		getRegex: function() { return this.regex; },
 		getSpanTitle: function() { return this.title; },
 		getHighlightClass: function() { return this.className; },
