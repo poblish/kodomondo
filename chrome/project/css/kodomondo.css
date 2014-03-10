@@ -1,10 +1,9 @@
 .highlightCore {
-    padding: 0 .3em 0 .5em;
-    border-radius: 4px;
-    background-color: rgb(255,91,87);
-    background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(255,191,187)), to(rgb(254,232,232)));
-    border: 2px solid rgb(255,91,87);
-    color: black;
+    font-weight: bold;
+    color: black !important;
+    background-color: rgb(254,232,232);
+    border-bottom: 2px dotted !important;
+    border-bottom-color: rgb(255,91,87) !important;
 }
 
 .highlightCore a {
@@ -13,32 +12,16 @@
     background-color: transparent !important;
 }
 
-.highlightCore  img.source {
-    padding: 0 0 0 7px !important;
-    margin: 0 0 -2px 0 !important;
-}
-
-.highlightCore  img.jar {
-    padding: 0 0 0 1px !important;
+.highlightCore  img.info {
+    padding: 0 2px 0 4px !important;
     margin: 0 0 -2px 0 !important;
 }
 
 .highlightCore_ul {
-    font-weight: bold;
-    border-bottom: 2px solid;
-    border-bottom-color: rgb(255,91,87);
+    font-weight: normal;
+    border-bottom: 1px dotted !important;
+    border-bottom-color: rgb(255,91,87) !important;
 }
 
 /**********/
 
-.blob {
-    border-radius: 16px;
-    background-color: rgb(128,151,189);
-    color: white;
-    font-weight: bold;
-    font-style: normal;
-    margin: 0 0 0 6px;
-    padding: 2px 5px;
-    font-family: tahoma;
-    font-size: 11px;
-}

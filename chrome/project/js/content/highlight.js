@@ -111,32 +111,19 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
                         }
 
 			if (!spanNode.className.endsWith('_ul')) {
-				var srcInfoNode = document.createElement('a');
-				srcInfoNode.id = 'kodomondo_src_' + idCount;
-				srcInfoNode.href = '';
-
-				var srcImgNode = document.createElement('img');
-				srcImgNode.setAttribute('class', 'source');
-				srcImgNode.src = chrome.runtime.getURL('img/source.png');
-				srcImgNode.title = 'Open .java';
-
-				srcInfoNode.appendChild(srcImgNode);
-				spanNode.appendChild(srcInfoNode);
-
 				var jarInfoNode = document.createElement('a');
-				jarInfoNode.id = 'kodomondo_jar_' + idCount;
+				jarInfoNode.id = 'kodomondo_info_' + idCount;
 				jarInfoNode.href = '';
 
-				var jarImgNode = document.createElement('img');
-				jarImgNode.setAttribute('class', 'jar');
-				jarImgNode.src = chrome.runtime.getURL('img/jar.png');
-				jarImgNode.title = 'Open JAR';
+				var infoImgNode = document.createElement('img');
+				infoImgNode.setAttribute('class', 'info');
+				infoImgNode.src = chrome.runtime.getURL('img/info.png');
+				infoImgNode.title = 'Kodmondo Info';
 
-				jarInfoNode.appendChild(jarImgNode);
+				jarInfoNode.appendChild(infoImgNode);
 				spanNode.appendChild(jarInfoNode);
 
-				$("#kodomondo_jar_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getJarUrl() ); });
-				$("#kodomondo_src_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getSourceUrl() ); });
+				$("#kodomondo_info_" + idCount).click( function(e){ e.preventDefault(); getArtifactInfo( inTermsGroup.getInfoUrl() ); });
 				idCount++;
 			}
                 }

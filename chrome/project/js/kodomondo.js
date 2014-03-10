@@ -131,6 +131,7 @@ var HighlightClass = (function() {
 		this.className = inAttrs.className;
 		this.title = inAttrs.title;
 		this.jarUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
+		this.infoUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
 		this.sourceUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&source=1';
 	};
 
@@ -139,7 +140,8 @@ var HighlightClass = (function() {
 		getSpanTitle: function() { return this.title; },
 		getHighlightClass: function() { return this.className; },
 		getJarUrl: function() { return this.jarUrl; },
-		getSourceUrl: function() { return this.sourceUrl; }
+		getSourceUrl: function() { return this.sourceUrl; },
+		getInfoUrl: function() { return this.infoUrl; }
 	};
 
 	return ctor;
