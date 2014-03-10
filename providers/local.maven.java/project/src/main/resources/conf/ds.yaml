@@ -8,7 +8,9 @@ stopwords:
   - After
   - break
   - Check
+  - "[Cc]hoices?"
   - "[Cc]lass(es)?"
+  - "[Cc]omment(s)?"
   - continue
   - Default
   - "[Dd]etail"
@@ -26,6 +28,7 @@ stopwords:
   - "[Mm]ethod"
   - "[Pp]ackage"
   - param
+  - "[Pp]assword"
   - Project
   - "[Rr]emove"
   - rename
