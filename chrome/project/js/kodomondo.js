@@ -163,7 +163,7 @@ function getArtifactInfo(inItem) {
 	$(closeButton).click(function(e) { e.preventDefault(); closeDialog(); });
 
 	var theCloseFormElem = document.createElement('form');
-	theCloseFormElem.setAttribute('style', "padding: 0 0 7px 10px; text-align: right");
+	theCloseFormElem.setAttribute('style', "padding: 0 0 7px 10px; margin: 0; text-align: right");
 	theCloseFormElem.appendChild(closeButton);
 	thePopup.appendChild(theCloseFormElem);
 
