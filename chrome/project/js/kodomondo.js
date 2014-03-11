@@ -76,20 +76,21 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 			text[i] = text[i].substring( 0, text[i].length - 1);
 		}
 
-		if (text[i].length < minIndividualWordLength) {
-			continue;
-		}
-
-		totalNumTermsInDoc++;
-
-		if (g_StopwordsRegex.test(text[i])) {
-			continue;
-		}
-
+		// Check keywords first, because there can be overlap. We use 'Java' to identify Java code, yet don't want to highlight it!
 		if (keyTermsRegex && keyTermsRegex.test(text[i])) {
 			keyTermsMatched++;
 		}
 		else {
+			if (text[i].length < minIndividualWordLength) {
+				continue;
+			}
+
+			totalNumTermsInDoc++;
+
+			if (g_StopwordsRegex.test(text[i])) {
+				continue;
+			}
+
 			visitTerm( text[i], inDocUrl, ioStats, ioHistory, inOptions);
 		}
 	}
