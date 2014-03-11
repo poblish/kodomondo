@@ -63,9 +63,14 @@ div.fbContentWrapper {
     -moz-background-clip: border;
     -moz-background-inline-policy: continuous;
     -moz-background-origin: padding;
-    color: black;   /* override parent container! */
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;   /* override parent container! */
-    font-size: 13px;    /* override parent container! */
+    color: black !important;   /* override parent container! */
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;   /* override parent container! */
+    font-size: 13px !important;    /* override parent container! */
+}
+
+div.fbContentWrapper a {
+    color: black !important;
+    text-decoration: underline;
 }
 
 .poblishButton, .poblishButtonDisabled {
