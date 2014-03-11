@@ -96,10 +96,10 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 
 	window.setTimeout( function(e) {
 		var normalTermsFound = termsToHighlight.length;
-		var score = Math.sqrt(( 5 * keyTermsMatched + normalTermsFound) / totalNumTermsInDoc);
+		var score = Math.sqrt(( 7 * keyTermsMatched + normalTermsFound) / totalNumTermsInDoc);
 		console.log('SCORE', score, ' > ', keyTermsMatched, normalTermsFound, '/', totalNumTermsInDoc);
 
-		if ( score > 0.2) {
+		if ( score > 0.25) {
 			for (i = 0; i < termsToHighlight.length; i++) {
 				var match = termsToHighlight[i];
 				$('body').highlight( ioStats, ioHistory, inDocUrl, new HighlightClass({terms: [match.term], caseInsensitive: false, foundClass: match.resp.classDetails.name, jarFQN: match.resp.jarFQN, artifact: match.resp.artifact, className:'highlightCore'}), inOptions);
