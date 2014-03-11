@@ -6,7 +6,9 @@ key-terms:
 stopwords:
   - About
   - After
+  - "[Bb]efore"
   - break
+  - "[Cc]hanges?"
   - Check
   - "[Cc]hoices?"
   - "[Cc]lass(es)?"
@@ -15,6 +17,7 @@ stopwords:
   - Default
   - "[Dd]etail"
   - "[Dd]eprecated"
+  - "[Dd]ocumentation"
   - "[Dd]ownload"
   - "[Ff]ilter"
   - goto
@@ -26,10 +29,12 @@ stopwords:
   - Maven
   - "[Mm]essages"
   - "[Mm]ethod"
+  - "[Oo]ption"
   - "[Pp]ackage"
   - param
   - "[Pp]assword"
   - Project
+  - "[Qq]uick"
   - "[Rr]emove"
   - rename
   - Rename
@@ -43,6 +48,7 @@ stopwords:
   - "[Ss]ubject"
   - Sun
   - switch
+  - "[Tt]erms?"
   - "[Uu]pdate"
 ---
 name: local-maven
