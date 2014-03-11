@@ -43,11 +43,11 @@
     right:0px;
     background-color: rgb(0, 0, 0);
     opacity: 0.3; display: block;
-    z-index: 1001;
+    z-index: 8001;
 }
 
 div.fbOutermost {
-    z-index: 1002;
+    z-index: 8002;
     position: absolute;
     height: 0;
     left: 0;
@@ -68,67 +68,43 @@ div.fbContentWrapper {
     font-size: 13px !important;    /* override parent container! */
 }
 
-div.fbContentWrapper a {
+div.fbContentWrapper a.dlgLink {
     color: black !important;
     text-decoration: underline;
 }
 
-.poblishButton, .poblishButtonDisabled {
-	border-style:solid;
-	border-width:1px;
-	display:inline-block;
-	outline-color:-moz-use-text-color;
-	outline-style:none;
-	outline-width:medium;
-	vertical-align:bottom;
-
-	cursor:pointer;
-	text-decoration:none;
+.dlgButton {
+    -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+    background-color: #eee;
+    border-color:#999 #999 #888;
+    border-style:solid;
+    border-width:1px;
+    cursor:pointer;
+    display:inline-block;
+    margin:0;
+    outline-color:-moz-use-text-color;
+    outline-style:none;
+    outline-width:medium;
+    padding:3px 8px;
+    text-decoration:none;
+    vertical-align:bottom;
 }
 
-.poblishButton, .poblishButtonDisabled {
-	padding:3px 6px;
+.dlgButton:hover {
+    text-decoration:none;
 }
 
-.UIButton_Gray, .poblishButton, .poblishButtonDisabled {
-	-moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
-	background-color: #eee;
-	border-color:#999 #999 #888;
-}
-
-.poblishButton .poblishButtonText {
-	color: #333;
-}
-
-.poblishButtonDisabled .poblishButtonText {
-	color: #999;
-}
-
-.poblishButton .poblishButtonText, .poblishButtonDisabled .poblishButtonText
-{
-	background-color:transparent;
-	border:medium none;
-	display:block;
-	font-weight:bold;
-	margin:0;
-	overflow:visible;
-	padding:0;
-	width:auto;
-}
-
-.poblishButton .poblishButtonText, .poblishButtonDisabled .poblishButtonText {
-	font-size: 11px;
-	line-height: 14px;
-}
-
-.poblishButton .poblishButtonText {
-	cursor: pointer;
-}
-
-.poblishButtonDisabled {
-	cursor: default;
-}
-
-.UIActionButton_SuppressMargin, .poblishButton, .poblishButtonDisabled {
-	margin:0;
+.dlgButton .dlgButtonText {
+    background-color:transparent;
+    border:medium none;
+    color: #333;
+    cursor: pointer;
+    display:block;
+    font-size: 13px;
+    font-weight:bold;
+    line-height: 16px;
+    margin:0;
+    overflow:visible;
+    padding:0;
+    width:auto;
 }

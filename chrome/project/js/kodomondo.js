@@ -142,11 +142,13 @@ function getArtifactInfo(inItem) {
 
 	var srcButton = document.createElement('a');
 	srcButton.setAttribute('href', '');
+	srcButton.setAttribute('class', 'dlgLink');
 	srcButton.innerHTML = 'View Source';
 	$(srcButton).click(function(e) { e.preventDefault(); asyncRequestUrl( inItem.getSourceUrl() ); });
 
 	var jarButton = document.createElement('a');
 	jarButton.setAttribute('href', '');
+	jarButton.setAttribute('class', 'dlgLink');
 	jarButton.innerHTML = 'Open JAR';
 	$(jarButton).click(function(e) { e.preventDefault(); asyncRequestUrl( inItem.getJarUrl() ); });
 
@@ -157,21 +159,21 @@ function getArtifactInfo(inItem) {
 	buttonsDiv.appendChild(jarButton);
 	thePopup.appendChild(buttonsDiv);
 
-	var closeButton = document.createElement('a');
-	closeButton.setAttribute('class', 'poblishButton');
-	closeButton.setAttribute('style', "margin-right: 7px; background-image: url('" + chrome.runtime.getURL('img/shading.png') + "')");
+	var closeBtn = document.createElement('a');
+	closeBtn.setAttribute('class', 'dlgButton');
+	closeBtn.setAttribute('style', "margin-right: 7px; background-image: url('" + chrome.runtime.getURL('img/shading.png') + "')");
 
-	var bS = document.createElement('span');
-	bS.setAttribute('class', 'poblishButtonText');
-	bS.innerHTML = 'Close';
-	closeButton.appendChild(bS);
+	var closeBtnText = document.createElement('span');
+	closeBtnText.setAttribute('class', 'dlgButtonText');
+	$(closeBtnText).html('<span style="color:#AAA">&#9099;</span>&nbsp;&nbsp;' + 'Close');
+	closeBtn.appendChild(closeBtnText);
 
-	$(closeButton).click(function(e) { e.preventDefault(); closeDialog(); });
+	$(closeBtn).click(function(e) { e.preventDefault(); closeDialog(); });
 
-	var theCloseFormElem = document.createElement('form');
-	theCloseFormElem.setAttribute('style', "padding: 0 0 7px 10px; margin: 0; text-align: right");
-	theCloseFormElem.appendChild(closeButton);
-	thePopup.appendChild(theCloseFormElem);
+	var closeForm = document.createElement('form');
+	closeForm.setAttribute('style', "padding: 0 0 7px 10px; margin: 0; text-align: right");
+	closeForm.appendChild(closeBtn);
+	thePopup.appendChild(closeForm);
 
 	thePopup.show();
 }
