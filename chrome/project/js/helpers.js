@@ -5,7 +5,6 @@ var HighlightClass = (function() {
 		this.jarFQN = inAttrs.jarFQN;
 		this.foundClass = inAttrs.foundClass;
 		this.className = inAttrs.className;
-		this.title = inAttrs.title;
 		this.jarUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
 		this.infoUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
 		this.sourceUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&source=1';
@@ -14,7 +13,7 @@ var HighlightClass = (function() {
 	ctor.prototype = {
 		getDisplayName: function() { return '<strong>' + this.foundClass + '</strong>  <--  ' + this.jarFQN; },
 		getRegex: function() { return this.regex; },
-		getSpanTitle: function() { return this.title; },
+		getSpanTitle: function() { return this.foundClass; },
 		getHighlightClass: function() { return this.className; },
 		getJarUrl: function() { return this.jarUrl; },
 		getSourceUrl: function() { return this.sourceUrl; },
