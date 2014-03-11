@@ -67,3 +67,63 @@ div.fbContentWrapper {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;   /* override parent container! */
     font-size: 13px;    /* override parent container! */
 }
+
+.poblishButton, .poblishButtonDisabled {
+	border-style:solid;
+	border-width:1px;
+	display:inline-block;
+	outline-color:-moz-use-text-color;
+	outline-style:none;
+	outline-width:medium;
+	vertical-align:bottom;
+
+	cursor:pointer;
+	text-decoration:none;
+}
+
+.poblishButton, .poblishButtonDisabled {
+	padding:3px 6px;
+}
+
+.UIButton_Gray, .poblishButton, .poblishButtonDisabled {
+	-moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	background-color: #eee;
+	border-color:#999 #999 #888;
+}
+
+.poblishButton .poblishButtonText {
+	color: #333;
+}
+
+.poblishButtonDisabled .poblishButtonText {
+	color: #999;
+}
+
+.poblishButton .poblishButtonText, .poblishButtonDisabled .poblishButtonText
+{
+	background-color:transparent;
+	border:medium none;
+	display:block;
+	font-weight:bold;
+	margin:0;
+	overflow:visible;
+	padding:0;
+	width:auto;
+}
+
+.poblishButton .poblishButtonText, .poblishButtonDisabled .poblishButtonText {
+	font-size: 11px;
+	line-height: 14px;
+}
+
+.poblishButton .poblishButtonText {
+	cursor: pointer;
+}
+
+.poblishButtonDisabled {
+	cursor: default;
+}
+
+.UIActionButton_SuppressMargin, .poblishButton, .poblishButtonDisabled {
+	margin:0;
+}

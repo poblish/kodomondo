@@ -157,9 +157,15 @@ function getArtifactInfo(inItem) {
 	buttonsDiv.appendChild(jarButton);
 	thePopup.appendChild(buttonsDiv);
 
-	var closeButton = document.createElement('button');
-	closeButton.setAttribute('style', "margin-right: 7px");
-	closeButton.innerHTML = 'Close';
+	var closeButton = document.createElement('a');
+	closeButton.setAttribute('class', 'poblishButton');
+	closeButton.setAttribute('style', "margin-right: 7px; background-image: url('" + chrome.runtime.getURL('img/shading.png') + "')");
+
+	var bS = document.createElement('span');
+	bS.setAttribute('class', 'poblishButtonText');
+	bS.innerHTML = 'Close';
+	closeButton.appendChild(bS);
+
 	$(closeButton).click(function(e) { e.preventDefault(); closeDialog(); });
 
 	var theCloseFormElem = document.createElement('form');
