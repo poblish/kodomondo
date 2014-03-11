@@ -27,6 +27,10 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
     var wantTermTracking = ( ioHistory != null && ( inOptions['displayTermCount'] === 'true' || isHighlightFirstMode));
 
     function innerHighlight( node, ioStats, ioHistory, inHighlightOption) {
+        if ( node.parentNode != null && node.parentNode.nodeName == "A") {
+            return 0;
+        }
+
         var skip = 0;
         if (node.nodeType === 3) { // 3 - Text node
             var pos = node.data.search( inTermsGroup.getRegex() );
