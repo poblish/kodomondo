@@ -32,6 +32,7 @@ stopwords:
   - "[Oo]ption"
   - "[Pp]ackage"
   - param
+  - "[Pp]arameters?"
   - "[Pp]assword"
   - Project
   - "[Qq]uick"
@@ -50,6 +51,7 @@ stopwords:
   - switch
   - "[Tt]erms?"
   - "[Uu]pdate"
+  - "[Vv]alues?"
 ---
 name: local-maven
 inherit: programming-language

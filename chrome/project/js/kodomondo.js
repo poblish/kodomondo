@@ -97,7 +97,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 
 	window.setTimeout( function(e) {
 		var normalTermsFound = termsToHighlight.length;
-		var score = Math.sqrt(( 7 * keyTermsMatched + normalTermsFound) / totalNumTermsInDoc);
+		var score = Math.pow(( 10 * keyTermsMatched + normalTermsFound) / totalNumTermsInDoc, 0.45);
 		console.log('SCORE', score, ' > ', keyTermsMatched, normalTermsFound, '/', totalNumTermsInDoc);
 
 		if ( score > 0.25) {
