@@ -19,6 +19,9 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.objectweb.asm.ClassReader;
@@ -39,6 +42,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
+import dagger.ObjectGraph;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
 
@@ -48,31 +52,51 @@ import freemarker.template.TemplateException;
  */
 public class LocalMavenServer 
 {
-	private static final Map<String,IDataSource> dataSources = Maps.newHashMap();
+	private final HttpServer server;
+	private final Map<String,IDataSource> dataSources = Maps.newHashMap();
 
-	private static final ObjectMapper MAPPER = new ObjectMapper();
+	@Inject Configuration fmConfig;
+	@Inject ObjectMapper mapper;
+
+	@Named("mvnRoot")
+	@Inject String mvnRoot;
+
+	private static Pattern POM_PATTERN = Pattern.compile("META-INF/.*/pom.xml");
+	private static Pattern REPACKAGED_PATTERN = Pattern.compile("/repackaged/");
+
 
 	public static void main(String[] args) throws Exception {
-		String origMvnRoot = System.getenv("M2_HOME");
-		final String mvnRoot = (( origMvnRoot != null && !origMvnRoot.isEmpty()) ? origMvnRoot : "~/.m2").replace("~",System.getProperty("user.home")) + "/repository/";
-		System.out.println(mvnRoot);
+		final LocalMavenServer server = new LocalMavenServer();
+		ObjectGraph.create( new DaggerModule() ).inject(server);
 
-		readConfig();
+		server.addContexts();
+		server.start();
+	}
 
-		final Configuration theConfig = new Configuration();
-		theConfig.setDirectoryForTemplateLoading( new File("src/main/resources/templates"));
+	public LocalMavenServer() {
+		try {
+			readConfig();
+			server = HttpServer.create(new InetSocketAddress(2000), 0);
+		}
+		catch (IOException e) {
+			throw Throwables.propagate(e);
+		}
+	}
 
-		HttpServer server = HttpServer.create(new InetSocketAddress(2000), 0);
+	public void addContexts() {
 		server.createContext("/", new ListingsHandler(mvnRoot));
 		server.createContext("/launch", new LaunchHandler(mvnRoot));
 		server.createContext("/datasource", new DataSourceHandler());
-		server.createContext("/info", new InfoHandler(mvnRoot, theConfig));
+		server.createContext("/info", new InfoHandler(mvnRoot, fmConfig));
 		server.setExecutor(null); // creates a default executor
+	}
+
+	public void start() {
 		server.start();
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void readConfig() {
+	private void readConfig() {
 		try {
 			for ( Object eachEntry : new Yaml().loadAll( Files.toString( new File( "src/main/resources/conf", "ds.yaml"), Charset.forName("utf-8")))) {
 				Map<String,Object> eachDsEntry = (Map<String,Object>) eachEntry;
@@ -183,7 +207,7 @@ public class LocalMavenServer
 		}		
 	}
 
-	static class DataSourceHandler implements HttpHandler {
+	private class DataSourceHandler implements HttpHandler {
 
 		/* (non-Javadoc)
 		 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
@@ -193,7 +217,7 @@ public class LocalMavenServer
 			final IDataSource ds = dataSources.get(dsName);
 
 			if ( ds != null) {
-				final byte[] bs = MAPPER.writeValueAsBytes(ds);
+				final byte[] bs = mapper.writeValueAsBytes(ds);
 				t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
 				t.sendResponseHeaders(200, bs.length);
 				OutputStream os = t.getResponseBody();
@@ -313,7 +337,7 @@ public class LocalMavenServer
 		}
 	}
 
-	static class ListingsHandler implements HttpHandler {
+	private class ListingsHandler implements HttpHandler {
 
 		private final String mvnRoot;
 
@@ -375,10 +399,10 @@ public class LocalMavenServer
 				}
 				else if (!versions.isEmpty()) {
 					String highest = Ordering.from( new VersionComparator() ).max(versions);
-					output = MAPPER.writeValueAsString( new VersionResponse(highest) );
+					output = mapper.writeValueAsString( new VersionResponse(highest) );
 				}
 				else {
-					output = MAPPER.writeValueAsString( new DirResponse(dirsList) );
+					output = mapper.writeValueAsString( new DirResponse(dirsList) );
 				}
 
 				t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
@@ -391,9 +415,6 @@ public class LocalMavenServer
 				handleFile( t, f);
 			}
 		}
-
-		private static Pattern POM_PATTERN = Pattern.compile("META-INF/.*/pom.xml");
-		private static Pattern REPACKAGED_PATTERN = Pattern.compile("/repackaged/");
 
 		private void handleFile( final HttpExchange t, final File f) throws IOException {
 			List<ClassEntry> classesList = Lists.newArrayList();
@@ -445,7 +466,7 @@ public class LocalMavenServer
 
 			final String mavenRelJarPath = f.getAbsolutePath().startsWith(mvnRoot) ? f.getAbsolutePath().substring( mvnRoot.length() ) : f.getAbsolutePath();  // FIXME Ugh!
 
-			final String output = MAPPER.writeValueAsString( new ClassResponse( mavenRelJarPath, classesList) );
+			final String output = mapper.writeValueAsString( new ClassResponse( mavenRelJarPath, classesList) );
 
 			t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
 			t.sendResponseHeaders(200, output.length());
