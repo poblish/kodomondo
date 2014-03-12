@@ -3,7 +3,2192 @@
 
 <p>A quick brown fox jumps over the lazy old bartender who said 'Hi!' as a response to the visitor who presumably assaulted the maid's brother, because he didn't pay his debts in time. In time in time does really mean in time. Too late is too early? Nonsense! 'Too late is too early' does not make any sense.</p>
 
-<p> <a href="#">Hello LazyInitializationException</a> Java</p>
+<p>Hello lovely org.hibernate.LazyInitializationException you!</p>
 
+<p>org.hibernate.TransientObjectException when all @OneToMany are cascade=ALL</p>
+
+I have a small data structure data structure that I serialize in Hibernate using JPA annotations:
+
+(below is very much simplified)
+
+public class Result {
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   public int id;
+
+
+   @OneToMany(cascade=CascadeType.ALL)
+   @OrderColumn("row")
+   @JoinColumn("ResultId)
+   public List<Row> rows
+}
+
+public class Row {
+   @Id
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   public int id;
+
+   @ElementCollection
+   @OrderColumn("col")
+   public List<Double> value;
+}
+
+Try freemarker.cache.ConcurrentMapFactory, groovy.beans.DefaultPropertyReader; com.hiatus.browsers.AbstractBrowserInfo. java.lang.StringBuffer! com.google.common.collect.FluentIterable ...
+
+<br/><hr/>
+
+<div class="content-page" style="font-size:6px">
+        <h2>What kind of behavior is expected of users?</h2>
+        <p>We’re excited to have you here, but we do ask that you follow a few guidelines when participating on our network.</p>
+
+<p><b>Be honest.</b></p>
+
+<p>Above all, be honest. If you see misinformation, <a href="/privileges/vote-down">vote it down</a>. Add <a href="/privileges/comment">comments</a> indicating what, specifically, is wrong. Provide better answers of your own. Last but not least, <a href="/privileges/edit">edit and improve</a> the existing questions and answers! By doing these things, you are helping keep Stack Exchange a great place to share knowledge of our craft.</p>
+
+<p>While you’re doing all of those things, we also require that you...</p>
+
+<p><b>Be nice.</b></p>
+
+<p>Civility is required at all times; rudeness will not be tolerated. Treat others with the same respect you’d want them to treat you because we’re all here to learn, together. Be tolerant of others who may not know everything you know, and bring your sense of humor.</p>
+
+<p>Please note that expletives are not allowed. If you use expletives on this site, you <a href="http://meta.stackoverflow.com/questions/22232/are-expletives-allowed-on-se-sites"> may be issued a warning or a suspension</a>.</p>
+
+<p><b>Do not use signature, taglines, or greetings.</b></p>
+
+<p></p><p></p><p></p><p>Every post you make is already “signed” with your standard user card, which links directly back to your user page. If you use an additional signature or tagline, it will be removed to reduce noise in the questions and answers. </p><p></p><p></p><p></p><p></p>
+
+<p>Your user page belongs to you — fill it with information about your interests, links to stuff you’ve worked on, or whatever else you like!</p>
+
+<p><b>Avoid overt self-promotion.</b></p>
+
+<p>The community tends to vote down overt self-promotion and flag it as spam. Post good, relevant answers, and if some (but not all) happen to be about your product or website, that’s okay. However, you <i>must</i> disclose your affiliation in your answers.</p>
+
+<p>If a large percentage of your posts include a mention of your product or website, you're probably here for the wrong reasons. Our advertising rates are quite reasonable; <a href="http://stackexchange.com/about/contact">contact our ad sales team</a> for details. We also offer <a href="http://blog.stackoverflow.com/2011/05/community-promotion-ads/">free community promotion ads</a> for open source projects and non-profit organizations.</p>
+</div>
+
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+
+<div style="font-size:6px">
+CATALLAXY AND ECONOMY
+The instance in which the use of the same term for two different kinds of order has caused most confusion, and is still constantly misleading serious thinkers, is probably that of the use of the word 'economy' for both the deliberate arrangement or organisa- tion of resources in the service of a unitary hierarchy of ends, such as a household, an enterprise, or any other organisation including government, and the structure of many inter-related economies of this kind which we call a social, or national, or world 'economy' and often also simply an 'economy'. T h e ordered structure which the market produces is, however, not an organisation but a spontaneous order or cosmos, and is for this reason in many respects fundamentally different from that
+1
+James Harrington, The Prerogative of Popular Government (1658), in: The Oceana and His Other Works, ed. J. Toland, London, 1771, p. 224.
+[28]
+be] called the empire of laws and not of men'.
+￼arrangement or organisation originally and properly called an 1
+economy.
+The belief, largely due to this use of the same term for both,
+that the market order ought to be made to behave as if it were an economy proper, and that its performance can and ought to be judged by the same criteria, has become the source of so many errors and fallacies that it seems necessary to adopt a new technical term to describe the order of the market which spon- taneously forms itself. By analogy with the term catallactics which has often been proposed as a replacement for the term 'economics' as the name for the theory of the market order, we could describe that order itself as a catallaxy. Both expres- sions are derived from the Greek verb katallatein (or katal- lassein) which significantly means not only 'to exchange' but
+also 'to receive into the community' and 'to turn from enemy into 2
+friend'.
+The chief aim of this neologism is to emphasise that a catal- laxy neither ought nor can be made to serve a particular hierarchy of concrete ends, and that therefore its performance cannot be judged in terms of a sum of particular results. Yet all the aims of socialism, all attempts to enforce 'social' or 'distribu- tive' justice, and the whole of so-called 'welfare economies', are directed towards turning the cosmos of the spontaneous order of the market into an arrangement or taxis, or the catallaxy into an economy proper. Apparently the belief that the catal- laxy ought to be made to behave as if it were an economy seems so obvious and unquestionable to many economists that they never examine its validity. They treat it as the indisputable presupposition for rational examination of the desirability of
+1
+as 'the study of the disposal of scarce means towards the realisation of
+given ends', which has been so effectively expounded by Lord Robbins and
+which I should long have defended. It seems to me appropriate only to
+that preliminary part of catallactics which consists in the study of what
+has sometimes been called 'simple economies' and to which also Aristotle's
+Oeconomica is exclusively devoted: the study of the dispositions of a single
+household or firm, sometimes described as the economic calculus or the
+pure logic of choice. (What is now called economics but had better be
+described as catallactics Aristotle described as chrematistike or the science
+of wealth.) The reason why Robbins' widely accepted definition now seems
+to me to be misleading is that the ends which a catallaxy serve are not
+given in their totality to anyone, that is, are not known either to any in-
+dividual participant in the process or to the scientist studying it.
+I now find somewhat misleading the definition of the science of economics
+2
+Oxford, 1940, s.v. Katalldsso.
+See H. G. Liddell and R. Scott, A Greek-English Lexicon, new edition, [29]
+
+￼any order, an assumption without which no judgement of the expediency or worth of alternative institutions is possible.
+The belief that the efficiency of the market order can be judged only in terms of the degree of the achievement of a known hierarchy of particular ends is, however, wholly erroneous. Indeed, since these ends are in their totality not known to anybody, any discussion in such terms is necessarily empty. The discovery procedure which we call competition aims at the closest approach we can achieve by any means known to us to a somewhat more modest aim which is nevertheless highly important: namely a state of affairs in which all that is in fact produced is produced at the lowest possible costs. This means that of that particular combination of commodities and services which will be produced more will be made available than could be done by any other known means; and that in consequence, though the share in that product which the different individuals will get is left to be determined by circumstances nobody can foresee and in this sense to 'accident', each will get for the share he wins in the game (which is partly a game of skill and partly a game of chance) as large a real equivalent as can be secured. We allow the individual share to be determined partly by luck in order to make the total to be shared as large as possible.
+The utilisation of the spontaneous ordering forces of the market to achieve this kind of optimum, and leaving the deter- mination of the relative shares of the different individuals to what must appear as accident, are inseparable. Only because the market induces every individual to use his unique knowledge of particular opportunities and possibilities for his purposes can an overall order be achieved that uses in its totality the dispersed knowledge which is not accessible as a whole to anyone. The 'maximisation' of the total product in the above sense, and its distribution by the market, cannot be separated because it is through the determination of the prices of the factors of produc- tion that the overall order of the market is brought about. If incomes are not determined by factor pricing within the output, then output cannot be maximised relative to individual prefer- ences.
+This does not preclude, of course, that outside the market government may use distinct means placed at its disposal for
+[30]
+
+￼the purpose of assisting people who, for one reason or another, cannot through the market earn a minimum income. A society relying on the market order for the efficient use of its resources is likely fairly soon to reach an overall level of wealth which makes it possible for this minimum to be at an adequate level. But it should not be achieved by manipulating the spontaneous order in such a manner as to make the income earned on the market conform to some ideal of 'distributive justice'. Such efforts will reduce the total in which all can share.
+VII
+DEMARCHY ANDDEMOCRACY
+This, unfortunately, does not exhaust the neologisms which seem necessary to escape the confusion which dominates current political thought. Another instance of the prevailing confusion of language is the almost universal use of the term 'democracy' for a special kind of democracy which is by no means a neces- sary consequence of the basic ideal originally described by that
+name. Indeed Aristotle questioned whether this form should 1
+even be called 'democracy'. The appeal of the original ideal has been transferred to the particular form of democracy which now prevails everywhere, although this is very far from corres- ponding to what the original conception aimed at.
+Initially the term 'democracy' meant no more than that what- ever ultimate power there is should be in the hands of the majority of the people or their representatives. But it said nothing about the extent of that power. It is often mistakenly suggested that any ultimate power must be unlimited. From the demand that the opinion of the majority should prevail it by no means follows that their will on particular matters should be unlimited. Indeed the classical theory of the separation of powers pre- supposes that the 'legislation' which was to be in the hands of 1
+Aristotle, Politics, Iv IV 4, 1,292a, Loeb, ed. Rackham, Cambridge, Mass., and London, 1950, p. 303: 'And it would seem a reasonable criti- cism to say that such a democracy is not a constitution at all; for where the laws do not govern there is no constitution, as the law ought to govern all things while the magistrates control particulars, and we ought to judge this to be constitutional government; if then democracy really is one of the forms of constitution, it is manifest that an organisation of this kind, in which all things are administered by resolutions of the assembly, is not even a democracy in the proper sense, for it is impossible for a voted resolu- tion to be a universal rule'.
+[31]
+
+￼a representative assembly should be concerned only with the passing of 'laws' (which were presumed to be distinguishable from particular commands by some intrinsic property), and that particular decisions did not become laws (in the sense of nomoi) merely because they emanated from the 'legislature'. Without this distinction the idea that a separation of powers
+involved the attribution of particular functions to distinct bodies 1
+would have been meaningless and indeed circular.
+If the legislature only can make new law and can do nothing
+else but make law, whether a particular resolution of that body is valid law must be determinable by a recognisable property of that resolution. Its source alone does not constitute a sufficient criterion of validity.
+There can be no doubt that what the great theorists of repre- sentative government and of liberal constitutionalism meant by law when they demanded a separation of powers was what we have called nomos. That they spoiled their aim by entrusting to the same representative assemblies also the task of making laws in another sense, namely that of the rules of organisation determining the structure and conduct of government, is another story which we cannot further pursue here. Nor can we further consider the inevitable consequence of an institutional arrange- ment under which a legislature which is not confined to laying down universal rules of just conduct must be driven by organised interests to use its power of 'legislation' to serve particular private ends. All we are here concerned with is that it is not necessary that the supreme authority possesses this sort of power. To limit power does not require that there be another power to limit it. If all power rests on opinion, and opinion recognises no other ultimate power than one that proves its be- lief in the justice of its actions by committing itself to universal rules (the application of which to particular cases it cannot control), the supreme power loses its authority as soon as it oversteps these limits.
+The supreme power thus need not be an unlimited power— it may be a power which loses the indispensable support of opinion as soon as it pronounces anything which does not 1
+Cp. above what is said under 'Nomos and Thesis' on the difference between private and public law; and on what follows now also the im- portant work by M. J. C. Vile, Constitutionalism and the Separation of Powers, Clarendon Press, Oxford, 1967.
+[32]
+
+￼possess the substantive character of nomos in the sense of a universal rule of just conduct. Just as the Pope is deemed to be infallible only dum ex cathedra loquitur, that is, so long as he lays down dogma and not in his decision of particular matters, so a legislature may be supreme only when it exercises the capacity of legislating in the strict sense of stating the valid nomos. And it can be so limited because there exist objective tests (however difficult they may be to apply in particular instances) by which independent and impartial courts, not concerned with any partic- ular aims of government, can decide whether what the legislature resolves has the character of a nomos or not, and therefore also whether it is binding law. All that is needed is a court of
+justice which can say whether the acts of the legislature do or do not possess certain formal properties which every valid law must possess. But this court need possess no positive power to issue any commands.
+The majority of a representative assembly may thus well be the supreme power and yet not possess unlimited power. If its power is limited to acting as (to revive another Greek term
+democracy and to John Stuart Mill) nomothetae, or as the setters of the nomos, without power to issue particular com- mands, no privilege or discrimination in favour of particular groups which it attempted to make law would have the force of law. This sort of power would simply not exist because who- ever exercised supreme power would have to prove the legiti- macy of its acts by committing itself to universal rules.
+If we want democratic determination not only of the coercive rules which bind the private citizen as well as the government, but also of the administration of the government apparatus, we need some representative body to do the latter. But this body need not and should not be the same as that which lays down the nomos. It should itself be under the nomos laid down by another representative body, which would determine the limits of the power which this body could not alter. Such a governmental or directive (but in the strict sense not legislative) representative body would then indeed be concerned with matters of the will
+1
+Cf. Philip Hunton, A Treatise on Monarchy, London, 1643, p. 5, and John Stuart Mill, On Liberty and Considerations of Representative Govern- ment, ed. R. B. McCallum, Oxford, 1946, p. 171.
+[33]
+which appealed both to the 17th century English theorists of 1
+
+￼of the majority (i.e. with the achievement of a particular con- crete purpose) for the pursuit of which it would employ govern- mental powers. It would not be concerned with questions of opinion about what was right and wrong. It would be devoted to the satisfaction of concrete foreseeable needs by the use of separate resources set aside for the purpose.
+The fathers of liberal constitutionalism were surely right when they thought that in the supreme assemblies concerned with what they regarded as legislation proper, that is, with laying down the nomos, those coalitions of organised interests which they called factions and which we call parties should have no place. Parties are indeed concerned with matters of concrete will, the satisfaction of the particular interest of the people who combine to form them, but legislation proper should express opinion and therefore not be placed in the hands of representatives of partic- ular interests but in the hands of a representative sample of the prevailing opinion, persons who should be secured against all pressure of particular interests.
+1
+I have elsewhere suggested a method of electing such a
+representative body that would make it independent of the organised parties though they would still remain necessary for the effective democratic conduct of government proper. It re- quires the election of members for long periods after which they would not be re-eligible. To make them nevertheless repre- sentative of current opinion a representation by age groups might be used: each generation electing once in their lives, say, in their fortieth year, representatives to serve for 15 years and thereafter assured of continued occupation as lay judges. The law-making assembly would then be composed of men and women between 40 and 55 (and thus probably of an average age somewhat lower than the existing representative assemblies!), elected by their contemporaries after they had opportunity to prove themselves in ordinary life, and required on election to abandon their private occupations for an honorific position for the rest of their active life.
+Such a system of election by the contemporaries (who usually are the best judges of a person's ability) would come nearer to producing that ideal of the political theorists, a senate of wise and honourable men, than any system yet tried. The restriction 1
+[34]
+Most recently in 'The Constitution of a Liberal State', II Politico, 1967.
+￼of the power of such a body to legislation proper would for the first time make possible that real separation of powers which has never yet existed, and with it a true government under the law and an effective rule of law. The governmental or directive assembly, on the other hand, subject to the law laid down by the former, and concerned with the provision of particular ser- vices, might well continue to be elected on established party lines.
+Such a basic change in existing constitutional arrangements pre-supposes that we finally shed the illusion that the safeguards men once painfully devised to prevent abuse of government power are all unnecessary once that power is placed in the hands of the majority of the people. There is no reason whatever to expect that an omnipotent democratic government will always serve the general rather than particular interests. Democratic government free to benefit particular groups is bound to be dominated by coalitions of organised interests, rather than serve the general interest in the classical sense of 'common right and justice, excluding all partial or private interests'.
+It is greatly to be regretted that the word democracy should
+have become indissolubly connected with the conception of the 1
+unlimited power of the majority on particular matters. But if this is so we need a new word to denote the ideal which democracy originally expressed, the ideal of a rule of the popular opinion on what is just, but not of a popular will con- cerning whatever concrete measures seem desirable to the coali- tion of organised interests governing at the moment. If democ- racy and limited government have become irreconcilable con- ceptions, we must find a new word for what once might have been called limited democracy. We want the opinion of the demos to be the ultimate authority, but not allow the naked power of the majority, its kratos, to do rule-less violence to individuals. The majority should then rule (archein) by 'estab-
+lished standing laws, promulgated and known to the people, 2
+and not by extemporary decrees'. We might perhaps describe
+1
+and W. G. Runciman (eds.), Philosophy, Politics, and Society, 2nd series,
+London, 1962, p. 72: 'the modern conception of democracy is of a form of
+government in which no restriction is placed on the governing body'.
+Cf. R. Wollheim, 'A Paradox in the Theory of Democracy', in P. Laslett
+2
+Cambridge, 1960, p. 371.
+John Locke, Second Treatise on Government, sect. 131, ed. P. Laslett,
+[35]
+
+￼such a political order by linking demos with archein and call demarchy such a limited government in which the opinion but not the particular will of the people is the highest authority. The particular scheme considered above was meant to suggest one possible way to secure such a demarchy.
+If it is insisted upon that democracy must be unlimited government, I do indeed not believe in democracy, but I am and shall remain a profoundly convinced demarchist in the sense indicated. If we can by such a change of the name free our- selves from the errors that have unfortunately come to be so closely associated with the conception of democracy, we might thereby succeed in avoiding the dangers which have plagued democracy from its very beginning and have again and again led to its destruction. It is the problem which arose in the memorable episode of which Xenophon tells us, when the Athenian Assembly wanted to vote the punishment of particular individuals and
+'the great numbers cried out that it was monstrous if the people were to be prevented from doing whatever they wished ... Then the Prytanes, stricken with fear, agreed to put the question—all of them except Socrates, the son of Sophroni-
+skus; and he said that in no case would he act except in 1
+accordance with the law'.
+</div>
+<hr />
+<div class="content-page" style="font-size:6px">
+        <h2>How do I find topics I'm interested in?</h2>
+        <p>Finding specific questions that interest you can be accomplished a few different ways. </p>
+
+<h2>Browse by tag</h2>
+
+<p>Every question asked on our site is <a href="/help/tagging">tagged</a> with the sub-topics that describe it. Each of these tags has its own page that contains a tag wiki and a list of questions with that tag. To find questions about a topic of the site, <a href="/tags">visit the Tags page</a> and either browse through popular tags or search for a specific one.</p>
+
+<p>Clicking a tag – from anywhere on the site, whether it's from the tag page, or from tags below a question – will show you a list of all questions in that tag and a tag wiki that describes what the tag is and how it is used on this site. You can then sort by unanswered questions, most highly voted questions in that tag, or the newest questions asked with that tag, among others.</p>
+
+<p>If you'd like to be notified of new activity within a certain tag, you can subscribe via email or RSS by hovering over the tag and selecting the method you prefer:</p>
+
+<h2>Search tags</h2>
+
+<p>If you're looking for questions about multiple topics, you can also <a href="/search">search</a> by tags. Our site search recognizes tags enclosed in brackets (like this: <code>[tag]</code>), as well as the search operators <code>AND</code> and <code>OR</code>. The default operator is <code>AND</code> – i.e., searching for "[tag1] [tag2]" returns posts tagged with both. To search for questions marked with <i>either</i> tag, insert an <code>OR</code> into your search (e.g., "[tag1] or [tag2]"). For more tips, <a href="/search">visit the search page</a> and click on "advanced tips".</p>
+
+<h2>Add favorite and ignored tags</h2>
+
+<p>Another way to filter out questions you're not interested in and focus on the ones you <i>do</i> care about is to add favorite and ignored tags to your account. </p>
+
+<p><strong>Favorite tags</strong> are meant to call out questions that are important or interesting to you. Any question tagged with one of your favorite tags will be highlighted on the homepage and questions lists.</p>
+
+<p><strong>Ignored tags</strong> downplay subjects you are not as interested in. Questions with these tags are faded on the homepage and questions list, but are still visible.  If you want to completely hide questions with containing your ignored tags, you may checking the "Hide Ignored Tags" box in the "prefs" tab of your profile.</p>
+
+<p>To designate tags as favorite or ignored, click the "add a favorite tag" or "add an ignored tag" link on the right sidebar of the homepage, or in the "prefs" tab of your user profile. </p>
+
+
+<p>You can also toggle a tag between normal, favorite, or ignored by mousing over the tag and clicking the star icon.</p>
+
+<p><em>Normal tag:</em></p>
+
+<p><em>Favorite tag:</em></p>
+
+<p><em>Ignored tag:</em></p>
+</div>
+    </div>
+    </div>
+
+<hr/>
+
+'com.hiatus.browsers.AbstractBrowserInfo'. com.hiatus.poblish2.activity.DefaultFollowGroupActivityItem, "com.fasterxml.jackson.annotation.JacksonInject"
 
 </body></html>
