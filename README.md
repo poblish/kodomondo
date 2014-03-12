@@ -8,10 +8,10 @@ kodomondo
 Each datasource is configured with its own **keywords, stopwords, and contextual rules**, so that only the most relevant web pages are ever touched by the highlighter. The aim is to minimise noise, and provide only the most useful matches.
 
 ---
-## Java datasource
+### Java datasource
 Read from local Maven repository.
 
-### Actions available:
+#### Actions available:
 * Highlighting by classname and/or fully-qualified name.
 * Artifact details dialog
 * View/download Source
@@ -20,5 +20,5 @@ Read from local Maven repository.
 Remote Maven repositories can also be easily accommodated.
 
 ---
-## #BannedList datasource
+### #BannedList datasource
 tbc
