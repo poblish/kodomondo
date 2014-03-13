@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo;
+package com.andrewregan.kodomondo.handlers;
 
 import java.io.File;
 import java.io.IOException;
