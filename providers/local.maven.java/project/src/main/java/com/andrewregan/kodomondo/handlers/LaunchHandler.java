@@ -20,6 +20,7 @@ import javax.inject.Named;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 
+import com.andrewregan.kodomondo.tasks.SourceDownloadTask;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import com.sun.net.httpserver.HttpExchange;
@@ -120,7 +121,7 @@ public class LaunchHandler implements HttpHandler {
 				}
 
 				if ( isSource && !sourceJarFound) {
-					System.err.println("Source JAR not found for " + artifactDir);
+					new SourceDownloadTask(artifactDir).run();
 				}
 			}
 			else {
