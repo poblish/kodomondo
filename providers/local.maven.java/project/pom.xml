@@ -84,6 +84,11 @@
 			<version>1.13</version>
 		</dependency>
 		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>1.0.1</version>
+		</dependency>
+		<dependency>
 			<groupId>com.squareup.dagger</groupId>
 			<artifactId>dagger</artifactId>
 			<version>${dagger.version}</version>

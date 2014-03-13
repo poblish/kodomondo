@@ -9,6 +9,10 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.elasticsearch.client.Client;
+import org.elasticsearch.node.Node;
+import org.elasticsearch.node.NodeBuilder;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 
@@ -36,6 +40,13 @@ public class DaggerModule {
 			Throwables.propagate(e);
 		}
 		return theConfig;
+	}
+
+	@Provides
+	@Singleton
+	Client provideEsClient() {
+		 Node node = NodeBuilder.nodeBuilder().node();
+		 return node.client();
 	}
 
 	@Provides

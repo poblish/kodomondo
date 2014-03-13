@@ -22,6 +22,7 @@ import javax.inject.Named;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.elasticsearch.client.Client;
 import org.yaml.snakeyaml.Yaml;
 
 import com.andrewregan.kodomondo.api.IDataSource;
@@ -51,6 +52,7 @@ public class LocalMavenServer
 	private final Map<String,IDataSource> dataSources = Maps.newHashMap();
 
 	@Inject ObjectMapper mapper;
+	@Inject Client esClient;
 
 	@Inject InfoHandler infoHandler;
 
@@ -89,6 +91,9 @@ public class LocalMavenServer
 
 	public void start() {
 		server.start();
+
+		esClient.prepareIndex( "datasource.local-maven", "doc", "1981").setSource("{\"name\": \"Andrew\",\"age\": 37}").get();
+		System.out.println( esClient.prepareGet( "datasource.local-maven", "doc", "1981").get().getSourceAsString() );
 	}
 
 	@SuppressWarnings("unchecked")
