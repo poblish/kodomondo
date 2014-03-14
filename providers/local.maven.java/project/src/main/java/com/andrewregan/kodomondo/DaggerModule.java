@@ -7,14 +7,18 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
+import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
+import com.andrewregan.kodomondo.tasks.JavaDocIndexingTask;
+import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
+import com.andrewregan.kodomondo.tasks.PomIndexingTask;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 
@@ -58,6 +62,26 @@ public class DaggerModule {
 	ObjectMapper provideObjectMapper() {
 		final ObjectMapper inst = new ObjectMapper();
 		return inst;
+	}
+
+	@Provides
+	@Singleton
+	JavaDocIndexerFactory provideJavaDocIndexerFactory( @Named("mvnRoot") final Provider<String> mvnRoot, final Provider<ObjectMapper> mapper, final Provider<Client> esClient) {
+		return new JavaDocIndexerFactory() {
+			@Override public JavaDocIndexingTask create( File artifact, File docJar) {
+				return new JavaDocIndexingTask( artifact, docJar, mvnRoot.get(), esClient.get(), mapper.get());
+			}
+		};
+	}
+
+	@Provides
+	@Singleton
+	PomIndexerFactory providePomIndexerFactory( @Named("mvnRoot") final Provider<String> mvnRoot, final Provider<ObjectMapper> mapper, final Provider<Client> esClient) {
+		return new PomIndexerFactory() {
+			@Override public PomIndexingTask create( File artifact, File docJar) {
+				return new PomIndexingTask( artifact, docJar, mvnRoot.get(), esClient.get(), mapper.get());
+			}
+		};
 	}
 
 	@Provides

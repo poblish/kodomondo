@@ -17,7 +17,8 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import com.andrewregan.kodomondo.tasks.JavaDocIndexingTask;
+import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
+import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
 import com.andrewregan.kodomondo.util.VersionComparator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,8 @@ public class ListingsHandler implements HttpHandler {
 	@Inject String mvnRoot;
 
 	@Inject ObjectMapper mapper;
+	@Inject JavaDocIndexerFactory indexerFactory;
+	@Inject PomIndexerFactory pomIndexerFactory;
 
 	private static Pattern POM_PATTERN = Pattern.compile("META-INF/.*/pom.xml");
 	private static Pattern REPACKAGED_PATTERN = Pattern.compile("/repackaged/");
@@ -74,12 +77,16 @@ public class ListingsHandler implements HttpHandler {
 					}
 				}
 				else {
+					if (each.getName().endsWith(".pom")) {
+						pomIndexerFactory.create(f, each).run();
+					}
+
 					if (!each.getName().endsWith(".jar") || each.getName().endsWith("-sources.jar") || each.getName().endsWith("-shaded.jar") || each.getName().endsWith("-tests.jar")) {
 						continue;
 					}
 
 					if (each.getName().endsWith("-javadoc.jar") ) {
-						new JavaDocIndexingTask(each).run();
+						indexerFactory.create(f, each).run();
 						continue;
 					}
 
