@@ -10,6 +10,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
@@ -45,7 +47,9 @@ public class DaggerModule {
 	@Provides
 	@Singleton
 	Client provideEsClient() {
-		 Node node = NodeBuilder.nodeBuilder().node();
+		 final Node node = NodeBuilder.nodeBuilder().settings( ImmutableSettings.builder()
+						 		.put( "index.number_of_shards", 1)
+						 	.build() ).node();
 		 return node.client();
 	}
 
