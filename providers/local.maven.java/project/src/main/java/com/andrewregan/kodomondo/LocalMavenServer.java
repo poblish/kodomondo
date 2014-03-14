@@ -75,9 +75,6 @@ public class LocalMavenServer
 
 	public void start() {
 		server.start();
-
-		esClient.prepareIndex( "datasource.local-maven", "doc", "1981").setSource("{\"name\": \"Andrew\",\"age\": 37}").get();
-		System.out.println( esClient.prepareGet( "datasource.local-maven", "doc", "1981").get().getSourceAsString() );
 	}
 
 	@SuppressWarnings("unchecked")
