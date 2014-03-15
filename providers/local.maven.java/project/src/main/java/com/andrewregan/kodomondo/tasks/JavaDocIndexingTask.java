@@ -66,10 +66,11 @@ public class JavaDocIndexingTask implements Runnable {
 				int psIdx = text.lastIndexOf("Overview Package Class");
 				text = ( psIdx > 0) ? text.substring( 0, psIdx) : text;
 
-				String id = artifactRelativePath + ":" + eachEntry.getName().replace('/', '.').substring( 0, /* Strip .html */ eachEntry.getName().length() - 5);
+				String className = eachEntry.getName().replace('/', '.').substring( 0, /* Strip .html */ eachEntry.getName().length() - 5);
+				String id = artifactRelativePath + ":" + className;
 				System.out.println("> Indexing as " + id);
 
-				esClient.prepareIndex( "datasource.local-maven", "doc", id).setSource( mapper.writeValueAsBytes( new JavaDocIndexEntry( text, artifactRelativePath) ) ).get();
+				esClient.prepareIndex( "datasource.local-maven", "javadoc", id).setSource( mapper.writeValueAsBytes( new JavaDocIndexEntry( text, artifactRelativePath, className) ) ).get();
 			}
 		}
 		catch (Throwable tt) {
@@ -78,21 +79,9 @@ public class JavaDocIndexingTask implements Runnable {
 
 	}
 
-	private static class JavaDocIndexEntry {
-		private final String text;
-		private final String artifact;
-
-		public JavaDocIndexEntry( final String inText, final String artifact) {
-			this.text = checkNotNull(inText);
-			this.artifact = checkNotNull(artifact);
-		}
-
-		public String getText() {
-			return text;
-		}
-
-		public String getArtifact() {
-			return artifact;
+	private static class JavaDocIndexEntry extends IndexEntry {
+		public JavaDocIndexEntry( final String inText, final String artifact, final String className) {
+			super( inText, artifact, className, null);
 		}
 	}
 }

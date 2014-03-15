@@ -6,7 +6,6 @@ package com.andrewregan.kodomondo.tasks;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.charset.Charset;
 
 import javax.inject.Inject;
@@ -49,35 +48,17 @@ public class PomIndexingTask implements Runnable {
 			int descPos = text.indexOf("<description>") + 14;
 			String desc = text.substring( descPos, text.indexOf("</description>", descPos)).replace('\n', ' ').trim();
 
-			esClient.prepareIndex( "datasource.local-maven", "doc", artifactRelativePath + ":metadata").setSource( mapper.writeValueAsBytes( new PomIndexEntry( name, desc, artifactRelativePath) ) ).get();
+			esClient.prepareIndex( "datasource.local-maven", "metadata", artifactRelativePath).setSource( mapper.writeValueAsBytes( new PomIndexEntry( name, desc, artifactRelativePath) ) ).get();
 		}
-		catch (IOException e) {
+		catch (Throwable e) {
+			e.printStackTrace();
 			Throwables.propagate(e);
 		}
 	}
 
-	private static class PomIndexEntry {
-		private final String name;
-		private final String desc;
-		private final String artifact;
-
+	private static class PomIndexEntry extends IndexEntry {
 		public PomIndexEntry( final String inName, final String inDesc, final String artifact) {
-			this.name = checkNotNull(inName);
-			this.desc = checkNotNull(inDesc);
-			this.artifact = checkNotNull(artifact);
-		}
-
-		@SuppressWarnings("unused")
-		public String getName() {
-			return name;
-		}
-
-		public String getText() {
-			return desc;
-		}
-
-		public String getArtifact() {
-			return artifact;
+			super( inDesc, artifact, null, inName);
 		}
 	}
 }

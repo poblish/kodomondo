@@ -18,6 +18,7 @@ import com.andrewregan.kodomondo.ds.AbstractDataSource;
 import com.andrewregan.kodomondo.handlers.InfoHandler;
 import com.andrewregan.kodomondo.handlers.LaunchHandler;
 import com.andrewregan.kodomondo.handlers.ListingsHandler;
+import com.andrewregan.kodomondo.handlers.SearchHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
@@ -45,6 +46,7 @@ public class LocalMavenServer
 	@Inject InfoHandler infoHandler;
 	@Inject LaunchHandler launchHandler;
 	@Inject ListingsHandler listingsHandler;
+	@Inject SearchHandler searchHandler;
 
 
 	public static void main(String[] args) throws Exception {
@@ -70,6 +72,7 @@ public class LocalMavenServer
 		server.createContext("/launch", launchHandler);
 		server.createContext("/datasource", new DataSourceHandler());
 		server.createContext("/info", infoHandler);
+		server.createContext("/search", searchHandler);
 		server.setExecutor(null); // creates a default executor
 	}
 
