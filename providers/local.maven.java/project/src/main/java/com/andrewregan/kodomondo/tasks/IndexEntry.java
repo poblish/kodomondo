@@ -6,6 +6,8 @@ package com.andrewregan.kodomondo.tasks;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
 
@@ -15,6 +17,7 @@ import com.google.common.base.Objects;
  * @author andrewregan
  *
  */
+@JsonInclude(Include.NON_NULL)
 public class IndexEntry {
 	protected final String artifact;
 	protected final String className;
@@ -26,7 +29,7 @@ public class IndexEntry {
 		this.artifact = checkNotNull(artifact);
 		this.className = className; // checkNotNull(className);
 		this.name = inName; // checkNotNull(className);
-		this.text = checkNotNull(inText);
+		this.text = inText;	// checkNotNull(inText);
 	}
 
 	public String getText() {
