@@ -28,14 +28,12 @@ public class PomIndexingTask implements Runnable {
 	private final String artifactRelativePath;
 	private final File pomFile;
 
-	private String mvnRoot;
 	private Client esClient;
 	private ObjectMapper mapper;
 
 	@Inject
 	public PomIndexingTask( File artifact, File pomFile, String mvnRoot, Client esClient, ObjectMapper mapper) {
 		this.pomFile = checkNotNull(pomFile);
-		this.mvnRoot = checkNotNull(mvnRoot);
 		this.esClient = checkNotNull(esClient);
 		this.mapper = checkNotNull(mapper);
 		this.artifactRelativePath = checkNotNull(artifact).getPath().substring( mvnRoot.length() );
@@ -69,6 +67,7 @@ public class PomIndexingTask implements Runnable {
 			this.artifact = checkNotNull(artifact);
 		}
 
+		@SuppressWarnings("unused")
 		public String getName() {
 			return name;
 		}

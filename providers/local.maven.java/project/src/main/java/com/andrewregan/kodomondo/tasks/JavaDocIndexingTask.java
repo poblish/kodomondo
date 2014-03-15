@@ -29,14 +29,12 @@ public class JavaDocIndexingTask implements Runnable {
 	private final String artifactRelativePath;
 	private final File docJar;
 
-	private String mvnRoot;
 	private Client esClient;
 	private ObjectMapper mapper;
 
 	@Inject
 	public JavaDocIndexingTask( File artifact, File javaDocJar, String mvnRoot, Client esClient, ObjectMapper mapper) {
 		this.docJar = checkNotNull(javaDocJar);
-		this.mvnRoot = checkNotNull(mvnRoot);
 		this.esClient = checkNotNull(esClient);
 		this.mapper = checkNotNull(mapper);
 		this.artifactRelativePath = checkNotNull(artifact).getPath().substring( mvnRoot.length() );
