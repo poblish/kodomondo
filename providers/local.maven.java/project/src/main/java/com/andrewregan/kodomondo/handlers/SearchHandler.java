@@ -45,17 +45,20 @@ public class SearchHandler implements HttpHandler {
 	public void handle( HttpExchange t) throws IOException {
 
 		String q = null;
+		int maxResults = 20;
 
 		for ( NameValuePair each : URLEncodedUtils.parse( t.getRequestURI(), "utf-8")) {
 			if ( each.getValue() == null) {
 				q = each.getName();
-				break;
+			}
+			else if ( each.getName().equals("size")) {
+				maxResults = Integer.parseInt( each.getValue() );
 			}
 		}
 
 		while (esClient.admin().cluster().prepareHealth("datasource.local-maven").get().getStatus() == ClusterHealthStatus.RED) ;
 
-		SearchHit[] sh = esClient.prepareSearch("datasource.local-maven").addHighlightedField("text", 200, 2).setQuery( matchPhraseQuery( "_all", q).cutoffFrequency(0.001f) ).setSize(999).execute().actionGet().getHits().hits();
+		SearchHit[] sh = esClient.prepareSearch("datasource.local-maven").addHighlightedField("text", 200, 2).setQuery( matchPhraseQuery( "_all", q).cutoffFrequency(0.001f) ).setSize(maxResults).execute().actionGet().getHits().hits();
 //		System.out.println("DONE " + sh.length);
 
 		List<SearchResult> entries = Lists.newArrayList();
