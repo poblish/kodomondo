@@ -17,6 +17,8 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
 import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
 import com.andrewregan.kodomondo.util.VersionComparator;
@@ -36,8 +38,9 @@ import com.sun.net.httpserver.HttpHandler;
 public class ListingsHandler implements HttpHandler {
 
 	@Named("mvnRoot")
-	@Inject String mvnRoot;
+	@Inject IFileObject mvnRoot;
 
+	@Inject IFileSystem fs;
 	@Inject ObjectMapper mapper;
 	@Inject JavaDocIndexerFactory indexerFactory;
 	@Inject PomIndexerFactory pomIndexerFactory;
@@ -48,7 +51,7 @@ public class ListingsHandler implements HttpHandler {
 	public void handle( final HttpExchange t) throws IOException {
 
 		final String path = t.getRequestURI().getPath().substring(1);
-		File f = new File( mvnRoot, path);
+		IFileObject f = mvnRoot.getChild(path);
 
 		if (!f.exists()) {
 			t.sendResponseHeaders( 404, 0);
@@ -59,15 +62,15 @@ public class ListingsHandler implements HttpHandler {
 		if (f.isDirectory()) {
 			List<DirEntry> dirsList = Lists.newArrayList();
 			Collection<String> versions = Lists.newArrayList();
-			Collection<File> jars = Lists.newArrayList();
+			Collection<IFileObject> jars = Lists.newArrayList();
 
-			File[] files = f.listFiles( new FileFilter() {
+			IFileObject[] files = f.listFiles( new FileFilter() {
 
 				public boolean accept( File pathname) {
 					return !pathname.getName().startsWith(".") && !pathname.getAbsolutePath().contains("com/google/collections");
 				}} );
 
-			for ( File each : files) {
+			for ( IFileObject each : files) {
 				if (each.isDirectory()) {
 					if (Character.isDigit( each.getName().charAt(0) )) {
 						versions.add( each.getName() );
@@ -125,12 +128,12 @@ public class ListingsHandler implements HttpHandler {
 		}
 	}
 
-	private void handleFile( final HttpExchange t, final File f) throws IOException {
+	private void handleFile( final HttpExchange t, final IFileObject f) throws IOException {
 		List<ClassEntry> classesList = Lists.newArrayList();
 
 		boolean gotClassAlready = false;
 
-		JarFile jf = new JarFile(f);
+		JarFile jf = fs.openJar(f);
 		try {
 			Enumeration<JarEntry> theEntries = jf.entries();
 			while (theEntries.hasMoreElements()) {
@@ -173,7 +176,7 @@ public class ListingsHandler implements HttpHandler {
 			jf.close();
 		}
 
-		final String mavenRelJarPath = f.getAbsolutePath().startsWith(mvnRoot) ? f.getAbsolutePath().substring( mvnRoot.length() ) : f.getAbsolutePath();  // FIXME Ugh!
+		final String mavenRelJarPath = f.getPathRelativeToFile(mvnRoot);
 
 		final String output = mapper.writeValueAsString( new ClassResponse( mavenRelJarPath, classesList) );
 

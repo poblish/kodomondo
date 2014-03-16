@@ -3,7 +3,7 @@
  */
 package com.andrewregan.kodomondo.tasks;
 
-import java.io.File;
+import com.andrewregan.kodomondo.fs.api.IFileObject;
 
 /**
  * TODO
@@ -13,5 +13,5 @@ import java.io.File;
  */
 public interface JavaDocIndexerFactory {
 
-	JavaDocIndexingTask create( File artifact, File docJar);
+	JavaDocIndexingTask create( IFileObject f, IFileObject each);
 }

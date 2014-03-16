@@ -11,7 +11,7 @@ import com.andrewregan.kodomondo.fs.api.IFileObject;
  * @author andrewregan
  *
  */
-public interface PomIndexerFactory {
+public interface SourceDownloaderFactory {
 
-	PomIndexingTask create( IFileObject artifact, IFileObject docJar);
+	SourceDownloadTask create( IFileObject artifact);
 }

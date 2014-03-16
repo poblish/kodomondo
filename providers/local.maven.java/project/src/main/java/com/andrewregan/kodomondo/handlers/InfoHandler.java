@@ -3,7 +3,6 @@
  */
 package com.andrewregan.kodomondo.handlers;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -20,6 +19,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.objectweb.asm.ClassReader;
 
+import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -39,9 +40,10 @@ import freemarker.template.TemplateException;
 public class InfoHandler implements HttpHandler {
 
 	@Inject Configuration fmConfig;
+	@Inject IFileSystem fs;
 
 	@Named("mvnRoot")
-	@Inject String mvnRoot;
+	@Inject IFileObject mvnRoot;
 
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
@@ -84,7 +86,7 @@ public class InfoHandler implements HttpHandler {
 	}
 
 	private void populateModelFromInputs( Map<String, Object> resultsModel, String className, String artifactName, String jarName) {
-		try ( JarFile jf = new JarFile( new File( mvnRoot, jarName))) {
+		try ( JarFile jf = fs.openJar( mvnRoot.getChild(jarName) )) {
 			String classNameToMatch = className.replace( '.', '/') + ".class";
 
 			Enumeration<JarEntry> theEntries = jf.entries();
@@ -109,10 +111,9 @@ public class InfoHandler implements HttpHandler {
 
 				break;
 			}
-
 		}
 		catch (IOException e) {
 			Throwables.propagate(e);
 		}
-	}		
+	}
 }
