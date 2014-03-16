@@ -15,6 +15,8 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
+import com.andrewregan.kodomondo.fs.impl.LocalFileSystem;
 import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
 import com.andrewregan.kodomondo.tasks.JavaDocIndexingTask;
 import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
@@ -55,6 +57,12 @@ public class DaggerModule {
 						 		.put( "index.number_of_shards", 1)
 						 	.build() ).node();
 		 return node.client();
+	}
+
+	@Provides
+	@Singleton
+	IFileSystem provideFileSystemManager() {
+		return new LocalFileSystem();
 	}
 
 	@Provides
