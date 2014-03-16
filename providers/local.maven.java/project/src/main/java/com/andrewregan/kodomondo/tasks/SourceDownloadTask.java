@@ -3,9 +3,12 @@
  */
 package com.andrewregan.kodomondo.tasks;
 
-import java.io.File;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.IOException;
 
+import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.maven.ArtifactDesc;
 import com.google.common.base.Throwables;
 
@@ -17,20 +20,23 @@ import com.google.common.base.Throwables;
  */
 public class SourceDownloadTask implements Runnable {
 
-	private final File artifactFile;
+	private final IFileObject artifactFile;
+
+	private IFileSystem fs;
 
 	/**
 	 * @param artifactDir
 	 */
-	public SourceDownloadTask( File inArtifact) {
-		artifactFile = inArtifact;
+	public SourceDownloadTask( IFileObject inArtifact, IFileSystem fs) {
+		this.artifactFile = inArtifact;
+		this.fs = checkNotNull(fs);
 	}
 
 	@Override
 	public void run() {
 		System.out.println("Source JAR not found for " + artifactFile);
 
-		ArtifactDesc artifact = ArtifactDesc.forFile(artifactFile);
+		ArtifactDesc artifact = fs.toArtifact(artifactFile);
 
 		// FIXME Need security here!
 		final String cmd = "mvn -DgroupId=" + artifact.getGroupId() + " -DartifactId=" + artifact.getArtifactId() + " -Dversion=" + artifact.getVersion() + " -Dclassifier=sources org.apache.maven.plugins:maven-dependency-plugin:2.8:get";

@@ -5,7 +5,6 @@ package com.andrewregan.kodomondo.tasks;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.File;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -15,6 +14,8 @@ import javax.inject.Inject;
 import org.elasticsearch.client.Client;
 import org.jsoup.Jsoup;
 
+import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.ByteStreams;
 
@@ -27,23 +28,25 @@ import com.google.common.io.ByteStreams;
 public class JavaDocIndexingTask implements Runnable {
 
 	private final String artifactRelativePath;
-	private final File docJar;
+	private final IFileObject docJar;
 
 	private Client esClient;
 	private ObjectMapper mapper;
+	private IFileSystem fs;
 
 	@Inject
-	public JavaDocIndexingTask( File artifact, File javaDocJar, String mvnRoot, Client esClient, ObjectMapper mapper) {
+	public JavaDocIndexingTask( IFileObject artifact, IFileObject javaDocJar, IFileObject mvnRoot, Client esClient, ObjectMapper mapper, IFileSystem fs) {
 		this.docJar = checkNotNull(javaDocJar);
 		this.esClient = checkNotNull(esClient);
 		this.mapper = checkNotNull(mapper);
-		this.artifactRelativePath = checkNotNull(artifact).getPath().substring( mvnRoot.length() );
+		this.artifactRelativePath = checkNotNull(artifact).getPath().substring( mvnRoot.getAbsolutePath().length() );  // FIXME Not getPathRelativeToFile() ?
+		this.fs = checkNotNull(fs);
 	}
 
 	public void run() {
 		System.out.println("> Start indexing " + docJar);
 
-		try (JarFile jf = new JarFile(docJar)) {
+		try (JarFile jf = fs.openJar(docJar)) {
 			Enumeration<JarEntry> theEntries = jf.entries();
 			while (theEntries.hasMoreElements()) {
 				JarEntry eachEntry = theEntries.nextElement();

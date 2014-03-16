@@ -20,7 +20,9 @@ import javax.inject.Named;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 
-import com.andrewregan.kodomondo.tasks.SourceDownloadTask;
+import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
+import com.andrewregan.kodomondo.tasks.SourceDownloaderFactory;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import com.sun.net.httpserver.HttpExchange;
@@ -36,9 +38,11 @@ public class LaunchHandler implements HttpHandler {
 
 	private File tempSrcDownloadDir;
 
-	@Named("mvnRoot")
-	@Inject String mvnRoot;
+	@Inject IFileSystem fs;
+	@Inject SourceDownloaderFactory srcDownloaderFactory;
 
+	@Named("mvnRoot")
+	@Inject IFileObject mvnRoot;
 
 	public LaunchHandler() {
 		tempSrcDownloadDir = Files.createTempDir();
@@ -48,13 +52,13 @@ public class LaunchHandler implements HttpHandler {
 	public void handle( final HttpExchange t) throws IOException {
 		final String clazz = t.getRequestURI().getPath().substring(8);  // '/launch/...'
 
-		File artifactDir = null;
+		IFileObject artifactDir = null;
 		boolean isJar = false;
 		boolean isSource = false;
 
 		for ( NameValuePair each : URLEncodedUtils.parse( t.getRequestURI(), "utf-8")) {
 			if (each.getName().equals("artifact")) {
-				artifactDir = new File( mvnRoot, each.getValue());
+				artifactDir = mvnRoot.getChild( each.getValue() );
 			}
 			else if (each.getName().equals("jar")) {
 				isJar = true;
@@ -66,7 +70,7 @@ public class LaunchHandler implements HttpHandler {
 		
 		if (artifactDir != null && ( isJar || isSource)) {
 			if (artifactDir.isDirectory()) {
-				File[] files = artifactDir.listFiles( new FileFilter() {
+				IFileObject[] files = artifactDir.listFiles( new FileFilter() {
 
 					public boolean accept( File other) {
 						return !other.getName().startsWith(".") && other.getName().endsWith(".jar") && !other.getName().endsWith("-shaded.jar") && !other.getName().endsWith("-javadoc.jar") && !other.getName().endsWith("-tests.jar");
@@ -79,10 +83,10 @@ public class LaunchHandler implements HttpHandler {
 
 				boolean sourceJarFound = false;
 
-				for ( File eachJar : files) {
+				for ( IFileObject eachJar : files) {
 					if ( isSource && eachJar.getName().endsWith("-sources.jar")) {
 						sourceJarFound = true;
-						JarFile jf = new JarFile(eachJar);
+						JarFile jf = fs.openJar(eachJar);
 						try {
 							Enumeration<JarEntry> theEntries = jf.entries();
 							while (theEntries.hasMoreElements()) {
@@ -116,12 +120,12 @@ public class LaunchHandler implements HttpHandler {
 						}
 					}
 					else if ( isJar && eachJar.getName().endsWith("jar")) {
-						Desktop.getDesktop().open(eachJar);  // Launch JAR in whatever viewer/editor
+						eachJar.launch();
 					}
 				}
 
 				if ( isSource && !sourceJarFound) {
-					new SourceDownloadTask(artifactDir).run();
+					srcDownloaderFactory.create(artifactDir).run();
 				}
 			}
 			else {

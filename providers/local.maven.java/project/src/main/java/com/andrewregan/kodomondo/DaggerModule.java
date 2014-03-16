@@ -15,12 +15,15 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
+import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.fs.impl.LocalFileSystem;
 import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
 import com.andrewregan.kodomondo.tasks.JavaDocIndexingTask;
 import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
 import com.andrewregan.kodomondo.tasks.PomIndexingTask;
+import com.andrewregan.kodomondo.tasks.SourceDownloadTask;
+import com.andrewregan.kodomondo.tasks.SourceDownloaderFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 
@@ -74,28 +77,38 @@ public class DaggerModule {
 
 	@Provides
 	@Singleton
-	JavaDocIndexerFactory provideJavaDocIndexerFactory( @Named("mvnRoot") final Provider<String> mvnRoot, final Provider<ObjectMapper> mapper, final Provider<Client> esClient) {
+	JavaDocIndexerFactory provideJavaDocIndexerFactory( @Named("mvnRoot") final Provider<IFileObject> mvnRoot, final Provider<ObjectMapper> mapper, final Provider<Client> esClient, final Provider<IFileSystem> fs) {
 		return new JavaDocIndexerFactory() {
-			@Override public JavaDocIndexingTask create( File artifact, File docJar) {
-				return new JavaDocIndexingTask( artifact, docJar, mvnRoot.get(), esClient.get(), mapper.get());
+			@Override public JavaDocIndexingTask create( IFileObject artifact, IFileObject docJar) {
+				return new JavaDocIndexingTask( artifact, docJar, mvnRoot.get(), esClient.get(), mapper.get(), fs.get());
 			}
 		};
 	}
 
 	@Provides
 	@Singleton
-	PomIndexerFactory providePomIndexerFactory( @Named("mvnRoot") final Provider<String> mvnRoot, final Provider<ObjectMapper> mapper, final Provider<Client> esClient) {
+	PomIndexerFactory providePomIndexerFactory( @Named("mvnRoot") final Provider<IFileObject> mvnRoot, final Provider<ObjectMapper> mapper, final Provider<Client> esClient) {
 		return new PomIndexerFactory() {
-			@Override public PomIndexingTask create( File artifact, File docJar) {
+			@Override public PomIndexingTask create( IFileObject artifact, IFileObject docJar) {
 				return new PomIndexingTask( artifact, docJar, mvnRoot.get(), esClient.get(), mapper.get());
 			}
 		};
 	}
 
 	@Provides
+	@Singleton
+	SourceDownloaderFactory provideSourceDownloaderFactory( final Provider<IFileSystem> fs) {
+		return new SourceDownloaderFactory() {
+			@Override public SourceDownloadTask create( IFileObject artifact) {
+				return new SourceDownloadTask( artifact, fs.get());
+			}
+		};
+	}
+
+	@Provides
 	@Named("mvnRoot")
-	String provideMavenRoot() {
+	IFileObject provideMavenRoot(IFileSystem inFS) {
 		String origMvnRoot = System.getenv("M2_HOME");
-		return (( origMvnRoot != null && !origMvnRoot.isEmpty()) ? origMvnRoot : "~/.m2").replace("~",System.getProperty("user.home")) + "/repository/";
+		return inFS.resolveFile((( origMvnRoot != null && !origMvnRoot.isEmpty()) ? origMvnRoot : "~/.m2").replace("~",System.getProperty("user.home")) + "/repository/");
 	}
 }
