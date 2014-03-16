@@ -206,7 +206,22 @@ $(document).ready(function () {
 		});
 
 		chrome.omnibox.onInputChanged.addListener( function( text, callbackFunc) {
-			// IGNORE for now
+			if ( text.length < 4) {
+				return;
+			}
+
+			$.get('http://localhost:2000/search?' + encodeURIComponent(text) + '&size=5')
+					.error( function(xhr) { /* Anything? */ } )
+					.success( function(obj) {
+							try {
+								var suggestions = [];
+								for ( i = 0; i < 5 && i < obj.length; i++) {
+									var hilite = obj[i].highlights[0].replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&lt;em&gt;/g, '<match>').replace(/&lt;\/em&gt;/g, '</match>');
+									suggestions.push({content: obj[i].entry.className, description: obj[i].entry.className + ': <dim>' + hilite + '</dim>'});
+								}
+								callbackFunc(suggestions);
+							} catch (e) { alert(e); }
+					});
 		} );
 
 		chrome.omnibox.onInputEntered.addListener( function( text, disposition) {
