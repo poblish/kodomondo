@@ -42,10 +42,10 @@ public class PomIndexingTask implements Runnable {
 
 		try {
 			String text = pomFile.toString( Charset.forName("utf-8") );
-			int namePos = text.indexOf("<name>") + 6;
-			String name = text.substring( namePos, text.indexOf("</name>", namePos)).trim();
-			int descPos = text.indexOf("<description>") + 14;
-			String desc = text.substring( descPos, text.indexOf("</description>", descPos)).replace('\n', ' ').trim();
+			int namePos = text.indexOf("<name>");
+			String name = ( namePos > 0) ? text.substring( namePos + 6, text.indexOf("</name>", namePos + 6)).trim() : "";
+			int descPos = text.indexOf("<description>") ;
+			String desc = ( descPos > 0) ? text.substring( descPos + 13, text.indexOf("</description>", descPos + 13)).replace('\n', ' ').trim() : "";
 
 			esClient.prepareIndex( "datasource.local-maven", "metadata", artifactRelativePath).setSource( mapper.writeValueAsBytes( new PomIndexEntry( name, desc, artifactRelativePath) ) ).get();
 		}
