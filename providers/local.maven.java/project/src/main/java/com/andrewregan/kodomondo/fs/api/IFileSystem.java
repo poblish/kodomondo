@@ -15,6 +15,7 @@ import com.andrewregan.kodomondo.maven.ArtifactDesc;
  *
  */
 public interface IFileSystem {
+	IFileObject resolveFile( IFileObject parent, String path);
 	IFileObject resolveFile( String path);
 	JarFile openJar( final IFileObject file) throws IOException;
 	ArtifactDesc toArtifact( final IFileObject file);

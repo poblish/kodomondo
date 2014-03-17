@@ -18,7 +18,12 @@ public class LocalFileSystem implements IFileSystem {
 
 	@Override
 	public IFileObject resolveFile( String path) {
-		return new LocalFile( new File(path) );
+		return new LocalFile( this, new File(path));
+	}
+
+	@Override
+	public IFileObject resolveFile( IFileObject parent, String path) {
+		return new LocalFile( this, new File( ((LocalFile) parent).getFile(), path) );
 	}
 
 	/* (non-Javadoc)

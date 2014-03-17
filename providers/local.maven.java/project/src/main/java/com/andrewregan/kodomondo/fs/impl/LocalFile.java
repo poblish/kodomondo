@@ -3,6 +3,8 @@
  */
 package com.andrewregan.kodomondo.fs.impl;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileFilter;
@@ -11,6 +13,7 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.io.Files;
@@ -23,15 +26,17 @@ import com.google.common.io.Files;
  */
 public class LocalFile implements IFileObject {
 
+	private final IFileSystem fs;
 	private final File file;
 
-	public LocalFile( final File file) {
+	public LocalFile( final IFileSystem fs, final File file) {
+		this.fs = checkNotNull(fs);
 		this.file = file;
 	}
 
 	@Override
 	public IFileObject getChild( String path) {
-		return new LocalFile( new File( file, path) );
+		return fs.resolveFile( this, path);
 	}
 
 	@Override
@@ -41,7 +46,7 @@ public class LocalFile implements IFileObject {
 
 			@Override
 			public IFileObject apply( File input) {
-				return new LocalFile(input);
+				return new LocalFile( fs, input);
 			}}
         ).toArray( IFileObject.class );
 	}
