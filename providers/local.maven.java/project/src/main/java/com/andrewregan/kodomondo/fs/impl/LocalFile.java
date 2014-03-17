@@ -101,4 +101,9 @@ public class LocalFile implements IFileObject {
 	public void launch() throws IOException {
 		Desktop.getDesktop().open(file);  // Launch JAR in whatever viewer/editor
 	}
+
+	@Override
+	public String toString() {
+		return file.toString();
+	}
 }
