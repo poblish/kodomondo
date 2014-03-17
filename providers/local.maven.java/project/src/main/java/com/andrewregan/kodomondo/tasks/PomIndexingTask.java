@@ -34,7 +34,7 @@ public class PomIndexingTask implements Runnable {
 		this.pomFile = checkNotNull(pomFile);
 		this.esClient = checkNotNull(esClient);
 		this.mapper = checkNotNull(mapper);
-		this.artifactRelativePath = checkNotNull(artifact).getPath().substring( mvnRoot.getAbsolutePath().length() );  // FIXME Not getPathRelativeToFile() ?
+		this.artifactRelativePath = checkNotNull(artifact).getPathRelativeToFile(mvnRoot);
 	}
 
 	public void run() {

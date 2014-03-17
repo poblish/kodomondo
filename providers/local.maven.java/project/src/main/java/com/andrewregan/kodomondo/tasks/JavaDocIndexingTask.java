@@ -39,7 +39,7 @@ public class JavaDocIndexingTask implements Runnable {
 		this.docJar = checkNotNull(javaDocJar);
 		this.esClient = checkNotNull(esClient);
 		this.mapper = checkNotNull(mapper);
-		this.artifactRelativePath = checkNotNull(artifact).getPath().substring( mvnRoot.getAbsolutePath().length() );  // FIXME Not getPathRelativeToFile() ?
+		this.artifactRelativePath = checkNotNull(artifact).getPathRelativeToFile(mvnRoot);
 		this.fs = checkNotNull(fs);
 	}
 

@@ -85,7 +85,12 @@ public class LocalFile implements IFileObject {
 	public String getPathRelativeToFile( IFileObject other) {
 		final String ourAP = file.getAbsolutePath();
 		final String parentAP = other.getAbsolutePath();
-		return ourAP.startsWith(parentAP) ? ourAP.substring( parentAP.length() ) : ourAP;	// FIXME Pretty crude
+
+		String endBit = ourAP.startsWith(parentAP) ? ourAP.substring( parentAP.length() ) : ourAP;	// FIXME Pretty crude
+		while (endBit.startsWith("/")) {
+			endBit = endBit.substring(1);
+		}
+		return endBit;
 	}
 
 	public File getFile() {
