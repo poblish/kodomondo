@@ -228,19 +228,31 @@ $(document).ready(function () {
 		chrome.omnibox.onInputEntered.addListener( function( text, disposition) {
 			// alert(text + ' ' + disposition);
 			var dataStore = globalDb.transaction("data", "readonly").objectStore("data");
-			dataStore.index("simpleNameIndex").get(text).onsuccess = function(event) {
+			dataStore.get(text).onsuccess = function(event) {
 				var obj = event.target.result;
 				if ( obj != null) {
-					chrome.tabs.query({'active': true}, function(tabs) {
-						chrome.tabs.update( tabs[0].id, {url: 'http://localhost:2000/info/?class=' + obj.className + '&jar=' + obj.jarFQN + '&artifact=' + obj.artifact});
-					});
+					displayOmniboxResults(obj);
 				}
 				else {
-					alert('Not found!'); // FIXME
+					dataStore.index("simpleNameIndex").get(text).onsuccess = function(event) {
+						var obj = event.target.result;
+						if ( obj != null) {
+							displayOmniboxResults(obj);
+						}
+						else {
+							alert( text + ' not found!'); // FIXME
+						}
+					};
 				}
 			};
 		});
 });
+
+function displayOmniboxResults(result) {
+	chrome.tabs.query({'active': true}, function(tabs) {
+		chrome.tabs.update( tabs[0].id, {url: 'http://localhost:2000/info/?class=' + result.className + '&jar=' + result.jarFQN + '&artifact=' + result.artifact});
+	});
+}
 
 function resetBadge(inSender) {
 	chrome.browserAction.setBadgeText({ text: '', tabId: inSender.tab.id});
