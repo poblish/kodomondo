@@ -71,6 +71,10 @@ function getDocumentWords2(ignoreCase) {
 }
 
 function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
+	refreshTermsCallback( inOptions, inDocUrl, ioStats, ioHistory, visitTerm)
+}
+
+function refreshTermsCallback( inOptions, inDocUrl, ioStats, ioHistory, visitorCallback) {
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
 	var minIndividualWordLength = 5;
 
@@ -103,7 +107,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 				continue;
 			}
 
-			visitTerm( text[i], inDocUrl, ioStats, ioHistory, inOptions);
+			visitorCallback( text[i], inDocUrl, ioStats, ioHistory, inOptions);
 		}
 	}
 
