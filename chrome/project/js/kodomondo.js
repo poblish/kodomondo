@@ -99,7 +99,7 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 
 			totalNumTermsInDoc++;
 
-			if (g_StopwordsRegex.test(text[i])) {
+			if (g_StopwordsRegex && g_StopwordsRegex.test(text[i])) {
 				continue;
 			}
 
