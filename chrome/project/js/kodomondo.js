@@ -48,25 +48,22 @@ function processPage( inOptions ) {
 var visitedTerms = {};
 var termsToHighlight = [];
 
-function getDocumentText() {
+function getDocumentText(ignoreCase) {
+	var REallowedChars = /[^a-zA-Z0-9\.\-]+/g;  // RE pattern to select valid characters. Invalid characters are replaced with a whitespace. Allow '.' because we need it for pkg names
 	// Remove all irrelevant characters
-	return $('body').text().replace(REallowedChars, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+	var text = $('body').text().replace(REallowedChars, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+	return ignoreCase ? text.toLowerCase() : text;
+}
+
+function getDocumentWords(ignoreCase) {
+	return getDocumentText(false).split(/\s+/);
 }
 
 function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
-
 	var minIndividualWordLength = 5;
-	var ignoreCase = false;  // Case-sensitivity
-	var REallowedChars = /[^a-zA-Z0-9\.\-]+/g;  // RE pattern to select valid characters. Invalid characters are replaced with a whitespace. Allow '.' because we need it for pkg names
 
-	var text = getDocumentText();
-
-	if (ignoreCase) {
-		text = text.toLowerCase();
-	}
-
-	text = text.split(/\s+/);
+	var text = getDocumentWords(false);
 
 	var i, textlen;
 	var totalNumTermsInDoc = 0, keyTermsMatched = 0;
