@@ -59,6 +59,17 @@ function getDocumentWords(ignoreCase) {
 	return getDocumentText(false).split(/\s+/);
 }
 
+function getDocumentText2(ignoreCase) {
+	var REallowedChars = /[^a-zA-Z0-9\.\-]+/g;  // RE pattern to select valid characters. Invalid characters are replaced with a whitespace. Allow '.' because we need it for pkg names
+	// Remove all irrelevant characters
+	var text = getText2($('body')).replace(REallowedChars, " ").replace(/^\s+/, "").replace(/\s+$/, "");
+	return ignoreCase ? text.toLowerCase() : text;
+}
+
+function getDocumentWords2(ignoreCase) {
+	return getDocumentText2(false).split(/\s+/);
+}
+
 function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
 	var minIndividualWordLength = 5;
@@ -187,3 +198,33 @@ function asyncRequestUrl(url) {
 			// console.log('Info requested OK');
 		});
 }
+
+//////////////////////////////////////
+
+function getText2(elem) {
+    if (elem.id === 'footer' || ( elem.style != null && elem.style.display === 'none') || (elem.parentNode != null && ( elem.parentNode.nodeName == "BUTTON" || elem.parentNode.nodeName == "LABEL" || elem.parentNode.nodeName == "OPTION"))) {
+        // console.log('SKIP', elem);
+        return "";
+    }
+
+    var node, ret = "", i = 0, nodeType = elem.nodeType;
+
+    if (!nodeType) {  // If no nodeType, this is expected to be an array
+        while ((node = elem[i++])) {
+            ret += getText2(node);  // Do not traverse comment nodes
+        }
+    } else if (nodeType === 1 || nodeType === 9 || nodeType === 11) {
+        for (elem = elem.firstChild; elem; elem = elem.nextSibling) {  // Traverse its children
+            ret += getText2(elem);
+        }
+    } else if (nodeType === 3 || nodeType === 4) {
+        var trimmed = elem.nodeValue.trim();
+        if (trimmed === '.') {
+          return '';
+        }
+        return ( trimmed !== '') ? trimmed + ' ' : trimmed;
+    }
+    // Do not include comment or processing instruction nodes
+
+    return ret;
+};
