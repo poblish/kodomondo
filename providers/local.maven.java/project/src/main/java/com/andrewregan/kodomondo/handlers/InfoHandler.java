@@ -103,11 +103,13 @@ public class InfoHandler implements HttpHandler {
 				String[] ifs = cr.getInterfaces();
 
 				String fqn = cr.getClassName();
+				String fqnSuper = cr.getSuperName();
 
 				resultsModel.put("interfaces", ifs);
-				resultsModel.put("classname", fqn.substring( fqn.lastIndexOf('/') + 1));
-				resultsModel.put("package", fqn.substring( 0, fqn.lastIndexOf('/') ).replace('/', '.'));
-				resultsModel.put("superClass", cr.getSuperName());
+				resultsModel.put("class_pkg", getPackage(fqn));
+				resultsModel.put("class_name", getName(fqn));
+				resultsModel.put("superClass_pkg", getPackage(fqnSuper));
+				resultsModel.put("superClass_name", getName(fqnSuper));
 
 				break;
 			}
@@ -115,5 +117,13 @@ public class InfoHandler implements HttpHandler {
 		catch (IOException e) {
 			Throwables.propagate(e);
 		}
+	}
+
+	private static String getPackage( final String fqn) {
+		return fqn.substring( 0, fqn.lastIndexOf('/') ).replace('/', '.');
+	}
+
+	private static String getName( final String fqn) {
+		return fqn.substring( fqn.lastIndexOf('/') + 1);
 	}
 }
