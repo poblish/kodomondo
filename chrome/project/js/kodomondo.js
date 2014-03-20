@@ -78,7 +78,7 @@ function refreshTermsCallback( inOptions, inDocUrl, ioStats, ioHistory, visitorC
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
 	var minIndividualWordLength = 5;
 
-	var text = getDocumentWords(false);
+	var text = getDocumentWords2(false);
 
 	var i, textlen;
 	var totalNumTermsInDoc = 0, keyTermsMatched = 0;
