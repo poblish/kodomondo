@@ -206,7 +206,7 @@ function asyncRequestUrl(url) {
 //////////////////////////////////////
 
 function getText2(elem) {
-    if (elem.id === 'footer' || ( elem.style != null && elem.style.display === 'none') || (elem.parentNode != null && ( elem.parentNode.nodeName == "BUTTON" || elem.parentNode.nodeName == "LABEL" || elem.parentNode.nodeName == "OPTION"))) {
+    if (elem.id === 'footer' || $(elem).css('display') === 'none' || (elem.parentNode != null && ( elem.parentNode.nodeName == "OPTION" || elem.parentNode.nodeName == "LABEL" || elem.parentNode.nodeName == "BUTTON"))) {
         // console.log('SKIP', elem);
         return "";
     }
