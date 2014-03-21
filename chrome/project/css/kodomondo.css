@@ -1,9 +1,8 @@
 .highlightCore {
     font-weight: bold;
     color: black !important;
-    background-color: rgb(254,232,232);
+    background-color: rgba(254,232,232,0.6);
     border-bottom: 2px dotted !important;
-    border-bottom-color: rgb(255,91,87) !important;
 }
 
 .highlightCore a {
@@ -22,7 +21,10 @@
 .highlightCore_ul {
     font-weight: normal;
     border-bottom: 1px dotted !important;
-    border-bottom-color: rgb(255,91,87) !important;
+}
+
+.highlightCore, .highlightCore_ul {
+    border-bottom-color: rgba(255,91,87,0.6) !important;
 }
 
 /**********/
