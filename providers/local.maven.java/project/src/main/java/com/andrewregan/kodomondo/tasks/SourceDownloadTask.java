@@ -5,12 +5,18 @@ package com.andrewregan.kodomondo.tasks;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.IOException;
+import java.io.File;
+import java.util.Properties;
+
+import org.apache.maven.shared.invoker.DefaultInvocationRequest;
+import org.apache.maven.shared.invoker.DefaultInvoker;
+import org.apache.maven.shared.invoker.InvocationRequest;
+import org.apache.maven.shared.invoker.Invoker;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.maven.ArtifactDesc;
-import com.google.common.base.Throwables;
+import com.google.common.collect.Lists;
 
 /**
  * TODO
@@ -38,24 +44,26 @@ public class SourceDownloadTask implements Runnable {
 
 		ArtifactDesc artifact = fs.toArtifact(artifactFile);
 
-		// FIXME Need security here!
-		final String cmd = "mvn -DgroupId=" + artifact.getGroupId() + " -DartifactId=" + artifact.getArtifactId() + " -Dversion=" + artifact.getVersion() + " -Dclassifier=sources org.apache.maven.plugins:maven-dependency-plugin:2.8:get";
-		System.err.println("cmd = " + cmd);
-
 		try {
-			int retVal = new ProcessBuilder(cmd).start().waitFor();
-			if ( retVal == 0) {
-				System.out.println("Source JAR downloaded for " + artifactFile);
-			}
-			else {
-				System.out.println("Source JAR FAILED (" + retVal + ") for " + artifactFile);
-			}
+			Properties props = new Properties();
+			props.put("groupId", artifact.getGroupId());
+			props.put("artifactId", artifact.getArtifactId());
+			props.put("version", artifact.getVersion());
+			props.put("classifier", "sources");
+			
+			InvocationRequest request = new DefaultInvocationRequest();
+			request.setProperties(props);
+			request.setGoals( Lists.newArrayList("org.apache.maven.plugins:maven-dependency-plugin:2.8:get") );
+
+			Invoker invoker = new DefaultInvoker();
+			invoker.setMavenHome( new File("/usr/local/") );  // FIXME!
+			invoker.setOutputHandler(null);
+			int result = invoker.execute( request ).getExitCode();
+
+			System.out.println( result == 0 ? "SUCCESS" : "FAIL");
 		}
-		catch (InterruptedException e) {
-			Throwables.propagate(e);
-		}
-		catch (IOException e) {
-			Throwables.propagate(e);
+		catch (Throwable e) {
+			e.printStackTrace(); // Throwables.propagate(e);
 		}
 	}
 }
