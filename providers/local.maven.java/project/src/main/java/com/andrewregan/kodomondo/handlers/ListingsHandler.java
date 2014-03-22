@@ -132,6 +132,7 @@ public class ListingsHandler implements HttpHandler {
 		List<ClassEntry> classesList = Lists.newArrayList();
 
 		boolean gotClassAlready = false;
+		boolean gotPomAlready = false;
 
 		JarFile jf = fs.openJar(f);
 		try {
@@ -149,10 +150,12 @@ public class ListingsHandler implements HttpHandler {
 				// hierarchy. This may all be ultimately fruitless...
 
 				if (POM_PATTERN.matcher(eachName).matches()) {
-					if (gotClassAlready) {
+					if (gotClassAlready && gotPomAlready) {
 						System.err.println("Already got classes, so skip shaded JARs: " + eachName + " in " + f);
 						break;
 					}
+
+					gotPomAlready = true;
 				}
 
 				if (!eachName.endsWith(".class") || eachName.contains("$") || /* Skip 'com.google.appengine.labs.repackaged.org.json.JSONArray' etc. */ REPACKAGED_PATTERN.matcher(eachName).find()) {
