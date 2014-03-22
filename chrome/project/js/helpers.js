@@ -6,7 +6,7 @@ var HighlightClass = (function() {
 		this.foundClass = inAttrs.foundClass;
 		this.className = inAttrs.className;
 		this.jarUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
-		this.infoUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&jar=1';
+		this.infoUrl = 'http://localhost:2000/info/?class=' + inAttrs.foundClass + '&jar=' + inAttrs.jarFQN + '&artifact=' + inAttrs.artifact;
 		this.sourceUrl = 'http://localhost:2000/launch/' + inAttrs.foundClass + '?artifact=' + inAttrs.artifact + '&source=1';
 	};
 

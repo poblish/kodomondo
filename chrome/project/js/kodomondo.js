@@ -169,11 +169,19 @@ function getArtifactInfo(inItem) {
 	jarButton.innerHTML = 'Open JAR';
 	$(jarButton).click(function(e) { e.preventDefault(); asyncRequestUrl( inItem.getJarUrl() ); });
 
+	var infoButton = document.createElement('a');
+	infoButton.setAttribute('href', inItem.getInfoUrl());
+	infoButton.setAttribute('target', '_kodomondoInfo');
+	infoButton.setAttribute('class', 'dlgLink');
+	infoButton.innerHTML = 'More Info';
+
 	var buttonsDiv = document.createElement('div');
 	buttonsDiv.setAttribute('style', 'padding: 9px 0 9px 16px');
 	buttonsDiv.appendChild(srcButton);
 	buttonsDiv.appendChild(document.createTextNode('  |  ') );
 	buttonsDiv.appendChild(jarButton);
+	buttonsDiv.appendChild(document.createTextNode('  |  ') );
+	buttonsDiv.appendChild(infoButton);
 	thePopup.appendChild(buttonsDiv);
 
 	var closeBtn = document.createElement('a');
