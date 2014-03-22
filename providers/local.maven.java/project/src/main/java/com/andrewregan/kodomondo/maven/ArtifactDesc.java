@@ -22,10 +22,14 @@ public class ArtifactDesc {
 	public static ArtifactDesc forFile( File inArtifactFile) {
 		String artifactStr = inArtifactFile.getPath();
 
+		while (artifactStr.startsWith("/")) {
+			artifactStr = artifactStr.substring(1);
+		}
+
 		int last = artifactStr.lastIndexOf('/');
 		int nextPos = artifactStr.lastIndexOf('/', last - 1);
 
-		return new ArtifactDesc( artifactStr.substring( /* Skip /*/ 1, nextPos).replace( '/', '.'), artifactStr.substring( nextPos + 1, last), artifactStr.substring( last + 1));
+		return new ArtifactDesc( artifactStr.substring( 0, nextPos).replace( '/', '.'), artifactStr.substring( nextPos + 1, last), artifactStr.substring( last + 1));
 	}
 
 	public ArtifactDesc( final String group, String artifact, String inVersion) {
