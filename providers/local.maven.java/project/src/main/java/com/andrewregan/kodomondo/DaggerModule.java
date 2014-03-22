@@ -5,6 +5,8 @@ package com.andrewregan.kodomondo;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -39,6 +41,11 @@ import freemarker.template.Configuration;
  */
 @Module(injects={LocalMavenServer.class})
 public class DaggerModule {
+
+	@Provides
+	ExecutorService provideTaskExecutorService() {
+		return Executors.newFixedThreadPool(5);
+	}
 
 	@Provides
 	@Singleton

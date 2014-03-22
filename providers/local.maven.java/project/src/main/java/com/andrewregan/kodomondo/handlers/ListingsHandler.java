@@ -40,6 +40,8 @@ public class ListingsHandler implements HttpHandler {
 	@Named("mvnRoot")
 	@Inject IFileObject mvnRoot;
 
+	@Inject ExecutorService taskExecutor;
+
 	@Inject IFileSystem fs;
 	@Inject ObjectMapper mapper;
 	@Inject JavaDocIndexerFactory indexerFactory;
