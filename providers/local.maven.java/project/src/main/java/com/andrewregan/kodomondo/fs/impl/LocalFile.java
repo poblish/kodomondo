@@ -93,6 +93,11 @@ public class LocalFile implements IFileObject {
 		return endBit;
 	}
 
+	@Override
+	public IFileObject getFileRelativeToFile( IFileObject other) {
+		return fs.resolveFile( getPathRelativeToFile(other) );
+	}
+
 	public File getFile() {
 		return file;
 	}

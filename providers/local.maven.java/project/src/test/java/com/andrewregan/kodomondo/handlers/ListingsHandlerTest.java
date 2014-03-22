@@ -8,7 +8,6 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -145,6 +144,11 @@ public class ListingsHandlerTest {
 
 		@Override
 		public String getPathRelativeToFile( IFileObject other) {
+			return null;
+		}
+
+		@Override
+		public IFileObject getFileRelativeToFile( IFileObject other) {
 			return null;
 		}
 

@@ -23,6 +23,7 @@ public interface IFileObject {
 	String getPath();
 	String getAbsolutePath();
 	String getPathRelativeToFile( IFileObject other);
+	IFileObject getFileRelativeToFile( IFileObject other);
 
 	String toString( Charset cs) throws IOException;
 
