@@ -210,7 +210,7 @@ $(document).ready(function () {
 				return;
 			}
 
-			$.get('http://localhost:2000/search?' + encodeURIComponent(text) + '&size=5')
+			$.get('http://localhost:2000/search?q=' + encodeURIComponent(text) + '&size=5')
 					.error( function(xhr) { /* Anything? */ } )
 					.success( function(obj) {
 							try {

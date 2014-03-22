@@ -48,8 +48,8 @@ public class SearchHandler implements HttpHandler {
 		int maxResults = 20;
 
 		for ( NameValuePair each : URLEncodedUtils.parse( t.getRequestURI(), "utf-8")) {
-			if ( each.getValue() == null) {
-				q = each.getName();
+			if ( each.getName().equals("q")) {
+				q = each.getValue();
 			}
 			else if ( each.getName().equals("size")) {
 				maxResults = Integer.parseInt( each.getValue() );

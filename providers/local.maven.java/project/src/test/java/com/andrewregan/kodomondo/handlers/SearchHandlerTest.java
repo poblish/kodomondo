@@ -36,7 +36,7 @@ public class SearchHandlerTest {
 	@Test
 	public void testHandle() throws IOException {
 		final com.sun.net.httpserver.HttpExchange req = mock( com.sun.net.httpserver.HttpExchange.class );
-		when(req.getRequestURI()).thenReturn( URI.create("http://localhost:2000/search?ImmutableMap") );
+		when(req.getRequestURI()).thenReturn( URI.create("http://localhost:2000/search?q=ImmutableMap") );
 		when(req.getResponseHeaders()).thenReturn( new Headers() );
 		when(req.getResponseBody()).thenReturn( new ByteArrayOutputStream() );
 		handler.handle(req);
