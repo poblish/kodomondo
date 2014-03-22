@@ -143,7 +143,7 @@ public class ListingsHandler implements HttpHandler {
 					continue;
 				}
 
-				String	eachName = eachEntry.getName();
+				String eachName = eachEntry.getName();
 
 				// Fairly lousy attempt to deal with shaded JARs. Essentially it boils down to using a discovered pom.xml as 
 				// a divider between the first set of classes (which we *assume* are the 'real' classes) and the next class
@@ -167,10 +167,6 @@ public class ListingsHandler implements HttpHandler {
 				}
 
 				classesList.add( new ClassEntry( eachName.substring( 0, eachName.length() - 6) .replace('/', '.')) );
-//				InputStream theStream = jf.getInputStream(eachEntry);
-//				ClassReader cr = new ClassReader( Files.toByteArray(f) );
-//				String[] ifs = cr.getInterfaces();
-//				System.out.println( Arrays.toString(ifs) );
 
 				gotClassAlready = true;
 			}
