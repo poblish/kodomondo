@@ -1,6 +1,6 @@
 <html>
     <head>
-		<title>Kodomondo</title>
+		<title>Kodomondo: ${class_name}</title>
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
     	<style type="text/css">
 /*
