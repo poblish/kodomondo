@@ -8,7 +8,9 @@ import static org.elasticsearch.index.query.QueryBuilders.matchPhraseQuery;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -18,6 +20,7 @@ import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.highlight.HighlightField;
 
 import com.andrewregan.kodomondo.tasks.IndexEntry;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -38,6 +41,8 @@ public class SearchHandler implements HttpHandler {
 
 	@Inject Client esClient;
 	@Inject ObjectMapper mapper;
+
+	private static final List<Text> NO_HIGHLIGHTED_TEXT = Collections.emptyList();
 
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
@@ -65,21 +70,21 @@ public class SearchHandler implements HttpHandler {
 
 		for ( SearchHit each : sh) {
 			try {
-				// System.out.println( each.getScore() + " / " + each.getHighlightFields() + " / " + mapper.readValue( each.source(), IndexEntry.class) );
-				Text[] hs = each.getHighlightFields().get("text").fragments();
-				entries.add( new SearchResult( mapper.readValue( each.source(), IndexEntry.class), FluentIterable.from( Arrays.asList(hs)).transform( new Function<Text,String>() {
+				final Map<String,HighlightField> highlights = each.getHighlightFields();
+
+				List<Text> texts = highlights.containsKey("text") ? Arrays.asList( highlights.get("text").fragments() ) : NO_HIGHLIGHTED_TEXT;
+
+				entries.add( new SearchResult( mapper.readValue( each.source(), IndexEntry.class), FluentIterable.from(texts).transform( new Function<Text,String>() {
 					public String apply( Text input) {
 						return input.string().trim().replaceAll("\\s+", " "); 
 					}
 				} ).toArray( String.class ), each.getScore()) );
 			}
 			catch (JsonProcessingException e) {
-				e.printStackTrace();  // FIXME
-				// Throwables.propagate(e);
+				e.printStackTrace();  // FIXME // Throwables.propagate(e);
 			}
 			catch (IOException e) {
-				e.printStackTrace();  // FIXME
-				// Throwables.propagate(e);
+				e.printStackTrace();  // FIXME // Throwables.propagate(e);
 			}
 		}
 
