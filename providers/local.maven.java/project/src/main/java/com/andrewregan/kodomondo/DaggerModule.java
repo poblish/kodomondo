@@ -20,6 +20,8 @@ import org.elasticsearch.node.NodeBuilder;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.fs.impl.LocalFileSystem;
+import com.andrewregan.kodomondo.tasks.JavaDocDownloadTask;
+import com.andrewregan.kodomondo.tasks.JavaDocDownloaderFactory;
 import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
 import com.andrewregan.kodomondo.tasks.JavaDocIndexingTask;
 import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
@@ -86,8 +88,18 @@ public class DaggerModule {
 	@Singleton
 	JavaDocIndexerFactory provideJavaDocIndexerFactory( @Named("mvnRoot") final Provider<IFileObject> mvnRoot, final Provider<ObjectMapper> mapper, final Provider<Client> esClient, final Provider<IFileSystem> fs) {
 		return new JavaDocIndexerFactory() {
-			@Override public JavaDocIndexingTask create( IFileObject artifact, IFileObject docJar) {
+			@Override public JavaDocIndexingTask create( String artifact, IFileObject docJar) {
 				return new JavaDocIndexingTask( artifact, docJar, mvnRoot.get(), esClient.get(), mapper.get(), fs.get());
+			}
+		};
+	}
+
+	@Provides
+	@Singleton
+	JavaDocDownloaderFactory provideJavaDocDownloaderFactory( @Named("mvnRoot") final Provider<IFileObject> mvnRoot, final Provider<IFileSystem> fs, final Provider<JavaDocIndexerFactory> indexer) {
+		return new JavaDocDownloaderFactory() {
+			@Override public JavaDocDownloadTask create( IFileObject artifact) {
+				return new JavaDocDownloadTask( artifact, fs.get(), mvnRoot.get(), indexer.get());
 			}
 		};
 	}

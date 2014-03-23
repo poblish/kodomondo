@@ -9,11 +9,11 @@ import java.nio.charset.Charset;
 
 import javax.inject.Inject;
 
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.Client;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Throwables;
 
 /**
  * TODO
@@ -38,7 +38,7 @@ public class PomIndexingTask implements Runnable {
 	}
 
 	public void run() {
-		System.out.println("> Start indexing " + pomFile);
+		System.out.println("> Start indexing POM: " + pomFile);
 
 		try {
 			String text = pomFile.toString( Charset.forName("utf-8") );
@@ -47,11 +47,20 @@ public class PomIndexingTask implements Runnable {
 			int descPos = text.indexOf("<description>") ;
 			String desc = ( descPos > 0) ? text.substring( descPos + 13, text.indexOf("</description>", descPos + 13)).replace('\n', ' ').trim() : "";
 
+			final GetResponse getResp = esClient.prepareGet( "datasource.local-maven", "metadata", artifactRelativePath).get();
+			if (getResp.isExists()) {
+				return;  // Either never existed, or its _ttl expired and it was deleted
+			}
+
+			System.out.println("> Indexing as " + artifactRelativePath);
+
 			esClient.prepareIndex( "datasource.local-maven", "metadata", artifactRelativePath).setSource( mapper.writeValueAsBytes( new PomIndexEntry( name, desc, artifactRelativePath) ) ).get();
 		}
 		catch (Throwable e) {
-			e.printStackTrace();
-			Throwables.propagate(e);
+			e.printStackTrace();  // Throwables.propagate(e);
+		}
+		finally {
+			System.out.println("> DONE indexing POM: " + pomFile);
 		}
 	}
 

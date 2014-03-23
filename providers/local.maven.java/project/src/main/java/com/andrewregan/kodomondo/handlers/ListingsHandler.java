@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
@@ -19,6 +20,7 @@ import javax.inject.Named;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
+import com.andrewregan.kodomondo.tasks.JavaDocDownloaderFactory;
 import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
 import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
 import com.andrewregan.kodomondo.util.VersionComparator;
@@ -44,6 +46,7 @@ public class ListingsHandler implements HttpHandler {
 
 	@Inject IFileSystem fs;
 	@Inject ObjectMapper mapper;
+	@Inject JavaDocDownloaderFactory docsDownloaderFactory;
 	@Inject JavaDocIndexerFactory indexerFactory;
 	@Inject PomIndexerFactory pomIndexerFactory;
 
@@ -60,6 +63,8 @@ public class ListingsHandler implements HttpHandler {
 			t.getResponseBody().close();
 			return;
 		}
+
+		boolean foundJavaDoc = false;
 
 		if (f.isDirectory()) {
 			List<DirEntry> dirsList = Lists.newArrayList();
@@ -91,7 +96,8 @@ public class ListingsHandler implements HttpHandler {
 					}
 
 					if (each.getName().endsWith("-javadoc.jar") ) {
-						indexerFactory.create(f, each).run();
+						indexerFactory.create( f.getPathRelativeToFile(mvnRoot), each).run();
+						foundJavaDoc = true;
 						continue;
 					}
 
@@ -109,6 +115,11 @@ public class ListingsHandler implements HttpHandler {
 					System.err.println("> 1 match: " + jars);
 					handleFile( t, jars.iterator().next());
 				}
+
+				if (!foundJavaDoc) {
+					taskExecutor.submit( docsDownloaderFactory.create( f.getFileRelativeToFile(mvnRoot) ) );
+				}
+
 				return;
 			}
 			else if (!versions.isEmpty()) {

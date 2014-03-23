@@ -11,7 +11,7 @@ import com.andrewregan.kodomondo.fs.api.IFileObject;
  * @author andrewregan
  *
  */
-public interface JavaDocIndexerFactory {
+public interface JavaDocDownloaderFactory {
 
-	JavaDocIndexingTask create( String artifact, IFileObject each);
+	JavaDocDownloadTask create( IFileObject artifact);
 }
