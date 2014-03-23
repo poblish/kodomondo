@@ -58,6 +58,11 @@ public class ArtifactDesc {
 		return version;
 	}
 
+	public String toPath() {
+		StringBuilder sb = new StringBuilder();
+		return sb.append(groupId.replace('.', '/')).append("/").append(artifactId).append("/").append(version).toString();
+	}
+
 	public String toString() {
 		return Objects.toStringHelper(this).omitNullValues()
 						.add( "groupId", Strings.emptyToNull(groupId))
