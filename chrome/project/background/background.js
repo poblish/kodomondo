@@ -216,7 +216,7 @@ $(document).ready(function () {
 							try {
 								var suggestions = [];
 								for ( i = 0; i < 5 && i < obj.length; i++) {
-									var hilite = obj[i].highlights[0].replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&lt;em&gt;/g, '<match>').replace(/&lt;\/em&gt;/g, '</match>');
+									var hilite = obj[i].highlights.length > 0 ? obj[i].highlights[0].replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/&lt;em&gt;/g, '<match>').replace(/&lt;\/em&gt;/g, '</match>') : '(no further information)';
 									var title = obj[i].entry.className || obj[i].entry.name;
 									suggestions.push({content:title, description: title + ': <dim>' + hilite + '</dim>'});
 								}
