@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.elasticsearch.client.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.yaml.snakeyaml.Yaml;
 
 import com.andrewregan.kodomondo.api.IDataSource;
@@ -52,6 +54,8 @@ public class LocalMavenServer
 	@Inject ListingsHandler listingsHandler;
 	@Inject SearchHandler searchHandler;
 
+	private final static Logger LOG = LoggerFactory.getLogger( LocalMavenServer.class );
+
 
 	public static void main(String[] args) throws Exception {
 		final LocalMavenServer server = new LocalMavenServer();
@@ -71,7 +75,7 @@ public class LocalMavenServer
 			server = HttpServer.create(new InetSocketAddress(2000), 0);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			LOG.error( "", e);  // FIXME
 			throw Throwables.propagate(e);
 		}
 	}

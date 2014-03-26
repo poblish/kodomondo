@@ -12,6 +12,8 @@ import javax.inject.Singleton;
 
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.Client;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
@@ -44,6 +46,8 @@ public class IndexerService extends AbstractExecutionThreadService {
 	@Inject JavaDocIndexerFactory indexerFactory;
 	@Inject PomIndexerFactory pomIndexerFactory;
 
+	private final static Logger LOG = LoggerFactory.getLogger( IndexerService.class );
+
 	@Override
 	protected void run() throws Exception {
 		new LocalMavenRepository(mvnRoot).visit( new ILocalMavenVisitor() {
@@ -56,19 +60,19 @@ public class IndexerService extends AbstractExecutionThreadService {
 
 			@Override
 			public void foundPom( IFileObject dir, IFileObject pomFile) {
-				System.out.println("> Got POM: " + pomFile);
+				LOG.debug("> Got POM: " + pomFile);
 				pomIndexerFactory.create( dir, pomFile).run();
 			}
 
 			@Override
 			public void foundJavaDoc( String relativePath, IFileObject docJar) {
-				System.out.println("> Got JavaDoc: " + docJar);
+				LOG.debug("> Got JavaDoc: " + docJar);
 				indexerFactory.create( relativePath, docJar).run();
 			}
 
 			@Override
 			public void missingJavaDoc( IFileObject artifactDir) {
-				System.out.println("> Try to download JavaDoc: " + artifactDir);
+				LOG.debug("> Try to download JavaDoc: " + artifactDir);
 				taskExecutor.submit( docsDownloaderFactory.create(artifactDir) );
 			}
 

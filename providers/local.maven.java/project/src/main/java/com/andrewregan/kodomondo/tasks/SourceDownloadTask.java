@@ -12,10 +12,13 @@ import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
 import org.apache.maven.shared.invoker.InvocationRequest;
 import org.apache.maven.shared.invoker.Invoker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 
 /**
@@ -30,6 +33,8 @@ public class SourceDownloadTask implements Runnable {
 
 	private IFileSystem fs;
 
+	private final static Logger LOG = LoggerFactory.getLogger( SourceDownloadTask.class );
+
 	/**
 	 * @param artifactDir
 	 */
@@ -40,7 +45,7 @@ public class SourceDownloadTask implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Source JAR not found for " + artifactFile);
+		LOG.debug("Source JAR not found for " + artifactFile);
 
 		ArtifactDesc artifact = fs.toArtifact(artifactFile);
 
@@ -60,10 +65,11 @@ public class SourceDownloadTask implements Runnable {
 			invoker.setOutputHandler(null);
 			int result = invoker.execute( request ).getExitCode();
 
-			System.out.println( result == 0 ? "SUCCESS" : "FAIL");
+			LOG.debug( result == 0 ? "SUCCESS" : "FAIL");
 		}
 		catch (Throwable e) {
-			e.printStackTrace(); // Throwables.propagate(e);
+			LOG.error( "", e);  // FIXME
+			Throwables.propagate(e);
 		}
 	}
 }

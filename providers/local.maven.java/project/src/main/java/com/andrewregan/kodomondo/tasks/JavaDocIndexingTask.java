@@ -15,10 +15,13 @@ import javax.inject.Inject;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.Client;
 import org.jsoup.Jsoup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Throwables;
 import com.google.common.io.ByteStreams;
 
 /**
@@ -36,6 +39,8 @@ public class JavaDocIndexingTask implements Runnable {
 	private ObjectMapper mapper;
 	private IFileSystem fs;
 
+	private final static Logger LOG = LoggerFactory.getLogger( JavaDocIndexingTask.class );
+
 	@Inject
 	public JavaDocIndexingTask( String artifact, IFileObject javaDocJar, IFileObject mvnRoot, Client esClient, ObjectMapper mapper, IFileSystem fs) {
 		this.docJar = checkNotNull(javaDocJar);
@@ -48,7 +53,7 @@ public class JavaDocIndexingTask implements Runnable {
 	public void run() {
 		checkArgument( docJar.getName().endsWith("-javadoc.jar"), "Not a JavaDoc JAR!");
 
-		System.out.println("> Start indexing " + docJar);
+		LOG.debug("> Start indexing " + docJar);
 
 		try (JarFile jf = fs.openJar(docJar)) {
 			Enumeration<JarEntry> theEntries = jf.entries();
@@ -81,16 +86,17 @@ public class JavaDocIndexingTask implements Runnable {
 					continue;  // Either never existed, or its _ttl expired and it was deleted
 				}
 
-				System.out.println("--> Indexing as " + id);
+				LOG.debug("--> Indexing as " + id);
 
 				esClient.prepareIndex( "datasource.local-maven", "javadoc", id).setSource( mapper.writeValueAsBytes( new JavaDocIndexEntry( text, artifactRelativePath, className) ) ).get();
 			}
 		}
 		catch (Throwable tt) {
-			tt.printStackTrace(); // Throwables.propagate(tt);
+			LOG.error( "", tt);  // FIXME
+			Throwables.propagate(tt);
 		}
 		finally {
-			System.out.println("> DONE indexing " + docJar);
+			LOG.debug("> DONE indexing " + docJar);
 		}
 	}
 

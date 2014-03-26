@@ -19,10 +19,13 @@ import javax.inject.Named;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.tasks.SourceDownloaderFactory;
+import com.google.common.base.Throwables;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import com.sun.net.httpserver.HttpExchange;
@@ -43,6 +46,8 @@ public class LaunchHandler implements HttpHandler {
 
 	@Named("mvnRoot")
 	@Inject IFileObject mvnRoot;
+
+	private final static Logger LOG = LoggerFactory.getLogger( LaunchHandler.class );
 
 	public LaunchHandler() {
 		tempSrcDownloadDir = Files.createTempDir();
@@ -76,10 +81,10 @@ public class LaunchHandler implements HttpHandler {
 						return !other.getName().startsWith(".") && other.getName().endsWith(".jar") && !other.getName().endsWith("-shaded.jar") && !other.getName().endsWith("-javadoc.jar") && !other.getName().endsWith("-tests.jar");
 					}} );
 
-				System.out.println( "LAUNCH: matching JARS: " + Arrays.toString(files));
+				LOG.debug( "LAUNCH: matching JARS: " + Arrays.toString(files));
 
 				final String expectedSourceFileName = clazz.replace('.', '/') + ".java";
-//					System.out.println( "expectedSourceFileName: " + expectedSourceFileName);
+//					LOG.debug( "expectedSourceFileName: " + expectedSourceFileName);
 
 				boolean sourceJarFound = false;
 
@@ -96,7 +101,7 @@ public class LaunchHandler implements HttpHandler {
 								}
 
 								if (expectedSourceFileName.equals( eachEntry.getName() )) {
-									System.out.println( "SOURCES: found: " + expectedSourceFileName);
+									LOG.debug( "SOURCES: found: " + expectedSourceFileName);
 									final String javaSrc = new String( ByteStreams.toByteArray( jf.getInputStream(eachEntry) ), Charset.forName("utf-8"));
 
 									if (!tempSrcDownloadDir.exists()) {
@@ -113,7 +118,8 @@ public class LaunchHandler implements HttpHandler {
 							}
 						}
 						catch (Throwable tt) {
-							tt.printStackTrace(); // Throwables.propagate(tt);
+							LOG.error( "", tt);  // FIXME
+							Throwables.propagate(tt);
 						}
 						finally {
 							jf.close();

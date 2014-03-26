@@ -12,10 +12,13 @@ import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
 import org.apache.maven.shared.invoker.InvocationRequest;
 import org.apache.maven.shared.invoker.Invoker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 
 /**
@@ -32,6 +35,8 @@ public class JavaDocDownloadTask implements Runnable {
 	private JavaDocIndexerFactory indexerFactory;
 	private IFileObject mvnRoot;
 
+	private final static Logger LOG = LoggerFactory.getLogger( JavaDocDownloadTask.class );
+
 	/**
 	 * @param artifactDir
 	 */
@@ -45,7 +50,7 @@ public class JavaDocDownloadTask implements Runnable {
 	@Override
 	public void run() {
 		ArtifactDesc artifact = fs.toArtifact(artifactFile);
-		System.out.println("> Try to download JavaDoc JAR for " + artifact + " (" + artifactFile + ")");
+		LOG.debug("> Try to download JAR for " + artifact + " (" + artifactFile + ")");
 
 		try {
 			Properties props = new Properties();
@@ -63,17 +68,18 @@ public class JavaDocDownloadTask implements Runnable {
 			invoker.setOutputHandler(null);
 			int result = invoker.execute( request ).getExitCode();
 
-			System.out.println( result == 0 ? "SUCCESS" : "FAIL");
+			LOG.debug( result == 0 ? "SUCCESS" : "FAIL");
 
 			if ( result == 0) {
 				indexerFactory.create( artifact.toPath(), mvnRoot.getChild( artifact.toPath() + "/" + artifact.getArtifactId() + "-" + artifact.getVersion() + "-javadoc.jar")).run();  // Yes, in same Thread
 			}
 		}
 		catch (Throwable e) {
-			e.printStackTrace(); // Throwables.propagate(e);
+			LOG.error( "", e);  // FIXME
+			Throwables.propagate(e);
 		}
 		finally {
-			System.out.println("> DONE downloading " + artifact);
+			LOG.debug("> DONE: " + artifact);
 		}
 	}
 }

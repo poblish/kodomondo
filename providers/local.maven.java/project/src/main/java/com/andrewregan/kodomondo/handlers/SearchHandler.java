@@ -20,11 +20,14 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.highlight.HighlightField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.tasks.IndexEntry;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Function;
+import com.google.common.base.Throwables;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.sun.net.httpserver.HttpExchange;
@@ -42,6 +45,8 @@ public class SearchHandler implements HttpHandler {
 	@Inject ObjectMapper mapper;
 
 	private static final List<Text> NO_HIGHLIGHTED_TEXT = Collections.emptyList();
+
+	private final static Logger LOG = LoggerFactory.getLogger( SearchHandler.class );
 
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
@@ -78,10 +83,12 @@ public class SearchHandler implements HttpHandler {
 				} ).toArray( String.class ), each.getScore()) );
 			}
 			catch (JsonProcessingException e) {
-				e.printStackTrace();  // FIXME // Throwables.propagate(e);
+				LOG.error( "", e);  // FIXME
+				Throwables.propagate(e);
 			}
 			catch (IOException e) {
-				e.printStackTrace();  // FIXME // Throwables.propagate(e);
+				LOG.error( "", e);  // FIXME
+				Throwables.propagate(e);
 			}
 		}
 
@@ -95,8 +102,8 @@ public class SearchHandler implements HttpHandler {
 			os.close();
 		}
 		catch (Throwable e) {
-			e.printStackTrace();  // FIXME
-			// Throwables.propagate(e);
+			LOG.error( "", e);  // FIXME
+			Throwables.propagate(e);
 		}
 	}
 
