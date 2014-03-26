@@ -65,6 +65,12 @@ public class SearchHandler implements HttpHandler {
 			}
 		}
 
+		if ( q == null || q.isEmpty()) {
+			t.sendResponseHeaders( 400, 0);
+			t.getResponseBody().close();
+			return;
+		}
+
 		SearchHit[] sh = esClient.prepareSearch("datasource.local-maven").addHighlightedField("text", 200, 2).setQuery( matchPhraseQuery( "_all", q).cutoffFrequency(0.001f) ).setSize(maxResults).execute().actionGet().getHits().hits();
 //		System.out.println("DONE " + sh.length);
 
