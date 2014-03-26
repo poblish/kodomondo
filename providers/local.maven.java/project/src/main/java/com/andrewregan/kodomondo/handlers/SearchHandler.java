@@ -16,7 +16,6 @@ import javax.inject.Inject;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.SearchHit;
@@ -60,8 +59,6 @@ public class SearchHandler implements HttpHandler {
 				maxResults = Integer.parseInt( each.getValue() );
 			}
 		}
-
-		while (esClient.admin().cluster().prepareHealth("datasource.local-maven").get().getStatus() == ClusterHealthStatus.RED) ;
 
 		SearchHit[] sh = esClient.prepareSearch("datasource.local-maven").addHighlightedField("text", 200, 2).setQuery( matchPhraseQuery( "_all", q).cutoffFrequency(0.001f) ).setSize(maxResults).execute().actionGet().getHits().hits();
 //		System.out.println("DONE " + sh.length);
