@@ -15,6 +15,7 @@ import org.yaml.snakeyaml.Yaml;
 
 import com.andrewregan.kodomondo.api.IDataSource;
 import com.andrewregan.kodomondo.ds.AbstractDataSource;
+import com.andrewregan.kodomondo.es.EsUtils;
 import com.andrewregan.kodomondo.handlers.InfoHandler;
 import com.andrewregan.kodomondo.handlers.LaunchHandler;
 import com.andrewregan.kodomondo.handlers.ListingsHandler;
@@ -41,7 +42,10 @@ public class LocalMavenServer
 	private final Map<String,IDataSource> dataSources = Maps.newHashMap();
 
 	@Inject ObjectMapper mapper;
+	@Inject EsUtils esUtils;
 	@Inject Client esClient;
+
+	@Inject IndexerService indexer;
 
 	@Inject InfoHandler infoHandler;
 	@Inject LaunchHandler launchHandler;
@@ -53,6 +57,10 @@ public class LocalMavenServer
 		final LocalMavenServer server = new LocalMavenServer();
 		ObjectGraph.create( new DaggerModule() ).inject(server);
 
+		server.esUtils.waitForStatus();  // When it returns, ES will be up-and-running, so start listening...
+
+		server.indexer.startAsync();
+
 		server.addContexts();
 		server.start();
 	}
@@ -63,6 +71,7 @@ public class LocalMavenServer
 			server = HttpServer.create(new InetSocketAddress(2000), 0);
 		}
 		catch (IOException e) {
+			e.printStackTrace();
 			throw Throwables.propagate(e);
 		}
 	}
