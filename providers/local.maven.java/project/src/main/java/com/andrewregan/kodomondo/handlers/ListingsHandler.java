@@ -138,7 +138,7 @@ public class ListingsHandler implements HttpHandler {
 	}
 
 	public static boolean isUselessFile( IFileObject each) {
-		return (!each.getName().endsWith(".jar") || each.getName().endsWith("-sources.jar") || each.getName().endsWith("-shaded.jar") || each.getName().endsWith("-tests.jar"));
+		return (!each.getName().endsWith(".jar") || each.getName().endsWith(".sha1") || each.getName().endsWith(".lastUpdated") || each.getName().endsWith(".repositories") || each.getName().endsWith("-sources.jar") || each.getName().endsWith("-shaded.jar") || each.getName().endsWith("-tests.jar"));
 	}
 
 	private void handleFile( final HttpExchange t, final IFileObject f) throws IOException {

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo.maven;
+package com.andrewregan.kodomondo.maven.util;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
