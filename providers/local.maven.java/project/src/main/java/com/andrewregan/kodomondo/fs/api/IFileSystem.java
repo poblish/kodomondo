@@ -6,7 +6,7 @@ package com.andrewregan.kodomondo.fs.api;
 import java.io.IOException;
 import java.util.jar.JarFile;
 
-import com.andrewregan.kodomondo.maven.ArtifactDesc;
+import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
 
 /**
  * TODO

@@ -52,7 +52,7 @@ public class PomIndexingTask implements Runnable {
 				return;  // Either never existed, or its _ttl expired and it was deleted
 			}
 
-			System.out.println("> Indexing as " + artifactRelativePath);
+			System.out.println("--> Indexing as " + artifactRelativePath);
 
 			esClient.prepareIndex( "datasource.local-maven", "metadata", artifactRelativePath).setSource( mapper.writeValueAsBytes( new PomIndexEntry( name, desc, artifactRelativePath) ) ).get();
 		}

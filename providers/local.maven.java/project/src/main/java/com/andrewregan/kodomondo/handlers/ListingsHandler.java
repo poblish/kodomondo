@@ -71,11 +71,7 @@ public class ListingsHandler implements HttpHandler {
 			Collection<String> versions = Lists.newArrayList();
 			Collection<IFileObject> jars = Lists.newArrayList();
 
-			IFileObject[] files = f.listFiles( new FileFilter() {
-
-				public boolean accept( File pathname) {
-					return !pathname.getName().startsWith(".") && !pathname.getAbsolutePath().contains("com/google/collections");
-				}} );
+			IFileObject[] files = f.listFiles( new BadDirFilter() );
 
 			for ( IFileObject each : files) {
 				if (each.isDirectory()) {
@@ -91,7 +87,7 @@ public class ListingsHandler implements HttpHandler {
 						pomIndexerFactory.create(f, each).run();
 					}
 
-					if (!each.getName().endsWith(".jar") || each.getName().endsWith("-sources.jar") || each.getName().endsWith("-shaded.jar") || each.getName().endsWith("-tests.jar")) {
+					if (isUselessFile(each)) {
 						continue;
 					}
 
@@ -139,6 +135,10 @@ public class ListingsHandler implements HttpHandler {
 		else {
 			handleFile( t, f);
 		}
+	}
+
+	public static boolean isUselessFile( IFileObject each) {
+		return (!each.getName().endsWith(".jar") || each.getName().endsWith(".sha1") || each.getName().endsWith(".lastUpdated") || each.getName().endsWith(".repositories") || each.getName().endsWith("-sources.jar") || each.getName().endsWith("-shaded.jar") || each.getName().endsWith("-tests.jar"));
 	}
 
 	private void handleFile( final HttpExchange t, final IFileObject f) throws IOException {
@@ -197,6 +197,15 @@ public class ListingsHandler implements HttpHandler {
 		OutputStream os = t.getResponseBody();
 		os.write( output.getBytes() );
 		os.close();
+	}
+
+	// FIXME See IndexerService
+	public static class BadDirFilter implements FileFilter {
+
+		@Override
+		public boolean accept( File pathname) {
+			return !pathname.getName().startsWith(".") && !pathname.getAbsolutePath().contains("com/google/collections");
+		}
 	}
 
 	private static class VersionResponse {

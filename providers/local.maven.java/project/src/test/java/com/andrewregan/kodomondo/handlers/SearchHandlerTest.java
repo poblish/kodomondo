@@ -13,6 +13,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.andrewregan.kodomondo.DaggerModule;
+import com.andrewregan.kodomondo.es.EsUtils;
 import com.sun.net.httpserver.Headers;
 
 import dagger.Module;
@@ -26,6 +27,7 @@ import dagger.ObjectGraph;
  */
 public class SearchHandlerTest {
 
+	@Inject EsUtils esUtils;
 	@Inject SearchHandler handler;
 
 	@BeforeClass
@@ -35,6 +37,8 @@ public class SearchHandlerTest {
 
 	@Test
 	public void testHandle() throws IOException {
+		esUtils.waitForStatus();
+
 		final com.sun.net.httpserver.HttpExchange req = mock( com.sun.net.httpserver.HttpExchange.class );
 		when(req.getRequestURI()).thenReturn( URI.create("http://localhost:2000/search?q=ImmutableMap") );
 		when(req.getResponseHeaders()).thenReturn( new Headers() );

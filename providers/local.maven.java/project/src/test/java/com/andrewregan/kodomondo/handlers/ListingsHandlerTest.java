@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
 import com.andrewregan.kodomondo.DaggerModule;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
-import com.andrewregan.kodomondo.maven.ArtifactDesc;
+import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import com.sun.net.httpserver.Headers;

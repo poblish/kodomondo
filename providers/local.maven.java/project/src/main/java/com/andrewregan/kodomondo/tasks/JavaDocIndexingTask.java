@@ -19,7 +19,6 @@ import org.jsoup.Jsoup;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Preconditions;
 import com.google.common.io.ByteStreams;
 
 /**
@@ -82,7 +81,7 @@ public class JavaDocIndexingTask implements Runnable {
 					continue;  // Either never existed, or its _ttl expired and it was deleted
 				}
 
-				System.out.println("> Indexing as " + id);
+				System.out.println("--> Indexing as " + id);
 
 				esClient.prepareIndex( "datasource.local-maven", "javadoc", id).setSource( mapper.writeValueAsBytes( new JavaDocIndexEntry( text, artifactRelativePath, className) ) ).get();
 			}
