@@ -10,7 +10,6 @@ import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.regex.Pattern;
@@ -20,9 +19,6 @@ import javax.inject.Named;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
-import com.andrewregan.kodomondo.tasks.JavaDocDownloaderFactory;
-import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
-import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
 import com.andrewregan.kodomondo.util.VersionComparator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,13 +38,8 @@ public class ListingsHandler implements HttpHandler {
 	@Named("mvnRoot")
 	@Inject IFileObject mvnRoot;
 
-	@Inject ExecutorService taskExecutor;
-
 	@Inject IFileSystem fs;
 	@Inject ObjectMapper mapper;
-	@Inject JavaDocDownloaderFactory docsDownloaderFactory;
-	@Inject JavaDocIndexerFactory indexerFactory;
-	@Inject PomIndexerFactory pomIndexerFactory;
 
 	private static Pattern POM_PATTERN = Pattern.compile("META-INF/.*/pom.xml");
 	private static Pattern REPACKAGED_PATTERN = Pattern.compile("/repackaged/");
@@ -63,8 +54,6 @@ public class ListingsHandler implements HttpHandler {
 			t.getResponseBody().close();
 			return;
 		}
-
-		boolean foundJavaDoc = false;
 
 		if (f.isDirectory()) {
 			List<DirEntry> dirsList = Lists.newArrayList();
@@ -83,17 +72,7 @@ public class ListingsHandler implements HttpHandler {
 					}
 				}
 				else {
-					if (each.getName().endsWith(".pom")) {
-						pomIndexerFactory.create(f, each).run();
-					}
-
-					if (isUselessFile(each)) {
-						continue;
-					}
-
-					if (each.getName().endsWith("-javadoc.jar") ) {
-						indexerFactory.create( f.getPathRelativeToFile(mvnRoot), each).run();
-						foundJavaDoc = true;
+					if (isUselessFile(each) || each.getName().endsWith(".pom") || each.getName().endsWith("-javadoc.jar") ) {
 						continue;
 					}
 
@@ -110,10 +89,6 @@ public class ListingsHandler implements HttpHandler {
 				else {
 					System.err.println("> 1 match: " + jars);
 					handleFile( t, jars.iterator().next());
-				}
-
-				if (!foundJavaDoc) {
-					taskExecutor.submit( docsDownloaderFactory.create( f.getFileRelativeToFile(mvnRoot) ) );
 				}
 
 				return;
