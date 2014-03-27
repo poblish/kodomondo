@@ -85,6 +85,6 @@ public class IndexerService extends AbstractExecutionThreadService {
 				esClient.prepareIndex( "datasource.local-maven", "dir-visit", inDir.getAbsolutePath()).setTTL( TimeUnit.DAYS.toMillis(2) ).setSource("{\"done\":true}").get();
 			}
 
-		}, mvnRoot, false, "");
+		}, mvnRoot, false);
 	}
 }
