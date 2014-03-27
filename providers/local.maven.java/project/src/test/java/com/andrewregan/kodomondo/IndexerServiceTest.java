@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
@@ -81,6 +82,8 @@ public class IndexerServiceTest {
 			when(irb.setTTL( anyLong() )).thenReturn(irb);
 			when(irb.get()).thenReturn( mock( IndexResponse.class ) );
 
+			final BulkRequestBuilder brb = mock( BulkRequestBuilder.class );
+
 			//////////////////////////////////////////
 
 			final Client c = mock( Client.class );
@@ -91,6 +94,8 @@ public class IndexerServiceTest {
 			when(c.prepareIndex( anyString(), eq("dir-visit"), anyString())).thenReturn(irb);
 			when(c.prepareIndex( anyString(), eq("javadoc"), anyString())).thenReturn(irb);
 			when(c.prepareIndex( anyString(), eq("metadata"), anyString())).thenReturn(irb);
+
+			when(c.prepareBulk()).thenReturn(brb);
 			return c;
 		}
 	}
