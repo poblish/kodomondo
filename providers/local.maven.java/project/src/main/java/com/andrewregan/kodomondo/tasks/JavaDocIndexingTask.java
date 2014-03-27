@@ -6,6 +6,7 @@ package com.andrewregan.kodomondo.tasks;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import java.io.FileNotFoundException;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -97,6 +98,9 @@ public class JavaDocIndexingTask implements Runnable {
 				LOG.debug("--> Indexing batch...");
 				esBulkIndex.execute();  // No need to wait / do .get()
 			}
+		}
+		catch (FileNotFoundException fe) {
+			LOG.warn( fe.toString() );
 		}
 		catch (Throwable tt) {
 			LOG.error( "", tt);  // FIXME
