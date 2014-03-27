@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.Objects;
+import com.google.common.base.Strings;
 
 /**
  * TODO
@@ -41,11 +42,11 @@ public class IndexEntry {
 	}
 
 	public String getName() {
-		return name;
+		return Strings.nullToEmpty(name);
 	}
 
 	public String getClassName() {
-		return className;
+		return Strings.nullToEmpty(className);
 	}
 
 	@Override

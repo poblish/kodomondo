@@ -78,11 +78,16 @@ public class SearchHandler implements HttpHandler {
 
 		for ( SearchHit each : sh) {
 			try {
+				final IndexEntry theEntry = mapper.readValue( each.source(), IndexEntry.class);
+				if (theEntry.getName().isEmpty() && theEntry.getClassName().isEmpty()) {  // Ugh, why would this be?
+					continue;
+				}
+
 				final Map<String,HighlightField> highlights = each.getHighlightFields();
 
 				List<Text> texts = highlights.containsKey("text") ? Arrays.asList( highlights.get("text").fragments() ) : NO_HIGHLIGHTED_TEXT;
 
-				entries.add( new SearchResult( mapper.readValue( each.source(), IndexEntry.class), FluentIterable.from(texts).transform( new Function<Text,String>() {
+				entries.add( new SearchResult( theEntry, FluentIterable.from(texts).transform( new Function<Text,String>() {
 					public String apply( Text input) {
 						return input.string().trim().replaceAll("\\s+", " "); 
 					}
