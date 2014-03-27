@@ -12,6 +12,7 @@ import java.util.jar.JarFile;
 
 import javax.inject.Inject;
 
+import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.client.Client;
 import org.jsoup.Jsoup;
@@ -55,6 +56,8 @@ public class JavaDocIndexingTask implements Runnable {
 
 		LOG.debug("> Start indexing " + docJar);
 
+		BulkRequestBuilder esBulkIndex = esClient.prepareBulk();
+
 		try (JarFile jf = fs.openJar(docJar)) {
 			Enumeration<JarEntry> theEntries = jf.entries();
 			while (theEntries.hasMoreElements()) {
@@ -86,9 +89,13 @@ public class JavaDocIndexingTask implements Runnable {
 					continue;  // Either never existed, or its _ttl expired and it was deleted
 				}
 
-				LOG.debug("--> Indexing as " + id);
+				LOG.trace("--> Batching " + id);
+				esBulkIndex.add( esClient.prepareIndex( "datasource.local-maven", "javadoc", id).setSource( mapper.writeValueAsBytes( new JavaDocIndexEntry( text, artifactRelativePath, className) ) ) );
+			}
 
-				esClient.prepareIndex( "datasource.local-maven", "javadoc", id).setSource( mapper.writeValueAsBytes( new JavaDocIndexEntry( text, artifactRelativePath, className) ) ).get();
+			if (esBulkIndex.numberOfActions() > 0) {
+				LOG.debug("--> Indexing batch...");
+				esBulkIndex.execute();  // No need to wait / do .get()
 			}
 		}
 		catch (Throwable tt) {
