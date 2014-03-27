@@ -78,6 +78,10 @@ public class IndexerService extends AbstractExecutionThreadService {
 
 			@Override
 			public void doneDirectory( IFileObject inDir) {
+				if (inDir.equals(mvnRoot)) {
+					return;
+				}
+
 				esClient.prepareIndex( "datasource.local-maven", "dir-visit", inDir.getAbsolutePath()).setTTL( TimeUnit.DAYS.toMillis(2) ).setSource("{\"done\":true}").get();
 			}
 
