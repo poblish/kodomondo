@@ -30,7 +30,7 @@
                     "additivity": "true"
                 },
                 {
-                    "name": "net.myrrix",
+                    "name": "org.elasticsearch",
                     "level": "info",
                     "additivity": "true"
                 }
