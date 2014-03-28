@@ -7,7 +7,6 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -16,9 +15,12 @@ import java.util.jar.JarFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,8 +30,6 @@ import com.andrewregan.kodomondo.tasks.SourceDownloaderFactory;
 import com.google.common.base.Throwables;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
 /**
  * TODO
@@ -37,7 +37,7 @@ import com.sun.net.httpserver.HttpHandler;
  * @author andrewregan
  *
  */
-public class LaunchHandler implements HttpHandler {
+public class LaunchHandler extends AbstractHandler {
 
 	private File tempSrcDownloadDir;
 
@@ -54,24 +54,12 @@ public class LaunchHandler implements HttpHandler {
 		tempSrcDownloadDir.deleteOnExit();
 	}
 
-	public void handle( final HttpExchange t) throws IOException {
-		final String clazz = t.getRequestURI().getPath().substring(8);  // '/launch/...'
+	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
+		final String clazz = baseRequest.getRequestURI().substring(8);  // '/launch/...'
 
-		IFileObject artifactDir = null;
-		boolean isJar = false;
-		boolean isSource = false;
-
-		for ( NameValuePair each : URLEncodedUtils.parse( t.getRequestURI(), "utf-8")) {
-			if (each.getName().equals("artifact")) {
-				artifactDir = mvnRoot.getChild( each.getValue() );
-			}
-			else if (each.getName().equals("jar")) {
-				isJar = true;
-			}
-			else if (each.getName().equals("source")) {
-				isSource = true;
-			}
-		}
+		final IFileObject artifactDir = mvnRoot.getChild( req.getParameter("artifact") );
+		final boolean isJar = req.getParameter("jar") != null;
+		final boolean isSource = req.getParameter("source") != null;
 		
 		if (artifactDir != null && ( isJar || isSource)) {
 			if (artifactDir.isDirectory()) {
@@ -136,15 +124,13 @@ public class LaunchHandler implements HttpHandler {
 			}
 			else {
 				System.err.println( artifactDir + " is not a directory!");
-				t.sendResponseHeaders( 404, 0);
-				t.getResponseBody().close();
+				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				baseRequest.setHandled(true);
 				return;
 			}
 		}
 
-		t.sendResponseHeaders(200, 2);
-		OutputStream os = t.getResponseBody();
-		os.write( "OK".getBytes() );
-		os.close();
+		resp.setStatus(HttpServletResponse.SC_OK);
+		resp.getWriter().println("OK");
 	}
 }
