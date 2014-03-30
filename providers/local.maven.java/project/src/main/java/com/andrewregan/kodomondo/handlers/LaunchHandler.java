@@ -121,7 +121,7 @@ public class LaunchHandler extends AbstractHandler {
 				}
 
 				if ( isSource && !sourceJarFound) {
-					srcDownloaderFactory.create(artifactDir).run();
+					srcDownloaderFactory.create(artifactDir).call();
 				}
 			}
 			else {

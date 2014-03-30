@@ -7,17 +7,20 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
 import org.apache.maven.shared.invoker.InvocationRequest;
 import org.apache.maven.shared.invoker.Invoker;
+import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.util.DirectoryContentsRestoration;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 
@@ -27,7 +30,7 @@ import com.google.common.collect.Lists;
  * @author andrewregan
  *
  */
-public class SourceDownloadTask implements Runnable {
+public class SourceDownloadTask implements Callable<Integer> {
 
 	private final IFileObject artifactFile;
 
@@ -44,10 +47,12 @@ public class SourceDownloadTask implements Runnable {
 	}
 
 	@Override
-	public void run() {
+	public Integer call() {
 		LOG.debug("Source JAR not found for " + artifactFile);
 
 		ArtifactDesc artifact = fs.toArtifact(artifactFile);
+
+		DirectoryContentsRestoration restorer = new DirectoryContentsRestoration( artifactFile.getParent() );
 
 		try {
 			Properties props = new Properties();
@@ -66,10 +71,16 @@ public class SourceDownloadTask implements Runnable {
 			int result = invoker.execute( request ).getExitCode();
 
 			LOG.debug( result == 0 ? "SUCCESS" : "FAIL");
+
+			return result;
 		}
-		catch (Throwable e) {
-			LOG.error( "", e);  // FIXME
-			Throwables.propagate(e);
+		catch (MavenInvocationException e) {
+			throw Throwables.propagate(e);
+		}
+		finally {
+			restorer.restore();
+
+			LOG.debug("> DONE: " + artifact);
 		}
 	}
 }

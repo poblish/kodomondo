@@ -6,8 +6,6 @@ package com.andrewregan.kodomondo.tasks;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -22,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.util.DirectoryContentsRestoration;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
 
@@ -58,12 +57,9 @@ public class JavaDocDownloadTask implements Callable<Integer> {
 		ArtifactDesc artifact = fs.toArtifact(relativeRef);
 		LOG.debug("> Try to download JAR for " + artifact + " (" + relativeRef + ")");
 
+		DirectoryContentsRestoration restorer = new DirectoryContentsRestoration( artifactFile.getParent() );
+
 		try {
-			IFileObject parentFile = artifactFile.getParent();
-			IFileObject[] origChildren = parentFile.listFiles();
-
-			/////////////////////////////////////////////////////
-
 			Properties props = new Properties();
 			props.put("groupId", artifact.getGroupId());
 			props.put("artifactId", artifact.getArtifactId());
@@ -77,25 +73,21 @@ public class JavaDocDownloadTask implements Callable<Integer> {
 			Invoker invoker = new DefaultInvoker();
 			invoker.setMavenHome( new File("/usr/local/") );  // FIXME!
 			invoker.setOutputHandler(null);
+
 			int result = invoker.execute( request ).getExitCode();
+			if ( result == 0)
+			{
+				LOG.debug("SUCCESS");
 
-			/////////////////////////////////////////////////////
+				if (restorer.contentsChanged()) {
+					throw new RuntimeException("Nothing downloaded");
+				}
 
-			LOG.debug( result == 0 ? "SUCCESS" : "FAIL");
-
-			List<IFileObject> newFiles = Lists.newArrayList( parentFile.listFiles() );
-			newFiles.removeAll( Arrays.asList(origChildren) );
-			if ( result == 0 && newFiles.isEmpty()) {
-				throw new RuntimeException("Nothing downloaded");
-			}
-
-			if ( result == 0) {
 				// Must be synchronous, otherwise we'd have to hand over responsibility for cleanup
 				indexerFactory.create( artifact.toPath(), mvnRoot.getChild( artifact.toPath() + "/" + artifact.getArtifactId() + "-" + artifact.getVersion() + "-javadoc.jar")).run();  // Yes, in same Thread
 			}
-
-			for ( IFileObject eachNewFile : newFiles) {
-				eachNewFile.delete();
+			else {
+				LOG.debug("FAIL");
 			}
 
 			return result;
@@ -104,6 +96,8 @@ public class JavaDocDownloadTask implements Callable<Integer> {
 			throw Throwables.propagate(e);
 		}
 		finally {
+			restorer.restore();
+
 			LOG.debug("> DONE: " + artifact);
 		}
 	}
