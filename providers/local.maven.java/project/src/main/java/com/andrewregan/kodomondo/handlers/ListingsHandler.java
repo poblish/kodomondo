@@ -6,7 +6,6 @@ package com.andrewregan.kodomondo.handlers;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
@@ -16,6 +15,12 @@ import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.handler.AbstractHandler;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
@@ -24,8 +29,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
 /**
  * TODO
@@ -33,7 +36,7 @@ import com.sun.net.httpserver.HttpHandler;
  * @author andrewregan
  *
  */
-public class ListingsHandler implements HttpHandler {
+public class ListingsHandler extends AbstractHandler {
 
 	@Named("mvnRoot")
 	@Inject IFileObject mvnRoot;
@@ -44,14 +47,15 @@ public class ListingsHandler implements HttpHandler {
 	private static Pattern POM_PATTERN = Pattern.compile("META-INF/.*/pom.xml");
 	private static Pattern REPACKAGED_PATTERN = Pattern.compile("/repackaged/");
 
-	public void handle( final HttpExchange t) throws IOException {
+	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 
-		final String path = t.getRequestURI().getPath().substring(1);
+		baseRequest.setHandled(true);
+
+		final String path = baseRequest.getRequestURI().substring(1);
 		IFileObject f = mvnRoot.getChild(path);
 
 		if (!f.exists()) {
-			t.sendResponseHeaders( 404, 0);
-			t.getResponseBody().close();
+			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 
@@ -84,11 +88,11 @@ public class ListingsHandler implements HttpHandler {
 
 			if (!jars.isEmpty()) {
 				if (jars.size() == 1) {
-					handleFile( t, jars.iterator().next());
+					handleFile( resp, jars.iterator().next());
 				}
 				else {
 					System.err.println("> 1 match: " + jars);
-					handleFile( t, jars.iterator().next());
+					handleFile( resp, jars.iterator().next());
 				}
 
 				return;
@@ -101,14 +105,13 @@ public class ListingsHandler implements HttpHandler {
 				output = mapper.writeValueAsString( new DirResponse(dirsList) );
 			}
 
-			t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
-			t.sendResponseHeaders(200, output.length());
-			OutputStream os = t.getResponseBody();
-			os.write( output.getBytes() );
-			os.close();
+			resp.setContentType("application/json;charset=utf-8");
+			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.setContentLength( output.length() );
+			resp.getWriter().println(output);
 		}
 		else {
-			handleFile( t, f);
+			handleFile( resp, f);
 		}
 	}
 
@@ -116,7 +119,7 @@ public class ListingsHandler implements HttpHandler {
 		return (!each.getName().endsWith(".jar") || each.getName().endsWith(".sha1") || each.getName().endsWith(".lastUpdated") || each.getName().endsWith(".repositories") || each.getName().endsWith("-sources.jar") || each.getName().endsWith("-shaded.jar") || each.getName().endsWith("-tests.jar"));
 	}
 
-	private void handleFile( final HttpExchange t, final IFileObject f) throws IOException {
+	private void handleFile( final HttpServletResponse resp, final IFileObject f) throws IOException {
 		List<ClassEntry> classesList = Lists.newArrayList();
 
 		boolean gotClassAlready = false;
@@ -167,11 +170,10 @@ public class ListingsHandler implements HttpHandler {
 
 		final String output = mapper.writeValueAsString( new ClassResponse( mavenRelJarPath, classesList) );
 
-		t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
-		t.sendResponseHeaders(200, output.length());
-		OutputStream os = t.getResponseBody();
-		os.write( output.getBytes() );
-		os.close();
+		resp.setContentType("application/json;charset=utf-8");
+		resp.setStatus(HttpServletResponse.SC_OK);
+		resp.setContentLength( output.length() );
+		resp.getWriter().println(output);
 	}
 
 	// FIXME See IndexerService

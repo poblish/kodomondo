@@ -6,16 +6,18 @@ package com.andrewregan.kodomondo.handlers;
 import static org.elasticsearch.index.query.QueryBuilders.matchPhraseQuery;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.SearchHit;
@@ -30,8 +32,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Throwables;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
 /**
  * TODO
@@ -39,7 +39,7 @@ import com.sun.net.httpserver.HttpHandler;
  * @author andrewregan
  *
  */
-public class SearchHandler implements HttpHandler {
+public class SearchHandler extends AbstractHandler {
 
 	@Inject Client esClient;
 	@Inject ObjectMapper mapper;
@@ -51,23 +51,15 @@ public class SearchHandler implements HttpHandler {
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
 	 */
-	public void handle( HttpExchange t) throws IOException {
+	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 
-		String q = null;
-		int maxResults = 20;
+		baseRequest.setHandled(true);
 
-		for ( NameValuePair each : URLEncodedUtils.parse( t.getRequestURI(), "utf-8")) {
-			if ( each.getName().equals("q")) {
-				q = each.getValue();
-			}
-			else if ( each.getName().equals("size")) {
-				maxResults = Integer.parseInt( each.getValue() );
-			}
-		}
+		String q = req.getParameter("q");
+		int maxResults = req.getParameter("size") != null ? Integer.parseInt( req.getParameter("size") ) : 20;
 
 		if ( q == null || q.isEmpty()) {
-			t.sendResponseHeaders( 400, 0);
-			t.getResponseBody().close();
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			return;
 		}
 
@@ -105,15 +97,13 @@ public class SearchHandler implements HttpHandler {
 
 		try {
 			String output = mapper.writeValueAsString(entries);
-			byte[] b = output.getBytes();
-			t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
-			t.sendResponseHeaders(200, b.length);
-			OutputStream os = t.getResponseBody();
-			os.write(b);
-			os.close();
+
+			resp.setStatus(HttpServletResponse.SC_OK);
+			resp.setContentType("application/json;charset=utf-8");
+			resp.setContentLength( output.length() );
+			resp.getWriter().println(output);
 		}
 		catch (Throwable e) {
-			LOG.error( "", e);  // FIXME
 			Throwables.propagate(e);
 		}
 	}

@@ -2,14 +2,21 @@ package com.andrewregan.kodomondo;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.elasticsearch.client.Client;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,12 +32,8 @@ import com.andrewregan.kodomondo.handlers.SearchHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
 
 import dagger.ObjectGraph;
 
@@ -40,7 +43,7 @@ import dagger.ObjectGraph;
  */
 public class LocalMavenServer 
 {
-	private final HttpServer server;
+	private final Server httpServer;
 	private final Map<String,IDataSource> dataSources = Maps.newHashMap();
 
 	@Inject ObjectMapper mapper;
@@ -70,27 +73,29 @@ public class LocalMavenServer
 	}
 
 	public LocalMavenServer() {
-		try {
-			readConfig();
-			server = HttpServer.create(new InetSocketAddress(2000), 0);
-		}
-		catch (IOException e) {
-			LOG.error( "", e);  // FIXME
-			throw Throwables.propagate(e);
-		}
+		readConfig();
+		httpServer = new Server(2000);
 	}
 
 	public void addContexts() {
-		server.createContext("/", listingsHandler);
-		server.createContext("/launch", launchHandler);
-		server.createContext("/datasource", new DataSourceHandler());
-		server.createContext("/info", infoHandler);
-		server.createContext("/search", searchHandler);
-		server.setExecutor(null); // creates a default executor
+		final ContextHandlerCollection coll = new ContextHandlerCollection();
+		createContext("/", listingsHandler, coll);
+		createContext("/launch", launchHandler, coll);
+		createContext("/datasource", new DataSourceHandler(), coll);
+		createContext("/info", infoHandler, coll);
+		createContext("/search", searchHandler, coll);
+		httpServer.setHandler(coll);
 	}
 
-	public void start() {
-		server.start();
+	private void createContext( String prefix, Handler handler, ContextHandlerCollection coll) {
+		final ContextHandler listingsCtxt = new ContextHandler(prefix);
+		listingsCtxt.setHandler(handler);
+		coll.addHandler(listingsCtxt);
+	}
+
+	public void start() throws Exception {
+		httpServer.start();
+		httpServer.join();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -121,26 +126,25 @@ public class LocalMavenServer
 		}
 	}
 
-	private class DataSourceHandler implements HttpHandler {
+	private class DataSourceHandler extends AbstractHandler {
 
 		/* (non-Javadoc)
 		 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
 		 */
-		public void handle( HttpExchange t) throws IOException {
-			final String dsName = t.getRequestURI().getPath().substring(12);  // '/datasource/...'
+		public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
+			final String dsName = baseRequest.getRequestURI().substring(12);  // '/datasource/...'
 			final IDataSource ds = dataSources.get(dsName);
 
 			if ( ds != null) {
-				final byte[] bs = mapper.writeValueAsBytes(ds);
-				t.getResponseHeaders().put( "Content-type", Lists.newArrayList("application/json"));
-				t.sendResponseHeaders(200, bs.length);
-				OutputStream os = t.getResponseBody();
-				os.write(bs);
-				os.close();
+				final String output = mapper.writeValueAsString(ds);
+
+				resp.setContentType("application/json;charset=utf-8");
+				resp.setStatus(HttpServletResponse.SC_OK);
+				resp.setContentLength( output.length() );
+				resp.getWriter().println(output);
 			}
 			else {
-				t.sendResponseHeaders( 404, 0);
-				t.getResponseBody().close();
+				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			}
 		}		
 	}

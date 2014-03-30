@@ -5,7 +5,6 @@ package com.andrewregan.kodomondo.handlers;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.Enumeration;
 import java.util.Map;
@@ -14,19 +13,19 @@ import java.util.jar.JarFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.objectweb.asm.ClassReader;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.google.common.base.Throwables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.ByteStreams;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateException;
@@ -37,7 +36,7 @@ import freemarker.template.TemplateException;
  * @author andrewregan
  *
  */
-public class InfoHandler implements HttpHandler {
+public class InfoHandler extends AbstractHandler {
 
 	@Inject Configuration fmConfig;
 	@Inject IFileSystem fs;
@@ -48,28 +47,19 @@ public class InfoHandler implements HttpHandler {
 	/* (non-Javadoc)
 	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
 	 */
-	public void handle( HttpExchange t) throws IOException {
+	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 
-		String className = null;
-		String artifactName = null;
-		String jarName = null;
+		baseRequest.setHandled(true);
 
-		for ( NameValuePair each : URLEncodedUtils.parse( t.getRequestURI(), "utf-8")) {
-			if (each.getName().equals("class")) {
-				className = each.getValue();
-			}
-			else if (each.getName().equals("artifact")) {
-				artifactName = each.getValue();
-			}
-			else if (each.getName().equals("jar")) {
-				jarName = each.getValue();
-			}
-		}
+		final String className = req.getParameter("class");
+		final String artifactName = req.getParameter("artifact");
+		final String jarName = req.getParameter("jar");
 
 		final Map<String,Object> resultsModel = Maps.newHashMap();
 		populateModelFromInputs( resultsModel, className, artifactName, jarName);
 
-		t.getResponseHeaders().put( "Content-type", Lists.newArrayList("text/html"));
+		resp.setContentType("text/html;charset=utf-8");
+		resp.setStatus(HttpServletResponse.SC_OK);
 
 		StringWriter sw = new StringWriter();
 		try {
@@ -78,11 +68,7 @@ public class InfoHandler implements HttpHandler {
 			Throwables.propagate(e);
 		}
 
-		final String output = sw.toString();
-		t.sendResponseHeaders(200, output.length());
-		OutputStream os = t.getResponseBody();
-		os.write( output.getBytes("utf-8") );
-		os.close();
+		resp.getWriter().println( sw.toString() );
 	}
 
 	private void populateModelFromInputs( Map<String, Object> resultsModel, String className, String artifactName, String jarName) {
