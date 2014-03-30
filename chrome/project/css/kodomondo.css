@@ -16,8 +16,8 @@
     margin: 0 0 -2px 0 !important;
     background: transparent !important;
     border: 0 !important;
-    width: 22px !important;
-    height: 16px !important;
+    max-width: 16px !important;
+    max-height: 16px !important;
 }
 
 .highlightCore_ul {
