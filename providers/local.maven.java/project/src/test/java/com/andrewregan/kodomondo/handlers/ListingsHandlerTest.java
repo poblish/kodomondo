@@ -51,7 +51,7 @@ public class ListingsHandlerTest {
 
 		handler.handle("", req, mock( HttpServletRequest.class ), resp);
 
-		assertThat( sw.toString(), is("{\"classes\":[],\"jar\":null}\n"));
+		assertThat( sw.toString(), is("{\"dirs\":[{\"dir\":\"/metrics\"}]}\n"));
 	}
 
 	@Module( includes=DaggerModule.class, overrides=true, injects=ListingsHandlerTest.class)
