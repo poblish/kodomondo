@@ -33,6 +33,11 @@
                     "name": "org.elasticsearch",
                     "level": "info",
                     "additivity": "true"
+                },
+                {
+                    "name": "org.eclipse.jetty",
+                    "level": "info",
+                    "additivity": "true"
                 }
             ],
             "root": {
