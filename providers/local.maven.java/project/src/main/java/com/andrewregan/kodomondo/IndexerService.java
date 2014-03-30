@@ -4,6 +4,7 @@
 package com.andrewregan.kodomondo;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -50,41 +51,53 @@ public class IndexerService extends AbstractExecutionThreadService {
 
 	@Override
 	protected void run() throws Exception {
-		new LocalMavenRepository(mvnRoot).visit( new ILocalMavenVisitor() {
+		Executors.newSingleThreadScheduledExecutor().scheduleWithFixedDelay( new ServiceRunner(), 0L, /* Every: */ 1L, TimeUnit.HOURS);
+	}
 
-			@Override
-			public boolean acceptDirectory( IFileObject inDir) {
-				final GetResponse getResp = esClient.prepareGet( "datasource.local-maven", "dir-visit", inDir.getAbsolutePath()).get();
-				return (!getResp.isExists());  // Either never existed, or its _ttl expired and it was deleted
-			}
+	private class ServiceRunner implements Runnable {
 
-			@Override
-			public void foundPom( IFileObject dir, IFileObject pomFile) {
-				LOG.debug("> Got POM: " + pomFile);
-				pomIndexerFactory.create( dir, pomFile).run();
-			}
+		@Override
+		public void run() {
+			LOG.trace("Started...");
 
-			@Override
-			public void foundJavaDoc( String relativePath, IFileObject docJar) {
-				LOG.debug("> Got JavaDoc: " + docJar);
-				indexerFactory.create( relativePath, docJar).run();
-			}
+			new LocalMavenRepository(mvnRoot).visit( new ILocalMavenVisitor() {
 
-			@Override
-			public void missingJavaDoc( IFileObject artifactDir) {
-				LOG.debug("> Try to download JavaDoc: " + artifactDir);
-				taskExecutor.submit( docsDownloaderFactory.create(artifactDir) );
-			}
-
-			@Override
-			public void doneDirectory( IFileObject inDir) {
-				if (inDir.equals(mvnRoot)) {
-					return;
+				@Override
+				public boolean acceptDirectory( IFileObject inDir) {
+					final GetResponse getResp = esClient.prepareGet( "datasource.local-maven", "dir-visit", inDir.getAbsolutePath()).get();
+					return (!getResp.isExists());  // Either never existed, or its _ttl expired and it was deleted
 				}
 
-				esClient.prepareIndex( "datasource.local-maven", "dir-visit", inDir.getAbsolutePath()).setTTL( TimeUnit.DAYS.toMillis(2) ).setSource("{\"done\":true}").get();
-			}
+				@Override
+				public void foundPom( IFileObject dir, IFileObject pomFile) {
+					LOG.debug("> Got POM: " + pomFile);
+					pomIndexerFactory.create( dir, pomFile).run();
+				}
 
-		}, mvnRoot, false);
+				@Override
+				public void foundJavaDoc( String relativePath, IFileObject docJar) {
+					LOG.debug("> Got JavaDoc: " + docJar);
+					indexerFactory.create( relativePath, docJar).run();
+				}
+
+				@Override
+				public void missingJavaDoc( IFileObject artifactDir) {
+					LOG.debug("> Try to download JavaDoc: " + artifactDir);
+					taskExecutor.submit( docsDownloaderFactory.create(artifactDir) );
+				}
+
+				@Override
+				public void doneDirectory( IFileObject inDir) {
+					if (inDir.equals(mvnRoot)) {
+						return;
+					}
+
+					esClient.prepareIndex( "datasource.local-maven", "dir-visit", inDir.getAbsolutePath()).setTTL( TimeUnit.DAYS.toMillis(2) ).setSource("{\"done\":true}").get();
+				}
+
+			}, mvnRoot, false);
+
+			LOG.trace("STOPPED");
+		}
 	}
 }
