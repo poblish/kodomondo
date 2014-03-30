@@ -4,3 +4,4 @@ target/
 .project
 providers/local.maven.java/project/data/
 test-output/
+providers/local.maven.java/project/dependency-reduced-pom.xml
