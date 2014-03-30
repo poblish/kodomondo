@@ -153,7 +153,7 @@ function getArtifactInfo(inItem) {
 	$('body').bind('keyup', function(e) { if ( e.keyCode == 27) closeDialog() });
 
 	var introNode = document.createElement('p');
-	introNode.setAttribute('style', 'padding: 12px 0 7px 7px; line-height: 18px; margin: 0');
+	introNode.setAttribute('class', 'kodoInfo');
 	introNode.innerHTML =  inItem.getDisplayName();
 	thePopup.appendChild(introNode);
 
