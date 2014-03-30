@@ -32,25 +32,29 @@ import com.google.common.collect.Lists;
  */
 public class SourceDownloadTask implements Callable<Integer> {
 
-	private final IFileObject artifactFile;
-
 	private IFileSystem fs;
+
+	private final IFileObject artifactFile;
+	private IFileObject mvnRoot;
 
 	private final static Logger LOG = LoggerFactory.getLogger( SourceDownloadTask.class );
 
 	/**
 	 * @param artifactDir
 	 */
-	public SourceDownloadTask( IFileObject inArtifact, IFileSystem fs) {
+	public SourceDownloadTask( IFileObject inArtifact, IFileSystem fs, IFileObject mvnRoot) {
 		this.artifactFile = inArtifact;
 		this.fs = checkNotNull(fs);
+		this.mvnRoot = checkNotNull(mvnRoot);
 	}
 
 	@Override
 	public Integer call() {
 		LOG.debug("Source JAR not found for " + artifactFile);
 
-		ArtifactDesc artifact = fs.toArtifact(artifactFile);
+		final IFileObject relativeRef = artifactFile.getFileRelativeToFile(mvnRoot);
+
+		ArtifactDesc artifact = fs.toArtifact(relativeRef);
 
 		DirectoryContentsRestoration restorer = new DirectoryContentsRestoration( artifactFile.getParent() );
 

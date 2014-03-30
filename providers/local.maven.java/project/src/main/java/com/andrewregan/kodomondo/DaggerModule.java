@@ -116,10 +116,10 @@ public class DaggerModule {
 
 	@Provides
 	@Singleton
-	SourceDownloaderFactory provideSourceDownloaderFactory( final Provider<IFileSystem> fs) {
+	SourceDownloaderFactory provideSourceDownloaderFactory( @Named("mvnRoot") final Provider<IFileObject> mvnRoot, final Provider<IFileSystem> fs) {
 		return new SourceDownloaderFactory() {
 			@Override public SourceDownloadTask create( IFileObject artifact) {
-				return new SourceDownloadTask( artifact, fs.get());
+				return new SourceDownloadTask( artifact, fs.get(), mvnRoot.get());
 			}
 		};
 	}
