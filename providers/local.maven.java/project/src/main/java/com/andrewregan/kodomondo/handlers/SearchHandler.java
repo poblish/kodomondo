@@ -48,9 +48,6 @@ public class SearchHandler extends AbstractHandler {
 
 	private final static Logger LOG = LoggerFactory.getLogger( SearchHandler.class );
 
-	/* (non-Javadoc)
-	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
-	 */
 	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 
 		baseRequest.setHandled(true);

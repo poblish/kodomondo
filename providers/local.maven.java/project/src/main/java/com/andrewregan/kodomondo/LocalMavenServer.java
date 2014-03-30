@@ -128,9 +128,6 @@ public class LocalMavenServer
 
 	private class DataSourceHandler extends AbstractHandler {
 
-		/* (non-Javadoc)
-		 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
-		 */
 		public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 			final String dsName = baseRequest.getRequestURI().substring(12);  // '/datasource/...'
 			final IDataSource ds = dataSources.get(dsName);
