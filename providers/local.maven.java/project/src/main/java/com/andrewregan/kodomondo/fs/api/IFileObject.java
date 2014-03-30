@@ -15,6 +15,8 @@ import java.nio.charset.Charset;
  */
 public interface IFileObject {
 	IFileObject getChild( String path);
+	IFileObject getParent();
+	IFileObject[] listFiles();
 	IFileObject[] listFiles( FileFilter fileFilter);
 	boolean isDirectory();
 	boolean exists();
@@ -28,4 +30,6 @@ public interface IFileObject {
 	String toString( Charset cs) throws IOException;
 
 	void launch() throws IOException;
+
+	boolean delete();
 }

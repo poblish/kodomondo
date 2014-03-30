@@ -15,6 +15,7 @@ import java.util.Arrays;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
 import com.google.common.collect.FluentIterable;
 import com.google.common.io.Files;
 
@@ -29,14 +30,52 @@ public class LocalFile implements IFileObject {
 	private final IFileSystem fs;
 	private final File file;
 
+	private static final FileFilter EMPTY_FILTER = new FileFilter() {
+
+		@Override
+		public boolean accept( File pathname) {
+			return true;
+		}};
+
+
 	public LocalFile( final IFileSystem fs, final File file) {
 		this.fs = checkNotNull(fs);
 		this.file = file;
 	}
 
 	@Override
+	public int hashCode() {
+		return file.hashCode();
+	}
+
+	@Override
+	public boolean equals( Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (!(obj instanceof LocalFile)) {
+			return false;
+		}
+		final LocalFile other = (LocalFile) obj;
+		return Objects.equal( file, other.file);
+	}
+
+	@Override
 	public IFileObject getChild( String path) {
 		return fs.resolveFile( this, path);
+	}
+
+	@Override
+	public IFileObject getParent() {
+		return new LocalFile( fs, file.getParentFile());
+	}
+
+	@Override
+	public IFileObject[] listFiles() {
+        return listFiles(EMPTY_FILTER);
 	}
 
 	@Override
@@ -110,5 +149,13 @@ public class LocalFile implements IFileObject {
 	@Override
 	public String toString() {
 		return file.toString();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.andrewregan.kodomondo.fs.api.IFileObject#delete()
+	 */
+	@Override
+	public boolean delete() {
+		return file.delete();
 	}
 }
