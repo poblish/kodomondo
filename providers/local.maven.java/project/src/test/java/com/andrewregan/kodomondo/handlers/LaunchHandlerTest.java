@@ -1,19 +1,24 @@
 package com.andrewregan.kodomondo.handlers;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URI;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import javax.inject.Inject;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.eclipse.jetty.server.Request;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.andrewregan.kodomondo.DaggerModule;
-import com.sun.net.httpserver.Headers;
 
 import dagger.Module;
 import dagger.ObjectGraph;
@@ -34,12 +39,22 @@ public class LaunchHandlerTest {
     }
 
 	@Test
-	public void testHandle() throws IOException {
-		final com.sun.net.httpserver.HttpExchange req = mock( com.sun.net.httpserver.HttpExchange.class );
-		when(req.getRequestURI()).thenReturn( URI.create("http://localhost:2000/launch/org.apache.lucene.analysis.Analyzer?artifact=org/apache/lucene/lucene-core/4.5.1?source=1") );
-		when(req.getResponseHeaders()).thenReturn( new Headers() );
-		when(req.getResponseBody()).thenReturn( new ByteArrayOutputStream() );
-		handler.handle(req);
+	public void testHandle() throws IOException, ServletException {
+		final Request baseReq = mock( Request.class );
+		final HttpServletRequest req = mock( HttpServletRequest.class );
+		final HttpServletResponse resp = mock( HttpServletResponse.class );
+
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		when(resp.getWriter()).thenReturn(pw);
+
+		when(baseReq.getRequestURI()).thenReturn("org.apache.lucene.analysis.Analyzer");
+		when(req.getParameter("artifact")).thenReturn("org/apache/lucene/lucene-core/4.5.1");
+		when(req.getParameter("source")).thenReturn("1");
+
+		handler.handle("", baseReq, req, resp);
+
+		assertThat( sw.toString(), is("OK\n"));
 	}
 
 	@Module( includes=DaggerModule.class, overrides=true, injects=LaunchHandlerTest.class)
