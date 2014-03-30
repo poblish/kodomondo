@@ -6,12 +6,16 @@ package com.andrewregan.kodomondo.tasks;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
 import org.apache.maven.shared.invoker.DefaultInvocationRequest;
 import org.apache.maven.shared.invoker.DefaultInvoker;
 import org.apache.maven.shared.invoker.InvocationRequest;
 import org.apache.maven.shared.invoker.Invoker;
+import org.apache.maven.shared.invoker.MavenInvocationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +31,7 @@ import com.google.common.collect.Lists;
  * @author andrewregan
  *
  */
-public class JavaDocDownloadTask implements Runnable {
+public class JavaDocDownloadTask implements Callable<Integer> {
 
 	private final IFileObject artifactFile;
 
@@ -48,11 +52,18 @@ public class JavaDocDownloadTask implements Runnable {
 	}
 
 	@Override
-	public void run() {
-		ArtifactDesc artifact = fs.toArtifact(artifactFile);
-		LOG.debug("> Try to download JAR for " + artifact + " (" + artifactFile + ")");
+	public Integer call() {
+		final IFileObject relativeRef = artifactFile.getFileRelativeToFile(mvnRoot);
+
+		ArtifactDesc artifact = fs.toArtifact(relativeRef);
+		LOG.debug("> Try to download JAR for " + artifact + " (" + relativeRef + ")");
 
 		try {
+			IFileObject parentFile = artifactFile.getParent();
+			IFileObject[] origChildren = parentFile.listFiles();
+
+			/////////////////////////////////////////////////////
+
 			Properties props = new Properties();
 			props.put("groupId", artifact.getGroupId());
 			props.put("artifactId", artifact.getArtifactId());
@@ -68,15 +79,29 @@ public class JavaDocDownloadTask implements Runnable {
 			invoker.setOutputHandler(null);
 			int result = invoker.execute( request ).getExitCode();
 
+			/////////////////////////////////////////////////////
+
 			LOG.debug( result == 0 ? "SUCCESS" : "FAIL");
 
+			List<IFileObject> newFiles = Lists.newArrayList( parentFile.listFiles() );
+			newFiles.removeAll( Arrays.asList(origChildren) );
+			if ( result == 0 && newFiles.isEmpty()) {
+				throw new RuntimeException("Nothing downloaded");
+			}
+
 			if ( result == 0) {
+				// Must be synchronous, otherwise we'd have to hand over responsibility for cleanup
 				indexerFactory.create( artifact.toPath(), mvnRoot.getChild( artifact.toPath() + "/" + artifact.getArtifactId() + "-" + artifact.getVersion() + "-javadoc.jar")).run();  // Yes, in same Thread
 			}
+
+			for ( IFileObject eachNewFile : newFiles) {
+				eachNewFile.delete();
+			}
+
+			return result;
 		}
-		catch (Throwable e) {
-			LOG.error( "", e);  // FIXME
-			Throwables.propagate(e);
+		catch (MavenInvocationException e) {
+			throw Throwables.propagate(e);
 		}
 		finally {
 			LOG.debug("> DONE: " + artifact);
