@@ -53,6 +53,8 @@ public class SearchHandler extends AbstractHandler {
 	 */
 	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 
+		baseRequest.setHandled(true);
+
 		String q = req.getParameter("q");
 		int maxResults = req.getParameter("size") != null ? Integer.parseInt( req.getParameter("size") ) : 20;
 

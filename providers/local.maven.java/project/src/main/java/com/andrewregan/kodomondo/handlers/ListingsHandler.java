@@ -49,6 +49,8 @@ public class ListingsHandler extends AbstractHandler {
 
 	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 
+		baseRequest.setHandled(true);
+
 		final String path = baseRequest.getRequestURI().substring(1);
 		IFileObject f = mvnRoot.getChild(path);
 

@@ -84,11 +84,12 @@ public class LocalMavenServer
 		createContext("/datasource", new DataSourceHandler(), coll);
 		createContext("/info", infoHandler, coll);
 		createContext("/search", searchHandler, coll);
+		httpServer.setHandler(coll);
 	}
 
 	private void createContext( String prefix, Handler handler, ContextHandlerCollection coll) {
-		final ContextHandler listingsCtxt = new ContextHandler("/");
-		listingsCtxt.setHandler(listingsHandler);
+		final ContextHandler listingsCtxt = new ContextHandler(prefix);
+		listingsCtxt.setHandler(handler);
 		coll.addHandler(listingsCtxt);
 	}
 

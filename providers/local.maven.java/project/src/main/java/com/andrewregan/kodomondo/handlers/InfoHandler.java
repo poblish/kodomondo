@@ -49,6 +49,8 @@ public class InfoHandler extends AbstractHandler {
 	 */
 	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 
+		baseRequest.setHandled(true);
+
 		final String className = req.getParameter("class");
 		final String artifactName = req.getParameter("artifact");
 		final String jarName = req.getParameter("jar");

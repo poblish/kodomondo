@@ -57,6 +57,8 @@ public class LaunchHandler extends AbstractHandler {
 	public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 		final String clazz = baseRequest.getRequestURI().substring(8);  // '/launch/...'
 
+		baseRequest.setHandled(true);
+
 		final IFileObject artifactDir = mvnRoot.getChild( req.getParameter("artifact") );
 		final boolean isJar = req.getParameter("jar") != null;
 		final boolean isSource = req.getParameter("source") != null;
@@ -125,7 +127,6 @@ public class LaunchHandler extends AbstractHandler {
 			else {
 				System.err.println( artifactDir + " is not a directory!");
 				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-				baseRequest.setHandled(true);
 				return;
 			}
 		}
