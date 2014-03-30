@@ -52,6 +52,11 @@ public class InfoHandler extends AbstractHandler {
 		final String artifactName = req.getParameter("artifact");
 		final String jarName = req.getParameter("jar");
 
+		if ( className == null) {
+			resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			return;
+		}
+
 		final Map<String,Object> resultsModel = Maps.newHashMap();
 		populateModelFromInputs( resultsModel, className, artifactName, jarName);
 

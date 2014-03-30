@@ -40,7 +40,7 @@ public class LocalFile implements IFileObject {
 
 	public LocalFile( final IFileSystem fs, final File file) {
 		this.fs = checkNotNull(fs);
-		this.file = file;
+		this.file = checkNotNull(file);
 	}
 
 	@Override
