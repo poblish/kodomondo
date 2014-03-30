@@ -174,7 +174,7 @@
 	<properties>
 		<dagger.version>1.2.1</dagger.version>
 		<hamcrest.version>1.3</hamcrest.version>
-		<jackson.version>2.2.3</jackson.version>
+		<jackson.version>2.3.2</jackson.version>
 		<log4j.version>2.0-rc1</log4j.version>
 	</properties>
 </project>
