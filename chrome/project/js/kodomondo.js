@@ -74,6 +74,8 @@ function refreshTerms( inOptions, inDocUrl, ioStats, ioHistory) {
 	refreshTermsCallback( inOptions, inDocUrl, ioStats, ioHistory, visitTerm)
 }
 
+var fqnsMatched;
+
 function refreshTermsCallback( inOptions, inDocUrl, ioStats, ioHistory, visitorCallback) {
 	/* Original @author Rob W, created on 16-17 September 2011, on request for Stackoverflow (http://stackoverflow.com/q/7085454/938089) */
 	var minIndividualWordLength = 5;
@@ -82,6 +84,8 @@ function refreshTermsCallback( inOptions, inDocUrl, ioStats, ioHistory, visitorC
 
 	var i, textlen;
 	var totalNumTermsInDoc = 0, keyTermsMatched = 0;
+
+	fqnsMatched = 0;
 
 	var keyTermsRegex = g_KeyTermRegexes.length > 0 ? new RegExp( '\\b' + '(' + g_KeyTermRegexes.join('|') + ')' + '\\b', "i") : null;  // FIXME Why do we have to keep regenerating in content script?
 	// console.log('keyTermsRegex', keyTermsRegex);
@@ -112,9 +116,9 @@ function refreshTermsCallback( inOptions, inDocUrl, ioStats, ioHistory, visitorC
 	}
 
 	window.setTimeout( function(e) {
-		var normalTermsFound = termsToHighlight.length;
-		var score = Math.pow(( 10 * keyTermsMatched + normalTermsFound) / totalNumTermsInDoc, 0.45);
-		console.log('SCORE', score, ' > ', keyTermsMatched, normalTermsFound, '/', totalNumTermsInDoc);
+		var normalTermsFound = termsToHighlight.length - fqnsMatched;
+		var score = Math.pow(( 15 * fqnsMatched + ( 5 * keyTermsMatched) + normalTermsFound) / totalNumTermsInDoc, 0.6);
+		console.log('SCORE', score, ' > ', fqnsMatched, keyTermsMatched, normalTermsFound, '/', totalNumTermsInDoc);
 
 		if ( score > 0.25) {
 			for (i = 0; i < termsToHighlight.length; i++) {
@@ -133,6 +137,11 @@ function visitTerm(term, inDocUrl, ioStats, ioHistory, inOptions) {  // FIXME Ne
 		termLookupPort.onMessage.addListener( function(resp) {
 			if (/* Match response to request */ resp.origTerm == term) {
 				termsToHighlight.push({ term: resp.origTerm, resp: resp});
+
+				if (term.indexOf('.') > 0) {
+					fqnsMatched++;
+				}
+
 				// console.log(resp.origTerm + ' -> ' + resp.classDetails.name);
 			}
 		});
