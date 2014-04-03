@@ -122,7 +122,8 @@ jQuery.fn.highlight = function( ioStats, ioHistory, inDocUrl, inTermsGroup, inOp
 				var infoImgNode = document.createElement('img');
 				infoImgNode.setAttribute('class', 'info');
 				infoImgNode.src = chrome.runtime.getURL('img/info.png');
-				infoImgNode.title = 'Kodmondo Info';
+				infoImgNode.title = 'Kodomondo Info';
+				infoImgNode.alt = '';
 
 				jarInfoNode.appendChild(infoImgNode);
 				spanNode.appendChild(jarInfoNode);
