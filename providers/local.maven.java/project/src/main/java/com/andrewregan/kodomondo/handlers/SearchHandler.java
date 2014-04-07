@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import com.andrewregan.kodomondo.tasks.IndexEntry;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Function;
 import com.google.common.base.Throwables;
 import com.google.common.collect.FluentIterable;
@@ -45,6 +47,10 @@ public class SearchHandler extends AbstractHandler {
 	@Inject ObjectMapper mapper;
 
 	private static final List<Text> NO_HIGHLIGHTED_TEXT = Collections.emptyList();
+
+	// FIXME Really need to move into JavaDocIndexingTask, so rather than index junk then clean it up, we index better (and more) context and speed up searches
+	private static final Pattern EXTRA_WS_PATTERN = Pattern.compile("\\p{Z}+");  // Remove all conceivable whitespace runs
+	private static final Pattern JUNK_PATTERN = Pattern.compile("(^[\\.:\\|>] |\\.$| [A-Z]$|Method Summary|extends Object|METHOD DETAIL: FIELD \\| CONSTR \\| METHOD)|(Modifier ?)and Type|(Field )?and Description|Methods Method", Pattern.CASE_INSENSITIVE);
 
 	private final static Logger LOG = LoggerFactory.getLogger( SearchHandler.class );
 
@@ -78,7 +84,7 @@ public class SearchHandler extends AbstractHandler {
 
 				entries.add( new SearchResult( theEntry, FluentIterable.from(texts).transform( new Function<Text,String>() {
 					public String apply( Text input) {
-						return input.string().trim().replaceAll("\\s+", " "); 
+						return cleanUpHighlight(input);
 					}
 				} ).toArray( String.class ), each.getScore()) );
 			}
@@ -104,6 +110,23 @@ public class SearchHandler extends AbstractHandler {
 			Throwables.propagate(e);
 		}
 	}
+
+	@VisibleForTesting
+	protected String cleanUpHighlight( final Text input) {
+		String s = input.string();
+		int prevLen;
+
+		do {
+			prevLen = s.length();
+			s = s.trim();
+			s = EXTRA_WS_PATTERN.matcher(s).replaceAll(" ");
+			s = JUNK_PATTERN.matcher(s).replaceAll("");
+		}
+		while (prevLen != s.length());
+
+		return s;
+	}
+	
 
 	private static class SearchResult {
 		private final IndexEntry entry;

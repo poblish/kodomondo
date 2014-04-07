@@ -1,6 +1,7 @@
 package com.andrewregan.kodomondo.handlers;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Request;
+import org.elasticsearch.common.text.StringText;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -39,6 +41,13 @@ public class SearchHandlerTest {
     void injectDependencies() {
         ObjectGraph.create( new TestModule() ).inject(this);
     }
+
+	@Test
+	public void testCleanupHighlight() {
+		assertThat( handler.cleanUpHighlight( new StringText("Test 1 2 3") ), is("Test 1 2 3"));
+		assertThat( handler.cleanUpHighlight( new StringText("Interfaces: Cloneable public class StatsConfig extends Object implements Cloneable Specifies the attributes of a <em>statistics</em> retrieval operation. Field Summary static StatsConfig DEFAULT           A") ), is("Interfaces: Cloneable public class StatsConfig implements Cloneable Specifies the attributes of a <em>statistics</em> retrieval operation. Field Summary static StatsConfig DEFAULT"));
+		assertThat( handler.cleanUpHighlight( new StringText(".   Method Summary  StatsConfig clone()           Returns a copy of this configuration object.  ") ), is("StatsConfig clone() Returns a copy of this configuration object"));
+	}
 
 	@Test
 	public void testHandle() throws IOException, ServletException {
