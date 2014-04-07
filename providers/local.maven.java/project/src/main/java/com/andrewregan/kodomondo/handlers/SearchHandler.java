@@ -93,12 +93,12 @@ public class SearchHandler extends AbstractHandler {
 		}
 
 		try {
-			String output = mapper.writeValueAsString(entries);
+			byte[] output = mapper.writeValueAsBytes(entries);
 
 			resp.setStatus(HttpServletResponse.SC_OK);
 			resp.setContentType("application/json;charset=utf-8");
-			resp.setContentLength( output.length() );
-			resp.getWriter().println(output);
+			resp.setContentLength( output.length );
+			resp.getOutputStream().write(output);
 		}
 		catch (Throwable e) {
 			Throwables.propagate(e);

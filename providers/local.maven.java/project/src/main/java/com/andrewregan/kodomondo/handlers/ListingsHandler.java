@@ -84,7 +84,7 @@ public class ListingsHandler extends AbstractHandler {
 				}
 			}
 
-			final String output;
+			final byte[] output;
 
 			if (!jars.isEmpty()) {
 				if (jars.size() == 1) {
@@ -99,16 +99,16 @@ public class ListingsHandler extends AbstractHandler {
 			}
 			else if (!versions.isEmpty()) {
 				String highest = Ordering.from( new VersionComparator() ).max(versions);
-				output = mapper.writeValueAsString( new VersionResponse(highest) );
+				output = mapper.writeValueAsBytes( new VersionResponse(highest) );
 			}
 			else {
-				output = mapper.writeValueAsString( new DirResponse(dirsList) );
+				output = mapper.writeValueAsBytes( new DirResponse(dirsList) );
 			}
 
 			resp.setContentType("application/json;charset=utf-8");
 			resp.setStatus(HttpServletResponse.SC_OK);
-			resp.setContentLength( output.length() );
-			resp.getWriter().println(output);
+			resp.setContentLength( output.length );
+			resp.getOutputStream().write(output);
 		}
 		else {
 			handleFile( resp, f);
@@ -168,12 +168,12 @@ public class ListingsHandler extends AbstractHandler {
 
 		final String mavenRelJarPath = f.getPathRelativeToFile(mvnRoot);
 
-		final String output = mapper.writeValueAsString( new ClassResponse( mavenRelJarPath, classesList) );
+		final byte[] output = mapper.writeValueAsBytes( new ClassResponse( mavenRelJarPath, classesList) );
 
 		resp.setContentType("application/json;charset=utf-8");
 		resp.setStatus(HttpServletResponse.SC_OK);
-		resp.setContentLength( output.length() );
-		resp.getWriter().println(output);
+		resp.setContentLength( output.length );
+		resp.getOutputStream().write(output);
 	}
 
 	// FIXME See IndexerService

@@ -57,6 +57,7 @@ public class LocalMavenServer
 	@Inject ListingsHandler listingsHandler;
 	@Inject SearchHandler searchHandler;
 
+	@SuppressWarnings("unused")
 	private final static Logger LOG = LoggerFactory.getLogger( LocalMavenServer.class );
 
 
@@ -133,12 +134,12 @@ public class LocalMavenServer
 			final IDataSource ds = dataSources.get(dsName);
 
 			if ( ds != null) {
-				final String output = mapper.writeValueAsString(ds);
+				final byte[] output = mapper.writeValueAsBytes(ds);
 
 				resp.setContentType("application/json;charset=utf-8");
 				resp.setStatus(HttpServletResponse.SC_OK);
-				resp.setContentLength( output.length() );
-				resp.getWriter().println(output);
+				resp.setContentLength( output.length );
+				resp.getOutputStream().write(output);
 			}
 			else {
 				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
