@@ -3,7 +3,7 @@ require 'formula'
 class Kodomondo < Formula
   homepage 'https://github.com/poblish/kodomondo'
   url "https://github.com/poblish/kodomondo/raw/mvn-repo/com/andrewregan/kodomondo/0.0.1/local-maven-server-0.0.1.jar"
-  sha1 "f0ffef0202c3756df39dc26630a88b7673070af9"
+  sha1 "ffd0307959ebaac1b45abc63b17fb924733c6b50"
 
   resource 'startupScript' do
     url 'https://raw.githubusercontent.com/poblish/kodomondo/master/providers/bin/kodomondo.sh'

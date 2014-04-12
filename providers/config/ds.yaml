@@ -1,0 +1,63 @@
+---
+name: programming-language
+key-terms:
+  - Commits?
+  - Merge requests?
+stopwords:
+  - About
+  - After
+  - "[Bb]efore"
+  - break
+  - "[Cc]hanges?"
+  - Check
+  - "[Cc]hoices?"
+  - "[Cc]lass(es)?"
+  - "[Cc]omment(s)?"
+  - continue
+  - Default
+  - "[Dd]etail"
+  - "[Dd]eprecated"
+  - "[Dd]ocumentation"
+  - "[Dd]ownload"
+  - "[Ff]ilter"
+  - goto
+  - "[Hh]elp"
+  - "[Ii]ndex"
+  - language
+  - Library
+  - LICENSE
+  - Maven
+  - "[Mm]essages"
+  - "[Mm]ethod"
+  - "[Oo]ption"
+  - "[Pp]ackage"
+  - param
+  - "[Pp]arameters?"
+  - "[Pp]assword"
+  - Project
+  - "[Qq]uick"
+  - "[Rr]emove"
+  - rename
+  - Rename
+  - "[Rr]eturns?"
+  - "[Rr]ights?"
+  - Search
+  - "[Ss]ettings"
+  - Since
+  - Start
+  - String
+  - "[Ss]ubject"
+  - Sun
+  - switch
+  - "[Tt]erms?"
+  - "[Uu]pdate"
+  - "[Vv]alues?"
+---
+name: local-maven
+inherit: programming-language
+implClass: "com.andrewregan.kodomondo.ds.LocalMavenDataSource"
+key-terms:
+  - Java
+stopwords:
+  - Java
+  - Oracle
