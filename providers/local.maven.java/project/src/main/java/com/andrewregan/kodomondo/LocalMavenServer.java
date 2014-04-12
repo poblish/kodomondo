@@ -62,7 +62,16 @@ public class LocalMavenServer
 
 
 	public static void main(String[] args) throws Exception {
-		final LocalMavenServer server = new LocalMavenServer();
+
+		String configFilePath = null;
+		for ( int i = 0; i < args.length; i++) {
+			if (args[i].equals("--config")) {
+				configFilePath = args[i+1];
+				break;
+			}
+ 		}
+
+		final LocalMavenServer server = new LocalMavenServer(configFilePath);
 		ObjectGraph.create( new DaggerModule() ).inject(server);
 
 		server.esUtils.waitForStatus();  // When it returns, ES will be up-and-running, so start listening...
@@ -73,8 +82,8 @@ public class LocalMavenServer
 		server.start();
 	}
 
-	public LocalMavenServer() {
-		readConfig();
+	public LocalMavenServer( String configFilePath) {
+		readConfig(configFilePath);
 		httpServer = new Server(2000);
 	}
 
@@ -100,9 +109,11 @@ public class LocalMavenServer
 	}
 
 	@SuppressWarnings("unchecked")
-	private void readConfig() {
+	private void readConfig( String configFilePath) {
 		try {
-			for ( Object eachEntry : new Yaml().loadAll( Files.toString( new File( "src/main/resources/conf", "ds.yaml"), Charset.forName("utf-8")))) {
+			final String pathToUse = Strings.emptyToNull(configFilePath) != null ? configFilePath : "src/main/resources/conf/ds.yaml";
+
+			for ( Object eachEntry : new Yaml().loadAll( Files.toString( new File(pathToUse), Charset.forName("utf-8")))) {
 				Map<String,Object> eachDsEntry = (Map<String,Object>) eachEntry;
 
 				final String dsName = Strings.emptyToNull((String) eachDsEntry.get("name"));
