@@ -55,7 +55,7 @@ String.prototype.endsWith = function(suffix) {
 
 function closeDialog() {
 	$('div.fbOutermost').each( function(i) { $(this).remove(); });
-	$('div.overlay').remove();
+	$('div.kodoOverlay').remove();
 }
 
 

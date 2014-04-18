@@ -41,7 +41,7 @@
     font-size: 120%;
 }
 
-.overlay {
+.kodoOverlay {
     position:fixed;
     top:0px;
     bottom:0px;

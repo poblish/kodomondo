@@ -156,7 +156,7 @@ function getArtifactInfo(inItem) {
 	var thePopup = new FacebookStylePopup( document.body, theHeaderElem, 800);
 
 	var overlay = document.createElement('div');
-	overlay.setAttribute('class', 'overlay');
+	overlay.setAttribute('class', 'kodoOverlay');
 	document.body.appendChild(overlay);
 
 	$('body').bind('keyup', function(e) { if ( e.keyCode == 27) closeDialog() });
