@@ -3,8 +3,6 @@
  */
 package com.andrewregan.kodomondo;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,7 +27,6 @@ import com.andrewregan.kodomondo.tasks.PomIndexingTask;
 import com.andrewregan.kodomondo.tasks.SourceDownloadTask;
 import com.andrewregan.kodomondo.tasks.SourceDownloaderFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.base.Throwables;
 
 import dagger.Module;
 import dagger.Provides;
@@ -53,12 +50,7 @@ public class DaggerModule {
 	@Singleton
 	Configuration provideConfiguration() {
 		final Configuration theConfig = new Configuration();
-		try {
-			theConfig.setDirectoryForTemplateLoading( new File("src/main/resources/templates"));
-		}
-		catch (IOException e) {
-			Throwables.propagate(e);
-		}
+		theConfig.setClassForTemplateLoading(this.getClass(), "/templates");
 		return theConfig;
 	}
 
