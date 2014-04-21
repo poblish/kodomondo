@@ -5,6 +5,8 @@ kodomondo
 
 **Kodomondo** is a Chrome extension that can subscribe to a range of different data sources, highlighting relevant terms within the web pages you visit, letting you explore the references in more detail.
 
+![Architecture Diagram](https://raw.githubusercontent.com/poblish/kodomondo/master/architecture/Kodomondo.png)
+
 Each datasource is configured with its own **keywords, stopwords, and contextual rules**, so that only the most relevant web pages are ever touched by the highlighter. The aim is to minimise noise, and provide only the most useful matches.
 
 ---
