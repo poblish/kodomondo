@@ -12,6 +12,7 @@ import javax.inject.Singleton;
 
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
@@ -60,7 +61,16 @@ public class DaggerModule {
 		 final Node node = NodeBuilder.nodeBuilder().settings( ImmutableSettings.builder()
 						 		.put( "index.number_of_shards", 1)
 						 	.build() ).node();
-		 return node.client();
+		 final Client c = node.client();
+
+		 try {
+			 c.admin().indices().prepareCreate("datasource.local-maven").setSettings("{}").execute().actionGet();
+		 }
+		 catch (IndexAlreadyExistsException e) {
+			 // Ignore
+		 }
+
+		 return c;
 	}
 
 	@Provides
