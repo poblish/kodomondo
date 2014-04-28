@@ -2,6 +2,5 @@ target/
 .settings/
 .classpath
 .project
-providers/local.maven.java/project/data/
 test-output/
-providers/local.maven.java/project/dependency-reduced-pom.xml
+server/dependency-reduced-pom.xml

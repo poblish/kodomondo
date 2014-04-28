@@ -2,10 +2,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.andrewregan.kodomondo</groupId>
-	<artifactId>local-maven-server</artifactId>
+	<artifactId>kodomondo-server</artifactId>
 	<packaging>jar</packaging>
 	<version>0.0.1</version>
-	<name>local-maven-server</name>
+	<name>Kodomondo Server</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
