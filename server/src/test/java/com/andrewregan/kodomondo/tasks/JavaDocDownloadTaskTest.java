@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.DaggerModule;
+import com.andrewregan.kodomondo.LocalMavenConfig;
 import com.andrewregan.kodomondo.es.EsUtils;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 
@@ -50,7 +50,7 @@ public class JavaDocDownloadTaskTest {
 		assertThat( "File not deleted", new File("/Users/andrewregan/.m2/repository/com/google/guava/guava/16.0.1/guava-16.0.1-javadoc.jar.sha1").exists(), is(false));
 	}
 
-	@Module( includes=DaggerModule.class, overrides=true, injects=JavaDocDownloadTaskTest.class)
+	@Module( includes=LocalMavenConfig.class, overrides=true, injects=JavaDocDownloadTaskTest.class)
 	static class TestModule {
 
 //		@Provides

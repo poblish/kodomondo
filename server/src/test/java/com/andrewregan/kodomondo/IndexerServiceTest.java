@@ -58,7 +58,7 @@ public class IndexerServiceTest {
 		indexer.stopAsync();
 	}
 
-	@Module( includes=DaggerModule.class, overrides=true, injects=IndexerServiceTest.class)
+	@Module( includes=LocalMavenConfig.class, overrides=true, injects=IndexerServiceTest.class)
 	static class TestModule {
 		
 		@Provides

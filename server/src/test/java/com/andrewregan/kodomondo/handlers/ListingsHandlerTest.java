@@ -18,7 +18,7 @@ import org.eclipse.jetty.server.Request;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.DaggerModule;
+import com.andrewregan.kodomondo.LocalMavenConfig;
 
 import dagger.Module;
 import dagger.ObjectGraph;
@@ -54,7 +54,7 @@ public class ListingsHandlerTest {
 		assertThat( sw.toString(), is("{\"dirs\":[{\"dir\":\"/metrics\"}]}\n"));
 	}
 
-	@Module( includes=DaggerModule.class, overrides=true, injects=ListingsHandlerTest.class)
+	@Module( includes=LocalMavenConfig.class, overrides=true, injects=ListingsHandlerTest.class)
 	static class TestModule {
 
 //		@Provides

@@ -72,7 +72,7 @@ public class LocalMavenServer
  		}
 
 		final LocalMavenServer server = new LocalMavenServer(configFilePath);
-		ObjectGraph.create( new DaggerModule() ).inject(server);
+		ObjectGraph.create( new ServerConfig() ).inject(server);
 
 		server.esUtils.waitForStatus();  // When it returns, ES will be up-and-running, so start listening...
 

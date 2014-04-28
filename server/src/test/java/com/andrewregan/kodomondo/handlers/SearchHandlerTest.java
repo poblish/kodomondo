@@ -20,7 +20,7 @@ import org.elasticsearch.common.text.StringText;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.DaggerModule;
+import com.andrewregan.kodomondo.LocalMavenConfig;
 import com.andrewregan.kodomondo.es.EsUtils;
 
 import dagger.Module;
@@ -67,6 +67,6 @@ public class SearchHandlerTest {
 		assertThat( sw.toString(), startsWith("[{\"entry\":{\"artifact\":\"com/google/guava/guava/16.0\",\"className\":\"com.google.common.collect.ImmutableMap\",\"name\":\"\"},\"highlights\""));
 	}
 
-	@Module( includes=DaggerModule.class, overrides=true, injects=SearchHandlerTest.class)
+	@Module( includes=LocalMavenConfig.class, overrides=true, injects=SearchHandlerTest.class)
 	static class TestModule {}
 }

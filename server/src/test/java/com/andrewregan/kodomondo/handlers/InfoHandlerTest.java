@@ -18,7 +18,7 @@ import org.eclipse.jetty.server.Request;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.DaggerModule;
+import com.andrewregan.kodomondo.LocalMavenConfig;
 
 import dagger.Module;
 import dagger.ObjectGraph;
@@ -56,6 +56,6 @@ public class InfoHandlerTest {
 		assertThat( sw.toString(), containsString("<title>Kodomondo: AggregateProjection</title>"));
 	}
 
-	@Module( includes=DaggerModule.class, overrides=true, injects=InfoHandlerTest.class)
+	@Module( includes=LocalMavenConfig.class, overrides=true, injects=InfoHandlerTest.class)
 	static class TestModule {}
 }
