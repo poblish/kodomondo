@@ -47,7 +47,7 @@ public class ServerConfig {
 	@Provides
 	@Singleton
 	Client provideEsClient() {
-		final Optional<String> dataDir = Optional.fromNullable( Strings.emptyToNull( System.getProperty("kodomondoDataDir") ) );
+		final Optional<String> dataDir = Optional.fromNullable( Strings.emptyToNull( System.getenv("KODOMONDO_DATA_DIR") ) );
 
 		final Node node = NodeBuilder.nodeBuilder().settings( ImmutableSettings.builder()
 						.put( "path.data", dataDir.or("/usr/local/var/kodomondo/"))  // Will create 'elasticsearch/nodes/...'
