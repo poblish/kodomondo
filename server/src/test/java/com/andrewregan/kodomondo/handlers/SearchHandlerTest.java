@@ -6,12 +6,13 @@ import static org.hamcrest.Matchers.startsWith;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,15 +57,30 @@ public class SearchHandlerTest {
 		final HttpServletRequest req = mock( HttpServletRequest.class );
 		final HttpServletResponse resp = mock( HttpServletResponse.class );
 
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		when(resp.getWriter()).thenReturn(pw);
+		final ByteArrayOutputStream bas = new ByteArrayOutputStream();
+		final ServletOutputStream sos = new ServletOutputStream() {
+
+			@Override
+			public boolean isReady() {
+				return true;
+			}
+
+			@Override
+			public void setWriteListener( WriteListener writeListener) {
+			}
+
+			@Override
+			public void write( int b) throws IOException {
+				bas.write(b);
+			}};
+
+		when(resp.getOutputStream()).thenReturn(sos);
 
 		when(req.getParameter("q")).thenReturn("ImmutableMap");
 
 		handler.handle("", mock( Request.class ), req, resp);
 
-		assertThat( sw.toString(), startsWith("[{\"entry\":{\"artifact\":\"com/google/guava/guava/16.0\",\"className\":\"com.google.common.collect.ImmutableMap\",\"name\":\"\"},\"highlights\""));
+		assertThat( new String( bas.toByteArray(), "utf-8"), startsWith("[{\"entry\":{\"artifact\":\"com/google/guava/guava/16.0.1\",\"className\":\"com.google.common.collect.ImmutableMap\",\"name\":\"\"},\"highlights\""));
 	}
 
 	@Module( includes=LocalMavenConfig.class, overrides=true, injects=SearchHandlerTest.class)

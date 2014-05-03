@@ -5,12 +5,13 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,15 +44,30 @@ public class ListingsHandlerTest {
 		final Request req = mock( Request.class );
 		final HttpServletResponse resp = mock( HttpServletResponse.class );
 
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		when(resp.getWriter()).thenReturn(pw);
+		final ByteArrayOutputStream bas = new ByteArrayOutputStream();
+		final ServletOutputStream sos = new ServletOutputStream() {
+
+			@Override
+			public boolean isReady() {
+				return true;
+			}
+
+			@Override
+			public void setWriteListener( WriteListener writeListener) {
+			}
+
+			@Override
+			public void write( int b) throws IOException {
+				bas.write(b);
+			}};
+
+		when(resp.getOutputStream()).thenReturn(sos);
 
 		when(req.getRequestURI()).thenReturn("/com/codahale");
 
 		handler.handle("", req, mock( HttpServletRequest.class ), resp);
 
-		assertThat( sw.toString(), is("{\"dirs\":[{\"dir\":\"/metrics\"}]}\n"));
+		assertThat( new String( bas.toByteArray(), "utf-8"), is("{\"dirs\":[{\"dir\":\"/metrics\"}]}"));
 	}
 
 	@Module( includes=LocalMavenConfig.class, overrides=true, injects=ListingsHandlerTest.class)
