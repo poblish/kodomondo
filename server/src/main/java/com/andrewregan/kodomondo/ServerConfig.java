@@ -15,6 +15,8 @@ import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Optional;
+import com.google.common.base.Strings;
 
 import dagger.Module;
 import dagger.Provides;
@@ -45,8 +47,10 @@ public class ServerConfig {
 	@Provides
 	@Singleton
 	Client provideEsClient() {
+		final Optional<String> dataDir = Optional.fromNullable( Strings.emptyToNull( System.getProperty("kodomondoDataDir") ) );
+
 		final Node node = NodeBuilder.nodeBuilder().settings( ImmutableSettings.builder()
-						.put( "path.data", "/usr/local/var/kodomondo/")  // Will create 'elasticsearch/nodes/...'
+						.put( "path.data", dataDir.or("/usr/local/var/kodomondo/"))  // Will create 'elasticsearch/nodes/...'
 						.put( "index.number_of_shards", 1)
 						.build() ).node();
 		final Client c = node.client();

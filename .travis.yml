@@ -1,4 +1,6 @@
 language: java
 jdk:
   - oraclejdk7
-before_script: cd server
+before_script:
+  - kodomondoDataDir=data/
+  - cd server
