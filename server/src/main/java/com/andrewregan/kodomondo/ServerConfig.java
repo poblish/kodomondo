@@ -45,21 +45,21 @@ public class ServerConfig {
 	@Provides
 	@Singleton
 	Client provideEsClient() {
-		 final Node node = NodeBuilder.nodeBuilder().settings( ImmutableSettings.builder()
-					 			.put( "path.data", "/usr/local/var/kodomondo/")  // Will create 'elasticsearch/nodes/...'
-						 		.put( "index.number_of_shards", 1)
-						 	.build() ).node();
-		 final Client c = node.client();
+		final Node node = NodeBuilder.nodeBuilder().settings( ImmutableSettings.builder()
+						.put( "path.data", "/usr/local/var/kodomondo/")  // Will create 'elasticsearch/nodes/...'
+						.put( "index.number_of_shards", 1)
+						.build() ).node();
+		final Client c = node.client();
 
-		 // FIXME: Try to factor this out into LocalMavenConfig somehow
-		 try {
-			 c.admin().indices().prepareCreate("datasource.local-maven").setSettings("{}").execute().actionGet();
-		 }
-		 catch (IndexAlreadyExistsException e) {
-			 // Ignore
-		 }
+		// FIXME: Try to factor this out into LocalMavenConfig somehow
+		try {
+			c.admin().indices().prepareCreate("datasource.local-maven").setSettings("{}").execute().actionGet();
+		}
+		catch (IndexAlreadyExistsException e) {
+			// Ignore
+		}
 
-		 return c;
+		return c;
 	}
 
 	@Provides
