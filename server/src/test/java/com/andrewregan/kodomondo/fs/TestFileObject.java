@@ -27,6 +27,12 @@ public class TestFileObject implements IFileObject {
 		this( fs, path, false, new IFileObject[]{});
 	}
 
+	public TestFileObject( final IFileSystem fs, final String path, boolean isDir) {
+		this.fs = fs;
+		this.path = path;
+		this.isDir = isDir;
+	}
+
 	public TestFileObject( final IFileSystem fs, final String path, boolean isDir, IFileObject[] children) {
 		this.fs = fs;
 		this.path = path;
@@ -41,7 +47,7 @@ public class TestFileObject implements IFileObject {
 
 	@Override
 	public IFileObject getParent() {
-		return null;
+		return fs.resolveFile( this, path.substring( 0, path.lastIndexOf('/')));
 	}
 
 	@Override

@@ -26,6 +26,7 @@ import com.andrewregan.kodomondo.LocalMavenConfig;
 import com.andrewregan.kodomondo.fs.TestFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
+import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
 
 import dagger.Module;
 import dagger.ObjectGraph;
@@ -82,7 +83,10 @@ public class LaunchHandlerTest {
 			final IFileSystem ifs = mock( IFileSystem.class );
 
 			when (ifs.resolveFile( any( IFileObject.class ), anyString() ))
-				.thenReturn( new TestFileObject( ifs, "/usr/blah/org/apache/lucene/lucene-core/4.5.1", true, new IFileObject[]{ new TestFileObject( ifs, "/usr/blah/org/apache/lucene/lucene-core/4.5.1/blah.jar") }) );
+				.thenReturn( new TestFileObject( ifs, "/usr/blah/org/apache/lucene/lucene-core/4.5.1", true, new IFileObject[]{ new TestFileObject( ifs, "/usr/blah/org/apache/lucene/lucene-core/4.5.1/blah.jar") }) )
+				.thenReturn( new TestFileObject( ifs, "/usr/blah/org/apache/lucene/lucene-core/", true, new IFileObject[]{}) );
+
+			when(ifs.toArtifact( any( IFileObject.class ) )).thenReturn( new ArtifactDesc("org.apache.lucene", "lucene-core", "4.5.1") );
 
 			return ifs;
 		}
