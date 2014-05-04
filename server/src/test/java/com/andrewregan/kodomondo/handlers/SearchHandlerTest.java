@@ -3,11 +3,16 @@ package com.andrewregan.kodomondo.handlers;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.startsWith;
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,7 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eclipse.jetty.server.Request;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.StringText;
+import org.elasticsearch.indices.IndexMissingException;
+import org.elasticsearch.indices.TypeMissingException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -28,6 +36,11 @@ import com.andrewregan.kodomondo.es.EsUtils;
 import com.andrewregan.kodomondo.fs.TestFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
+import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.tasks.JavaDocDownloaderFactory;
+import com.google.common.base.Throwables;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 
 import dagger.Module;
 import dagger.ObjectGraph;
@@ -42,7 +55,11 @@ import dagger.Provides;
 public class SearchHandlerTest {
 
 	@Inject EsUtils esUtils;
+	@Inject Client esClient;
+
 	@Inject SearchHandler handler;
+	@Inject IFileSystem fs;
+	@Inject JavaDocDownloaderFactory docsDownloaderFactory;
 
 	@BeforeClass
     void injectDependencies() {
@@ -59,6 +76,20 @@ public class SearchHandlerTest {
 	@Test
 	public void testHandle() throws IOException, ServletException {
 		esUtils.waitForStatus();
+
+		// Clear down...
+		try {
+			esClient.admin().indices().prepareDeleteMapping().setIndices("datasource.local-maven").setType("_all").execute().actionGet();
+		}
+		catch (TypeMissingException e) {
+			// Ignore
+		}
+		catch (IndexMissingException e) {
+			// Ignore
+		}
+
+		// Index something...
+		docsDownloaderFactory.create( fs.resolveFile("/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1.jar") ).call();
 
 		final HttpServletRequest req = mock( HttpServletRequest.class );
 		final HttpServletResponse resp = mock( HttpServletResponse.class );
@@ -94,12 +125,40 @@ public class SearchHandlerTest {
 
 		@Provides @Named("mvnRoot")
 		IFileObject provideMavenRoot(IFileSystem inFS) {
-			return new TestFileObject( mock( IFileSystem.class ), "/usr/blah");
+			return new TestFileObject( getFS(), "/usr/blah");
 		}
 
 		@Provides @Singleton
 		IFileSystem provideFileSystemManager() {
-			return mock( IFileSystem.class );
+			return getFS();
+		}
+
+		private IFileSystem getFS() {
+			final IFileSystem ifs = mock( IFileSystem.class );
+
+			JarFile jf = mock( JarFile.class );
+			final JarEntry je1 = new JarEntry("com/google/common/collect/ImmutableMap.html");
+			final List<JarEntry> jl = Lists.newArrayList(je1);
+
+			when(jf.entries()).thenReturn( Iterators.asEnumeration( jl.iterator() ) );
+
+			try {
+				when(jf.getInputStream( eq(je1) )).thenReturn( new ByteArrayInputStream( "ImmutableMap: An immutable, hash-based Map with reliable user-specified iteration order. Does not permit null keys or values".getBytes("utf-8") ) );
+				when( ifs.openJar( any( IFileObject.class ) ) ).thenReturn(jf);
+			}
+			catch (IOException e) {
+				Throwables.propagate(e);
+			}
+
+			when (ifs.resolveFile( anyString() ))
+				.thenReturn( new TestFileObject( ifs, "/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1.jar") );
+
+			when (ifs.resolveFile( any( IFileObject.class ), anyString() ))
+				.thenReturn( new TestFileObject( ifs, "/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1-javadoc.jar") );
+
+			when(ifs.toArtifact( any( IFileObject.class ) )).thenReturn( new ArtifactDesc("com.google.guava", "guava", "16.0.1") );
+
+			return ifs;
 		}
 	}
 }
