@@ -30,7 +30,7 @@ public class DirectoryContentsRestoration {
 	}
 
 	public boolean contentsChanged() {
-		return assessState().isEmpty();
+		return !assessState().isEmpty();
 	}
 
 	public void restore() {

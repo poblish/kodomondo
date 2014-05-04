@@ -81,7 +81,7 @@ public class JavaDocDownloadTask implements Callable<Integer> {
 			{
 				LOG.debug("SUCCESS");
 
-				if (restorer.contentsChanged()) {
+				if (!restorer.contentsChanged()) {
 					throw new RuntimeException("Nothing downloaded");
 				}
 
