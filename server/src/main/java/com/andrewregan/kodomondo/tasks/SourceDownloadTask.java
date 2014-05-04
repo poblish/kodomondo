@@ -69,8 +69,10 @@ public class SourceDownloadTask implements Callable<Integer> {
 			request.setProperties(props);
 			request.setGoals( Lists.newArrayList("org.apache.maven.plugins:maven-dependency-plugin:2.8:get") );
 
+			final String m2Loc = System.getenv("M2");
+
 			Invoker invoker = new DefaultInvoker();
-			invoker.setMavenHome( new File("/usr/local/") );  // FIXME!
+			invoker.setMavenHome( new File( m2Loc != null ? m2Loc : "/usr/local/") );
 			invoker.setOutputHandler(null);
 			int result = invoker.execute( request ).getExitCode();
 
