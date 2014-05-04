@@ -53,7 +53,7 @@ public class JavaDocIndexingTask implements Runnable {
 	}
 
 	public void run() {
-		checkArgument( docJar.getName().endsWith("-javadoc.jar"), "Not a JavaDoc JAR!");
+		checkArgument( docJar.getName().endsWith("-javadoc.jar"), "Not a JavaDoc JAR: " + docJar);
 
 		LOG.debug("> Start indexing " + docJar);
 

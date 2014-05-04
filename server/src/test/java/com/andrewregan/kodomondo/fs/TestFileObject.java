@@ -3,6 +3,8 @@
  */
 package com.andrewregan.kodomondo.fs;
 
+import static com.google.common.base.Preconditions.checkState;
+
 import java.io.FileFilter;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -21,7 +23,7 @@ public class TestFileObject implements IFileObject {
 	private final IFileSystem fs;
 	private String path;
 	private boolean isDir = false;
-	private IFileObject[] children;
+	private IFileObject[] children = new IFileObject[0];
 
 	public TestFileObject( final IFileSystem fs, final String path) {
 		this( fs, path, false, new IFileObject[]{});
@@ -52,11 +54,13 @@ public class TestFileObject implements IFileObject {
 
 	@Override
 	public IFileObject[] listFiles() {
+		checkState(this.isDir, "Must be a directory: " + this);
 		return children;
 	}
 
 	@Override
 	public IFileObject[] listFiles( FileFilter fileFilter) {
+		checkState(this.isDir, "Must be a directory: " + this);
 		return children;
 	}
 
@@ -107,5 +111,10 @@ public class TestFileObject implements IFileObject {
 	@Override
 	public boolean delete() {
 		return false;
+	}
+
+	@Override
+	public String toString() {
+		return path;
 	}
 }
