@@ -5,7 +5,6 @@ package com.andrewregan.kodomondo.tasks;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.io.File;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -20,6 +19,7 @@ import org.slf4j.LoggerFactory;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.maven.util.MavenHome;
 import com.andrewregan.kodomondo.util.DirectoryContentsRestoration;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Lists;
@@ -70,10 +70,8 @@ public class JavaDocDownloadTask implements Callable<Integer> {
 			request.setProperties(props);
 			request.setGoals( Lists.newArrayList("org.apache.maven.plugins:maven-dependency-plugin:2.8:get") );
 
-			final String m2Loc = System.getenv("M2");
-
 			Invoker invoker = new DefaultInvoker();
-			invoker.setMavenHome( new File( m2Loc != null ? m2Loc : "/usr/local/") );
+			invoker.setMavenHome( MavenHome.getMavenHome() );
 			invoker.setOutputHandler(null);
 
 			int result = invoker.execute( request ).getExitCode();
