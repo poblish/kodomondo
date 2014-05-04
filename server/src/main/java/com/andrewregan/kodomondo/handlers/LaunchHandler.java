@@ -129,9 +129,10 @@ public class LaunchHandler extends AbstractHandler {
 				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 				return;
 			}
+
+			resp.getWriter().println("OK");
 		}
 
 		resp.setStatus(HttpServletResponse.SC_OK);
-		resp.getWriter().println("OK");
 	}
 }
