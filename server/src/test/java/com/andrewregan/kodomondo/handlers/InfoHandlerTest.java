@@ -93,7 +93,6 @@ public class InfoHandlerTest {
 			final List<JarEntry> jl = Lists.newArrayList(je1);
 
 			try {
-				
 				when(jf.entries()).thenReturn( Iterators.asEnumeration( jl.iterator() ) );
 				when(jf.getInputStream( eq(je1) )).thenReturn( new ByteArrayInputStream( Files.toByteArray( new File("src/test/resources/Test.class.bin") ) ) );
 	

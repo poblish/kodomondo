@@ -8,11 +8,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -22,6 +28,9 @@ import com.andrewregan.kodomondo.fs.TestFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.google.common.base.Throwables;
+import com.google.common.collect.Iterators;
+import com.google.common.collect.Lists;
 
 import dagger.Module;
 import dagger.ObjectGraph;
@@ -76,11 +85,28 @@ public class JavaDocDownloadTaskTest {
 		private IFileSystem getFS() {
 			final IFileSystem ifs = mock( IFileSystem.class );
 
-			when (ifs.resolveFile( anyString() ))
-				.thenReturn( new TestFileObject( ifs, "/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1.jar") );
+			JarFile jf = mock( JarFile.class );
+			final JarEntry je1 = new JarEntry("com/google/common/collect/ImmutableMap.class");
+			final List<JarEntry> jl = Lists.newArrayList(je1);
 
-			when (ifs.resolveFile( any( IFileObject.class ), anyString() ))
-				.thenReturn( new TestFileObject( ifs, "/usr/blah/com/google/guava/guava/16.0.1", true, new IFileObject[]{}) );
+			try {
+				when(jf.entries()).thenReturn( Iterators.asEnumeration( jl.iterator() ) );
+				when( ifs.openJar( any( IFileObject.class ) ) ).thenReturn(jf);
+			}
+			catch (IOException e) {
+				Throwables.propagate(e);
+			}
+
+			when (ifs.resolveFile( anyString() )).thenReturn( new TestFileObject( ifs, "/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1.jar") );
+
+			when (ifs.resolveFile( any( IFileObject.class ), anyString() )).thenAnswer( new Answer<IFileObject>() {
+
+					@Override
+					public IFileObject answer( InvocationOnMock invocation) throws Throwable {
+						String name = (String) invocation.getArguments()[1];
+						return name.endsWith(".jar") ? new TestFileObject( ifs, "/usr/blah/" + name, false) : new TestFileObject( ifs, "/usr/blah/" + name, true, new IFileObject[]{});
+					}
+				} );
 
 			when(ifs.toArtifact( any( IFileObject.class ) )).thenReturn( new ArtifactDesc("com.google.guava", "guava", "16.0.1") );
 
