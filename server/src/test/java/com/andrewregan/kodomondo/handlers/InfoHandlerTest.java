@@ -95,7 +95,7 @@ public class InfoHandlerTest {
 			try {
 				
 				when(jf.entries()).thenReturn( Iterators.asEnumeration( jl.iterator() ) );
-				when(jf.getInputStream( eq(je1) )).thenReturn( new ByteArrayInputStream( Files.toByteArray( new File("src/test/resources/Test.class") ) ) );
+				when(jf.getInputStream( eq(je1) )).thenReturn( new ByteArrayInputStream( Files.toByteArray( new File("src/test/resources/Test.class.bin") ) ) );
 	
 				when (ifs.resolveFile( any( IFileObject.class ), anyString() ))
 					.thenReturn( new TestFileObject( ifs, "/usr/blah/org/hibernate/hibernate-core/4.3.0.Final/hibernate-core-4.3.0.Final.jar", false, new IFileObject[]{}) );
