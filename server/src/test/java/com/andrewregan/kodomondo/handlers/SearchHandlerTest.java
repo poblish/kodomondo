@@ -10,6 +10,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
@@ -23,9 +25,13 @@ import org.testng.annotations.Test;
 
 import com.andrewregan.kodomondo.LocalMavenConfig;
 import com.andrewregan.kodomondo.es.EsUtils;
+import com.andrewregan.kodomondo.fs.TestFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
 
 import dagger.Module;
 import dagger.ObjectGraph;
+import dagger.Provides;
 
 /**
  * TODO
@@ -40,7 +46,7 @@ public class SearchHandlerTest {
 
 	@BeforeClass
     void injectDependencies() {
-        ObjectGraph.create( new TestModule() ).inject(this);
+        ObjectGraph.create( new SearchTestModule() ).inject(this);
     }
 
 	@Test
@@ -84,5 +90,16 @@ public class SearchHandlerTest {
 	}
 
 	@Module( includes=LocalMavenConfig.class, overrides=true, injects=SearchHandlerTest.class)
-	static class TestModule {}
+	static class SearchTestModule {
+
+		@Provides @Named("mvnRoot")
+		IFileObject provideMavenRoot(IFileSystem inFS) {
+			return new TestFileObject( mock( IFileSystem.class ), "/usr/blah");
+		}
+
+		@Provides @Singleton
+		IFileSystem provideFileSystemManager() {
+			return mock( IFileSystem.class );
+		}
+	}
 }

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
 
 /**
  * TODO
@@ -17,15 +18,25 @@ import com.andrewregan.kodomondo.fs.api.IFileObject;
  */
 public class TestFileObject implements IFileObject {
 
+	private final IFileSystem fs;
 	private String path;
+	private boolean isDir = false;
+	private IFileObject[] children;
 
-	public TestFileObject( final String path) {
+	public TestFileObject( final IFileSystem fs, final String path) {
+		this( fs, path, false, new IFileObject[]{});
+	}
+
+	public TestFileObject( final IFileSystem fs, final String path, boolean isDir, IFileObject[] children) {
+		this.fs = fs;
 		this.path = path;
+		this.isDir = isDir;
+		this.children = children;
 	}
 
 	@Override
 	public IFileObject getChild( String path) {
-		return new TestFileObject( getAbsolutePath() + "/" + path);
+		return fs.resolveFile( this, path);
 	}
 
 	@Override
@@ -35,17 +46,17 @@ public class TestFileObject implements IFileObject {
 
 	@Override
 	public IFileObject[] listFiles() {
-		return null;
+		return children;
 	}
 
 	@Override
 	public IFileObject[] listFiles( FileFilter fileFilter) {
-		return null;
+		return children;
 	}
 
 	@Override
 	public boolean isDirectory() {
-		return false;
+		return isDir;
 	}
 
 	@Override
@@ -55,7 +66,7 @@ public class TestFileObject implements IFileObject {
 
 	@Override
 	public String getName() {
-		return null;
+		return path.substring( path.lastIndexOf("/") + 1);
 	}
 
 	@Override

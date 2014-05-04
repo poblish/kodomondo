@@ -2,6 +2,8 @@ package com.andrewregan.kodomondo.handlers;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,6 +11,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.WriteListener;
@@ -20,9 +24,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.andrewregan.kodomondo.LocalMavenConfig;
+import com.andrewregan.kodomondo.fs.TestFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileObject;
+import com.andrewregan.kodomondo.fs.api.IFileSystem;
 
 import dagger.Module;
 import dagger.ObjectGraph;
+import dagger.Provides;
 
 /**
  * TODO
@@ -73,10 +81,23 @@ public class ListingsHandlerTest {
 	@Module( includes=LocalMavenConfig.class, overrides=true, injects=ListingsHandlerTest.class)
 	static class TestModule {
 
-//		@Provides
-//		@Singleton
-//		IFileSystem provideFileSystemManager() {
-//			return new TestFileSystem();
-//		}
+		@Provides @Named("mvnRoot")
+		IFileObject provideMavenRoot(IFileSystem inFS) {
+			return new TestFileObject( getFS(), "/usr/blah");
+		}
+
+		@Provides @Singleton
+		IFileSystem provideFileSystemManager() {
+			return getFS();
+		}
+
+		private IFileSystem getFS() {
+			final IFileSystem ifs = mock( IFileSystem.class );
+
+			when (ifs.resolveFile( any( IFileObject.class ), anyString() ))
+				.thenReturn( new TestFileObject( ifs, "/usr/blah/com/codahale", true, new IFileObject[]{ new TestFileObject( ifs, "/usr/blah/com/codahale/metrics", true, new IFileObject[]{}) }) );
+
+			return ifs;
+		}
 	}
 }
