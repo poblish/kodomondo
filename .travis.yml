@@ -3,4 +3,7 @@ jdk:
   - oraclejdk7
 before_script:
   - export KODOMONDO_DATA_DIR=data/
+  - env
   - cd server
+script:
+  -  mvn test -B -X
