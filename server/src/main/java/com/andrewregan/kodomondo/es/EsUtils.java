@@ -6,7 +6,10 @@ package com.andrewregan.kodomondo.es;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.elasticsearch.action.admin.indices.stats.IndicesStatsRequestBuilder;
 import org.elasticsearch.client.Client;
+
+import com.google.common.base.Throwables;
 
 /**
  * TODO
@@ -40,5 +43,26 @@ public class EsUtils {
 //		catch (Throwable e) {
 //			e.printStackTrace();
 //		}
+	}
+
+	public void waitUntilTypesRefreshed( final String... inTypes) {
+		final IndicesStatsRequestBuilder reqBuilder = esClient.admin().indices().prepareStats("datasource.local-maven").setRefresh(true).setTypes(inTypes);
+		final long currCount = reqBuilder.execute().actionGet().getTotal().getRefresh().getTotal();
+		int waitsToGo = 10;
+
+		try {
+			do {
+				Thread.sleep(250);
+				waitsToGo--;
+			}
+			while ( waitsToGo > 0 && reqBuilder.execute().actionGet().getTotal().getRefresh().getTotal() == currCount);
+		}
+		catch (InterruptedException e) {
+			Throwables.propagate(e);
+		}
+
+		if ( waitsToGo <= 0) {
+			throw new RuntimeException("Timeout exceeded!");
+		}
 	}
 }
