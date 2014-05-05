@@ -94,6 +94,9 @@ public class SearchHandlerTest {
 		// Index something...
 		docsDownloaderFactory.create( fs.resolveFile("/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1.jar") ).call();
 
+		// Wait until refresh...
+		esUtils.waitUntilTypesRefreshed("javadoc");
+
 		final HttpServletRequest req = mock( HttpServletRequest.class );
 		final HttpServletResponse resp = mock( HttpServletResponse.class );
 
@@ -161,7 +164,7 @@ public class SearchHandlerTest {
 				@Override
 				public IFileObject answer( InvocationOnMock invocation) throws Throwable {
 					String name = (String) invocation.getArguments()[1];
-					return name.endsWith(".jar") ? new TestFileObject( ifs, "/usr/blah/" + name, false) : new TestFileObject( ifs, "/usr/blah/" + name, true, new IFileObject[]{});
+					return name.endsWith(".jar") ? new TestFileObject( ifs, "/usr/blah/" + name, false) : new StatefulTestDir( ifs, "/usr/blah/"); // new TestFileObject( ifs, "/usr/blah/" + name, true, new IFileObject[]{});
 				}
 			} );
 
