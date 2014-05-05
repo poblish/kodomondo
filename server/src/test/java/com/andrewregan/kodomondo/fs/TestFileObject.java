@@ -20,10 +20,10 @@ import com.andrewregan.kodomondo.fs.api.IFileSystem;
  */
 public class TestFileObject implements IFileObject {
 
-	private final IFileSystem fs;
+	protected final IFileSystem fs;
 	private String path;
 	private boolean isDir = false;
-	private IFileObject[] children = new IFileObject[0];
+	protected IFileObject[] children = new IFileObject[0];
 
 	public TestFileObject( final IFileSystem fs, final String path) {
 		this( fs, path, false, new IFileObject[]{});
@@ -81,7 +81,7 @@ public class TestFileObject implements IFileObject {
 
 	@Override
 	public String getPath() {
-		return null;
+		return path;
 	}
 
 	@Override

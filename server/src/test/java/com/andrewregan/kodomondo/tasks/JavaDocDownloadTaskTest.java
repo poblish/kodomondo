@@ -31,6 +31,7 @@ import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.google.common.collect.ObjectArrays;
 
 import dagger.Module;
 import dagger.ObjectGraph;
@@ -104,13 +105,29 @@ public class JavaDocDownloadTaskTest {
 					@Override
 					public IFileObject answer( InvocationOnMock invocation) throws Throwable {
 						String name = (String) invocation.getArguments()[1];
-						return name.endsWith(".jar") ? new TestFileObject( ifs, "/usr/blah/" + name, false) : new TestFileObject( ifs, "/usr/blah/" + name, true, new IFileObject[]{});
+						return name.endsWith(".jar") ? new TestFileObject( ifs, "/usr/blah/" + name, false) : new StatefulTestDir( ifs, name);
 					}
 				} );
 
 			when(ifs.toArtifact( any( IFileObject.class ) )).thenReturn( new ArtifactDesc("com.google.guava", "guava", "16.0.1") );
 
 			return ifs;
+		}
+
+		// Horrible code to simulate download of a file into a dir
+		private static class StatefulTestDir extends TestFileObject {
+
+			public StatefulTestDir(IFileSystem fs, String path) {
+				super(fs, path, true);
+				this.children = new IFileObject[]{};
+			}
+
+			@Override
+			public IFileObject[] listFiles() {
+				IFileObject[] ret = children.clone();
+				children = ObjectArrays.concat( children, new TestFileObject( this.fs, getAbsolutePath() + "/child." + ret.length, false));
+				return ret;
+			}
 		}
 	}
 }

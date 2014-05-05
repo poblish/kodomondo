@@ -28,6 +28,8 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.StringText;
 import org.elasticsearch.indices.IndexMissingException;
 import org.elasticsearch.indices.TypeMissingException;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -41,6 +43,7 @@ import com.andrewregan.kodomondo.tasks.JavaDocDownloaderFactory;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.google.common.collect.ObjectArrays;
 
 import dagger.Module;
 import dagger.ObjectGraph;
@@ -153,12 +156,34 @@ public class SearchHandlerTest {
 			when (ifs.resolveFile( anyString() ))
 				.thenReturn( new TestFileObject( ifs, "/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1.jar") );
 
-			when (ifs.resolveFile( any( IFileObject.class ), anyString() ))
-				.thenReturn( new TestFileObject( ifs, "/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1-javadoc.jar") );
+			when (ifs.resolveFile( any( IFileObject.class ), anyString() )).thenAnswer( new Answer<IFileObject>() {
+
+				@Override
+				public IFileObject answer( InvocationOnMock invocation) throws Throwable {
+					String name = (String) invocation.getArguments()[1];
+					return name.endsWith(".jar") ? new TestFileObject( ifs, "/usr/blah/" + name, false) : new TestFileObject( ifs, "/usr/blah/" + name, true, new IFileObject[]{});
+				}
+			} );
 
 			when(ifs.toArtifact( any( IFileObject.class ) )).thenReturn( new ArtifactDesc("com.google.guava", "guava", "16.0.1") );
 
 			return ifs;
+		}
+
+		// Horrible code to simulate download of a file into a dir
+		private static class StatefulTestDir extends TestFileObject {
+
+			public StatefulTestDir(IFileSystem fs, String path) {
+				super(fs, path, true);
+				this.children = new IFileObject[]{};
+			}
+
+			@Override
+			public IFileObject[] listFiles() {
+				IFileObject[] ret = children.clone();
+				children = ObjectArrays.concat( children, new TestFileObject( this.fs, getAbsolutePath() + "/child." + ret.length, false));
+				return ret;
+			}
 		}
 	}
 }
