@@ -9,6 +9,8 @@ kodomondo
 
 Each datasource is configured with its own **keywords, stopwords, and contextual rules**, so that only the most relevant web pages are ever touched by the highlighter. The aim is to minimise noise, and provide only the most useful matches.
 
+[![Build Status](https://travis-ci.org/poblish/kodomondo.svg?branch=master)](https://travis-ci.org/poblish/kodomondo)
+
 ---
 ### Java datasource
 Read from local Maven repository.
