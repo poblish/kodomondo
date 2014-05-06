@@ -6,6 +6,11 @@ class Kodomondo < Formula
   sha1 "8f403fc725e462708f7567216d085f5ffb3f71a9"
 
   resource 'startupScript' do
+    url 'https://raw.githubusercontent.com/poblish/kodomondo/master/providers/bin/kodomondo'
+    sha1 '35bab5dbc5fb3457b07e323e1281d15126d603c3'
+  end
+
+  resource 'startupScriptSh' do
     url 'https://raw.githubusercontent.com/poblish/kodomondo/master/providers/bin/kodomondo.sh'
     sha1 '35bab5dbc5fb3457b07e323e1281d15126d603c3'
   end
@@ -16,7 +21,8 @@ class Kodomondo < Formula
   end
 
   def install
-    resource("startupScript").stage { bin.install "kodomondo.sh" }  # FIXME Need to install 'kodomondo'
+    resource("startupScriptSh").stage { bin.install "kodomondo.sh" }
+    resource("startupScript").stage { bin.install "kodomondo" }  # FIXME Should be link to kodomondo.sh!
     resource("configScript").stage { (prefix/"config").install "ds.yaml" }
     libexec.install Dir['*']
     # bin.install_symlink "#{bin}/kodomondo.sh" => "kodomondo"
