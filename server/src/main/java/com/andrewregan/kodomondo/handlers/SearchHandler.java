@@ -26,7 +26,7 @@ import org.elasticsearch.search.highlight.HighlightField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.andrewregan.kodomondo.tasks.IndexEntry;
+import com.andrewregan.kodomondo.modules.maven.tasks.IndexEntry;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.VisibleForTesting;

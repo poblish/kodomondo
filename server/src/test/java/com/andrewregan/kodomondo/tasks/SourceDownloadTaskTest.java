@@ -16,12 +16,14 @@ import javax.inject.Singleton;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.LocalMavenConfig;
 import com.andrewregan.kodomondo.es.EsUtils;
 import com.andrewregan.kodomondo.fs.TestFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
-import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.modules.maven.config.LocalMavenConfig;
+import com.andrewregan.kodomondo.modules.maven.tasks.SourceDownloadTask;
+import com.andrewregan.kodomondo.modules.maven.tasks.SourceDownloaderFactory;
+import com.andrewregan.kodomondo.modules.maven.util.ArtifactDesc;
 
 import dagger.Module;
 import dagger.ObjectGraph;

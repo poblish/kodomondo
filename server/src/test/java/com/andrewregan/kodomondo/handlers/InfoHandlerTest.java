@@ -26,10 +26,11 @@ import org.eclipse.jetty.server.Request;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.LocalMavenConfig;
 import com.andrewregan.kodomondo.fs.TestFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
+import com.andrewregan.kodomondo.modules.maven.config.LocalMavenConfig;
+import com.andrewregan.kodomondo.modules.maven.handlers.InfoHandler;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;

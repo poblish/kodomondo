@@ -22,11 +22,12 @@ import org.eclipse.jetty.server.Request;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.LocalMavenConfig;
 import com.andrewregan.kodomondo.fs.TestFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
-import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.modules.maven.config.LocalMavenConfig;
+import com.andrewregan.kodomondo.modules.maven.handlers.LaunchHandler;
+import com.andrewregan.kodomondo.modules.maven.util.ArtifactDesc;
 
 import dagger.Module;
 import dagger.ObjectGraph;

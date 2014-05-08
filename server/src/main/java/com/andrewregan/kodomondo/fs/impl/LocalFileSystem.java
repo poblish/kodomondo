@@ -6,7 +6,7 @@ import java.util.jar.JarFile;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
-import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.modules.maven.util.ArtifactDesc;
 
 /**
  * TODO

@@ -17,6 +17,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.andrewregan.kodomondo.es.EsUtils;
+import com.andrewregan.kodomondo.modules.maven.IndexerService;
+import com.andrewregan.kodomondo.modules.maven.config.LocalMavenConfig;
 import com.google.common.base.Throwables;
 
 import dagger.Module;

@@ -7,7 +7,7 @@ import java.io.File;
 
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.modules.maven.util.ArtifactDesc;
 
 /**
  * 

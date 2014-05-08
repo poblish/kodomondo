@@ -1,14 +1,14 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo.maven.repo;
+package com.andrewregan.kodomondo.modules.maven.repo;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
-import com.andrewregan.kodomondo.handlers.ListingsHandler;
+import com.andrewregan.kodomondo.modules.maven.handlers.ListingsHandler;
 import com.andrewregan.kodomondo.util.VersionComparator;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;

@@ -22,12 +22,14 @@ import org.mockito.stubbing.Answer;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.andrewregan.kodomondo.LocalMavenConfig;
 import com.andrewregan.kodomondo.es.EsUtils;
 import com.andrewregan.kodomondo.fs.TestFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
-import com.andrewregan.kodomondo.maven.util.ArtifactDesc;
+import com.andrewregan.kodomondo.modules.maven.config.LocalMavenConfig;
+import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocDownloadTask;
+import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocDownloaderFactory;
+import com.andrewregan.kodomondo.modules.maven.util.ArtifactDesc;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;

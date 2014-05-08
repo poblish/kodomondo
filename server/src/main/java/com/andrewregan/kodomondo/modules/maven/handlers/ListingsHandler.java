@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo.handlers;
+package com.andrewregan.kodomondo.modules.maven.handlers;
 
 import java.io.File;
 import java.io.FileFilter;

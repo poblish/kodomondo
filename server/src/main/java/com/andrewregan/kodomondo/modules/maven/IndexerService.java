@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo;
+package com.andrewregan.kodomondo.modules.maven;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,11 +18,11 @@ import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
-import com.andrewregan.kodomondo.maven.repo.ILocalMavenVisitor;
-import com.andrewregan.kodomondo.maven.repo.LocalMavenRepository;
-import com.andrewregan.kodomondo.tasks.JavaDocDownloaderFactory;
-import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
-import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
+import com.andrewregan.kodomondo.modules.maven.repo.ILocalMavenVisitor;
+import com.andrewregan.kodomondo.modules.maven.repo.LocalMavenRepository;
+import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocDownloaderFactory;
+import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocIndexerFactory;
+import com.andrewregan.kodomondo.modules.maven.tasks.PomIndexerFactory;
 import com.google.common.util.concurrent.AbstractExecutionThreadService;
 
 /**

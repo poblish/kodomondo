@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo.maven.repo;
+package com.andrewregan.kodomondo.modules.maven.repo;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 

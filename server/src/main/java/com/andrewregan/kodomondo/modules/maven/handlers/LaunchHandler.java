@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo.handlers;
+package com.andrewregan.kodomondo.modules.maven.handlers;
 
 import java.awt.Desktop;
 import java.io.File;
@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
-import com.andrewregan.kodomondo.tasks.SourceDownloaderFactory;
+import com.andrewregan.kodomondo.modules.maven.tasks.SourceDownloaderFactory;
 import com.google.common.base.Throwables;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo.api;
+package com.andrewregan.kodomondo.ds.api;
 
 import java.util.Collection;
 import java.util.Set;

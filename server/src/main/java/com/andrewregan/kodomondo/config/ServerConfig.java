@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo;
+package com.andrewregan.kodomondo.config;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

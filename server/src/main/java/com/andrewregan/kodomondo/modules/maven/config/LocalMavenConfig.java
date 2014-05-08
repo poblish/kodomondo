@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo;
+package com.andrewregan.kodomondo.modules.maven.config;
 
 import javax.inject.Named;
 import javax.inject.Provider;
@@ -9,17 +9,19 @@ import javax.inject.Singleton;
 
 import org.elasticsearch.client.Client;
 
+import com.andrewregan.kodomondo.KodomondoServer;
+import com.andrewregan.kodomondo.config.ServerConfig;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.fs.impl.LocalFileSystem;
-import com.andrewregan.kodomondo.tasks.JavaDocDownloadTask;
-import com.andrewregan.kodomondo.tasks.JavaDocDownloaderFactory;
-import com.andrewregan.kodomondo.tasks.JavaDocIndexerFactory;
-import com.andrewregan.kodomondo.tasks.JavaDocIndexingTask;
-import com.andrewregan.kodomondo.tasks.PomIndexerFactory;
-import com.andrewregan.kodomondo.tasks.PomIndexingTask;
-import com.andrewregan.kodomondo.tasks.SourceDownloadTask;
-import com.andrewregan.kodomondo.tasks.SourceDownloaderFactory;
+import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocDownloadTask;
+import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocDownloaderFactory;
+import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocIndexerFactory;
+import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocIndexingTask;
+import com.andrewregan.kodomondo.modules.maven.tasks.PomIndexerFactory;
+import com.andrewregan.kodomondo.modules.maven.tasks.PomIndexingTask;
+import com.andrewregan.kodomondo.modules.maven.tasks.SourceDownloadTask;
+import com.andrewregan.kodomondo.modules.maven.tasks.SourceDownloaderFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dagger.Module;

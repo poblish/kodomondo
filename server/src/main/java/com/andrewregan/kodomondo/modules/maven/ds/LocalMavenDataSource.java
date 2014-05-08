@@ -1,7 +1,9 @@
 /**
  * 
  */
-package com.andrewregan.kodomondo.ds;
+package com.andrewregan.kodomondo.modules.maven.ds;
+
+import com.andrewregan.kodomondo.ds.impl.AbstractDataSource;
 
 
 /**
