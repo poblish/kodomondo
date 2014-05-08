@@ -31,7 +31,7 @@ import dagger.Provides;
  * @author andrewregan
  *
  */
-@Module(includes=ServerConfig.class, injects={LocalMavenServer.class})
+@Module(includes=ServerConfig.class, injects={KodomondoServer.class})
 public class LocalMavenConfig {
 
 	@Provides

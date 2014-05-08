@@ -41,7 +41,7 @@ import dagger.ObjectGraph;
  * Hello world!
  *
  */
-public class LocalMavenServer 
+public class KodomondoServer 
 {
 	private final Server httpServer;
 	private final Map<String,IDataSource> dataSources = Maps.newHashMap();
@@ -58,7 +58,7 @@ public class LocalMavenServer
 	@Inject SearchHandler searchHandler;
 
 	@SuppressWarnings("unused")
-	private final static Logger LOG = LoggerFactory.getLogger( LocalMavenServer.class );
+	private final static Logger LOG = LoggerFactory.getLogger( KodomondoServer.class );
 
 
 	public static void main(String[] args) throws Exception {
@@ -71,7 +71,7 @@ public class LocalMavenServer
 			}
  		}
 
-		final LocalMavenServer server = new LocalMavenServer(configFilePath);
+		final KodomondoServer server = new KodomondoServer(configFilePath);
 		ObjectGraph.create( new ServerConfig() ).inject(server);
 
 		server.esUtils.waitForStatus();  // When it returns, ES will be up-and-running, so start listening...
@@ -82,7 +82,7 @@ public class LocalMavenServer
 		server.start();
 	}
 
-	public LocalMavenServer( String configFilePath) {
+	public KodomondoServer( String configFilePath) {
 		readConfig(configFilePath);
 		httpServer = new Server(2000);
 	}
