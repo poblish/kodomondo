@@ -1,10 +1,8 @@
 /**
- * 
+ *
  */
 package com.andrewregan.kodomondo.ds.api;
 
-import java.util.Collection;
-import java.util.Set;
 
 /**
  * TODO
@@ -15,12 +13,10 @@ import java.util.Set;
 public interface IDataSource {
 
 	IDataSource getParent();  // FIXME Should be multiple, i.e. List
+	void setParent( IDataSource parent);
 
 	String getName();
-	Set<String> getStopwords();
-	Set<String> getKeyTerms();
 
-	void setKeyTerms( Collection<String> terms);
-	void setStopwords( Collection<String> terms);
-	void setParent( IDataSource parent);
+	void startup();  // FIXME - lifecycle!
+	void shutdown();  // FIXME - lifecycle!
 }

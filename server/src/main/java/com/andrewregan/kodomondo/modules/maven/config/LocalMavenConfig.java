@@ -9,11 +9,11 @@ import javax.inject.Singleton;
 
 import org.elasticsearch.client.Client;
 
-import com.andrewregan.kodomondo.KodomondoServer;
 import com.andrewregan.kodomondo.config.ServerConfig;
 import com.andrewregan.kodomondo.fs.api.IFileObject;
 import com.andrewregan.kodomondo.fs.api.IFileSystem;
 import com.andrewregan.kodomondo.fs.impl.LocalFileSystem;
+import com.andrewregan.kodomondo.modules.maven.ds.LocalMavenDataSource;
 import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocDownloadTask;
 import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocDownloaderFactory;
 import com.andrewregan.kodomondo.modules.maven.tasks.JavaDocIndexerFactory;
@@ -33,7 +33,7 @@ import dagger.Provides;
  * @author andrewregan
  *
  */
-@Module(includes=ServerConfig.class, injects={KodomondoServer.class})
+@Module(includes=ServerConfig.class, injects={LocalMavenDataSource.class})
 public class LocalMavenConfig {
 
 	@Provides

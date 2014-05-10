@@ -14,6 +14,7 @@ import org.elasticsearch.indices.IndexAlreadyExistsException;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 
+import com.andrewregan.kodomondo.KodomondoServer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
@@ -28,7 +29,7 @@ import freemarker.template.Configuration;
  * @author andrewregan
  *
  */
-@Module(library=true /* Turn off usage checks */)
+@Module(library=true, injects={KodomondoServer.class})
 public class ServerConfig {
 
 	@Provides
