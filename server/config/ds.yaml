@@ -1,5 +1,6 @@
 ---
 name: programming-language
+implClass: "com.andrewregan.kodomondo.ds.impl.KeyTermDataSource"
 key-terms:
   - Commits?
   - Merge requests?
@@ -55,7 +56,7 @@ stopwords:
 ---
 name: local-maven
 inherit: programming-language
-implClass: "com.andrewregan.kodomondo.ds.LocalMavenDataSource"
+implClass: "com.andrewregan.kodomondo.modules.maven.ds.LocalMavenDataSource"
 key-terms:
   - Java
 stopwords:
