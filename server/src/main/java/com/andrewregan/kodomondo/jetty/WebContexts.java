@@ -26,7 +26,6 @@ public class WebContexts {
 	}
 
 	public void addContext( String prefix, Handler handler) {
-		System.out.println("Add to " + handlerColl);
 		final ContextHandler listingsCtxt = new ContextHandler(prefix);
 		listingsCtxt.setHandler(handler);
 		handlerColl.addHandler(listingsCtxt);
