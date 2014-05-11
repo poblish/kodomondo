@@ -2,17 +2,17 @@ require 'formula'
 
 class Kodomondo < Formula
   homepage 'https://github.com/poblish/kodomondo'
-  url "https://github.com/poblish/kodomondo/raw/mvn-repo/com/andrewregan/kodomondo/0.0.1/local-maven-server-0.0.1.jar"
-  sha1 "8f403fc725e462708f7567216d085f5ffb3f71a9"
+  url "https://github.com/poblish/kodomondo/raw/mvn-repo/com/andrewregan/kodomondo/0.0.1/kodomondo-server-0.0.1.jar"
+  sha1 "f9867365ae7a3e201c6b6afc4c1e4d478dd6cc0c"
 
   resource 'startupScript' do
     url 'https://raw.githubusercontent.com/poblish/kodomondo/master/server/bin/kodomondo'
-    sha1 '35bab5dbc5fb3457b07e323e1281d15126d603c3'
+    sha1 '776035da4f7a78e6e663fccd97b99db50c6bc01e'
   end
 
   resource 'startupScriptSh' do
     url 'https://raw.githubusercontent.com/poblish/kodomondo/master/server/bin/kodomondo.sh'
-    sha1 '35bab5dbc5fb3457b07e323e1281d15126d603c3'
+    sha1 '776035da4f7a78e6e663fccd97b99db50c6bc01e'
   end
 
   resource 'configScript' do
