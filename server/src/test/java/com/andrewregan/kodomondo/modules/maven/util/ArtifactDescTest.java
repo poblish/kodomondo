@@ -1,4 +1,4 @@
-package com.andrewregan.kodomondo.maven;
+package com.andrewregan.kodomondo.modules.maven.util;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

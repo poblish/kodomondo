@@ -1,4 +1,4 @@
-package com.andrewregan.kodomondo;
+package com.andrewregan.kodomondo.modules.maven;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
