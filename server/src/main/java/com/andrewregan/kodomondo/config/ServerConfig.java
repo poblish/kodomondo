@@ -6,8 +6,10 @@ package com.andrewregan.kodomondo.config;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,6 +24,7 @@ import org.elasticsearch.node.NodeBuilder;
 import org.yaml.snakeyaml.Yaml;
 
 import com.andrewregan.kodomondo.KodomondoServer;
+import com.andrewregan.kodomondo.ds.api.DataSourceMeta;
 import com.andrewregan.kodomondo.ds.api.IDataSource;
 import com.andrewregan.kodomondo.ds.api.IKeyTermDataSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +32,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.google.common.io.Files;
 
 import dagger.Module;
@@ -59,7 +63,7 @@ public class ServerConfig {
 
 	@Provides
 	@Singleton
-	Client provideEsClient() {
+	Client provideEsClient( @Named("dataSources") Map<String,IDataSource> dataSources) {
 		final Optional<String> dataDir = Optional.fromNullable( Strings.emptyToNull( System.getenv("KODOMONDO_DATA_DIR") ) );
 
 		final Node node = NodeBuilder.nodeBuilder().settings( ImmutableSettings.builder()
@@ -68,9 +72,20 @@ public class ServerConfig {
 						.build() ).node();
 		final Client c = node.client();
 
-		// FIXME: Try to factor this out into LocalMavenConfig somehow
 		try {
-			c.admin().indices().prepareCreate("datasource.local-maven").setSettings("{}").execute().actionGet();
+			final Set<String> idxNames = Sets.newHashSet();
+
+			// Can't use Batching for some reason
+			for ( IDataSource eachDS : dataSources.values()) {
+				final DataSourceMeta metadata = eachDS.getClass().getAnnotation(DataSourceMeta.class);
+				if ( metadata != null) {
+					idxNames.addAll( Arrays.asList( metadata.indexName() ) );
+				}
+			}
+
+			for ( String eachIdx : idxNames) {
+				c.admin().indices().prepareCreate(eachIdx).setSettings("{}").execute().actionGet();
+			}
 		}
 		catch (IndexAlreadyExistsException e) {
 			// Ignore
@@ -123,7 +138,13 @@ public class ServerConfig {
 	@Named("configFilePath")
 	@Provides
 	String provdeConfigPath() {
-		throw new UnsupportedOperationException("Should call override!");
+		for ( int i = 0; i < KodomondoServer.APP_ARGS.length; i++) {
+			if (KodomondoServer.APP_ARGS[i].equals("--config")) {
+				return KodomondoServer.APP_ARGS[i+1];
+			}
+ 		}
+		return null;
+		// throw new UnsupportedOperationException("Should call override!");
 	}
 
 	@Provides

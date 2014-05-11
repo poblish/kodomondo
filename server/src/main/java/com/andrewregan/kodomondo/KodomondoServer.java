@@ -45,12 +45,15 @@ public class KodomondoServer
 	@Inject Map<String,IDataSource> dataSources;
 
 	private static ObjectGraph SERVER_GRAPH;
+	public static String[] APP_ARGS;
 
 	private final static Logger LOG = LoggerFactory.getLogger( KodomondoServer.class );
 
 
 	public static void main(String[] args) throws Exception {
-		SERVER_GRAPH = ObjectGraph.create( new AppArgsModule(args) );
+		APP_ARGS = args;
+
+		SERVER_GRAPH = ObjectGraph.create( new ServerConfig() ); // AppArgsModule(args) );
 		SERVER_GRAPH.inject( new KodomondoServer() ).start();
 	}
 
