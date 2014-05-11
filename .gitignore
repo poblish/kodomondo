@@ -1,0 +1,12 @@
+target/
+.settings/
+.classpath
+.project
+test-output/
+server/dependency-reduced-pom.xml
+chrome/
+server/
+architecture/
+README.md
+test/
+.travis.yml
