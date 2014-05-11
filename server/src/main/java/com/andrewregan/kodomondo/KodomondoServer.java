@@ -97,18 +97,29 @@ public class KodomondoServer
 
 		public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 			final String dsName = baseRequest.getRequestURI().substring(12);  // '/datasource/...'
-			final IDataSource ds = dsRegistry.get(dsName);
 
-			if ( ds != null) {
-				final byte[] output = mapper.writeValueAsBytes(ds);
-
+			if (dsName.isEmpty()) {
+				final byte[] output = mapper.writeValueAsBytes(dsRegistry);
+				
 				resp.setContentType("application/json;charset=utf-8");
 				resp.setStatus(HttpServletResponse.SC_OK);
 				resp.setContentLength( output.length );
 				resp.getOutputStream().write(output);
 			}
 			else {
-				resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				final IDataSource ds = dsRegistry.get(dsName);
+	
+				if ( ds != null) {
+					final byte[] output = mapper.writeValueAsBytes(ds);
+	
+					resp.setContentType("application/json;charset=utf-8");
+					resp.setStatus(HttpServletResponse.SC_OK);
+					resp.setContentLength( output.length );
+					resp.getOutputStream().write(output);
+				}
+				else {
+					resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+				}
 			}
 		}		
 	}

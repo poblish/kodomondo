@@ -12,6 +12,7 @@ import java.util.Set;
 
 import com.andrewregan.kodomondo.ds.api.DataSourceMeta;
 import com.andrewregan.kodomondo.ds.api.IDataSource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 
@@ -27,6 +28,11 @@ public class DataSourceRegistry {
 
 	public Collection<IDataSource> dataSources() {
 		return registry.values();
+	}
+
+	@JsonProperty("datasources")
+	public Map<String,IDataSource> registry() {
+		return registry;
 	}
 
 	public IDataSource get( String dsName) {
