@@ -24,9 +24,7 @@ import com.andrewregan.kodomondo.jetty.WebContexts;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 
-import dagger.Module;
 import dagger.ObjectGraph;
-import dagger.Provides;
 
 /**
  * Hello world!
@@ -53,7 +51,7 @@ public class KodomondoServer
 	public static void main(String[] args) throws Exception {
 		APP_ARGS = args;
 
-		SERVER_GRAPH = ObjectGraph.create( new ServerConfig() ); // AppArgsModule(args) );
+		SERVER_GRAPH = ObjectGraph.create( new ServerConfig() );
 		SERVER_GRAPH.inject( new KodomondoServer() ).start();
 	}
 
@@ -90,27 +88,6 @@ public class KodomondoServer
 		}
 		catch (ReflectiveOperationException e) {
 			Throwables.propagate(e);
-		}
-	}
-
-	@Module(overrides=true, includes=ServerConfig.class)
-	static class AppArgsModule {
-
-		private final String[] args;
-
-		public AppArgsModule( String[] inArgs) {
-			args = inArgs;
-		}
-
-		@Named("configFilePath")
-		@Provides
-		String provdeConfigPath() {
-			for ( int i = 0; i < args.length; i++) {
-				if (args[i].equals("--config")) {
-					return args[i+1];
-				}
-	 		}
-			return null;
 		}
 	}
 
