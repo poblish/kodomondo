@@ -19,6 +19,7 @@ import com.andrewregan.kodomondo.ds.api.DataSourceMeta;
 import com.andrewregan.kodomondo.ds.api.IDataSource;
 import com.andrewregan.kodomondo.ds.impl.DataSourceRegistry;
 import com.andrewregan.kodomondo.es.EsUtils;
+import com.andrewregan.kodomondo.handlers.SearchHandler;
 import com.andrewregan.kodomondo.jetty.WebContexts;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
@@ -37,6 +38,9 @@ public class KodomondoServer
 	@Inject ObjectMapper mapper;
 	@Inject EsUtils esUtils;
 	@Inject Client esClient;
+
+	@Inject SearchHandler searchHandler;
+
 	@Inject DataSourceRegistry dsRegistry;
 
 	private static ObjectGraph SERVER_GRAPH;
@@ -62,6 +66,7 @@ public class KodomondoServer
 		esUtils.waitForStatus();  // When it returns, ES will be up-and-running, so start listening...
 
 		webContexts.addContext("/datasource", new DataSourceHandler());
+		webContexts.addContext("/search", searchHandler);
 
 		httpServer.setHandler(webContexts.getHandler());
 		httpServer.start();
