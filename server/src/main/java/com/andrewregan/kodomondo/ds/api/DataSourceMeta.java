@@ -18,6 +18,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface DataSourceMeta {
 
-	String[] value();
+	String[] indexName();
 	Class<?> daggerConfig();
 }

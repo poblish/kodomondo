@@ -22,7 +22,7 @@ import com.andrewregan.kodomondo.modules.maven.handlers.ListingsHandler;
  * @author andrewregan
  *
  */
-@DataSourceMeta(value="datasource.local-maven", daggerConfig=LocalMavenConfig.class)
+@DataSourceMeta(indexName="datasource.local-maven", daggerConfig=LocalMavenConfig.class)
 public class LocalMavenDataSource extends KeyTermDataSource {
 
 	@Inject WebContexts webContexts;
