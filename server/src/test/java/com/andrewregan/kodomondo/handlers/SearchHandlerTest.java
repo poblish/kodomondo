@@ -95,7 +95,7 @@ public class SearchHandlerTest {
 		docsDownloaderFactory.create( fs.resolveFile("/usr/blah/com/google/guava/guava/16.0.1/guava-16.0.1.jar") ).call();
 
 		// Wait until refresh...
-		esUtils.waitUntilTypesRefreshed("javadoc");
+		esUtils.waitUntilTypesRefreshed("datasource.local-maven", "javadoc");
 
 		final HttpServletRequest req = mock( HttpServletRequest.class );
 		final HttpServletResponse resp = mock( HttpServletResponse.class );

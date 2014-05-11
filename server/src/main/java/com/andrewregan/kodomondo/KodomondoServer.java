@@ -1,10 +1,8 @@
 package com.andrewregan.kodomondo;
 
 import java.io.IOException;
-import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.andrewregan.kodomondo.config.ServerConfig;
 import com.andrewregan.kodomondo.ds.api.DataSourceMeta;
 import com.andrewregan.kodomondo.ds.api.IDataSource;
+import com.andrewregan.kodomondo.ds.impl.DataSourceRegistry;
 import com.andrewregan.kodomondo.es.EsUtils;
 import com.andrewregan.kodomondo.jetty.WebContexts;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,9 +37,7 @@ public class KodomondoServer
 	@Inject ObjectMapper mapper;
 	@Inject EsUtils esUtils;
 	@Inject Client esClient;
-
-	@Named("dataSources")
-	@Inject Map<String,IDataSource> dataSources;
+	@Inject DataSourceRegistry dsRegistry;
 
 	private static ObjectGraph SERVER_GRAPH;
 	public static String[] APP_ARGS;
@@ -73,7 +70,7 @@ public class KodomondoServer
 
 	private void startDataSources() {
 		try {
-			for ( IDataSource eachDS : dataSources.values()) {
+			for ( IDataSource eachDS : dsRegistry.dataSources()) {
 				final DataSourceMeta metadata = eachDS.getClass().getAnnotation(DataSourceMeta.class);
 				if ( metadata != null) {
 					LOG.info("Configuring " + eachDS + "...");
@@ -95,7 +92,7 @@ public class KodomondoServer
 
 		public void handle(final String target, final Request baseRequest, final HttpServletRequest req, final HttpServletResponse resp) throws IOException, ServletException {
 			final String dsName = baseRequest.getRequestURI().substring(12);  // '/datasource/...'
-			final IDataSource ds = dataSources.get(dsName);
+			final IDataSource ds = dsRegistry.get(dsName);
 
 			if ( ds != null) {
 				final byte[] output = mapper.writeValueAsBytes(ds);

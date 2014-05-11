@@ -6,10 +6,8 @@ package com.andrewregan.kodomondo.config;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,15 +22,13 @@ import org.elasticsearch.node.NodeBuilder;
 import org.yaml.snakeyaml.Yaml;
 
 import com.andrewregan.kodomondo.KodomondoServer;
-import com.andrewregan.kodomondo.ds.api.DataSourceMeta;
 import com.andrewregan.kodomondo.ds.api.IDataSource;
 import com.andrewregan.kodomondo.ds.api.IKeyTermDataSource;
+import com.andrewregan.kodomondo.ds.impl.DataSourceRegistry;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.google.common.base.Throwables;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.common.io.Files;
 
 import dagger.Module;
@@ -63,7 +59,7 @@ public class ServerConfig {
 
 	@Provides
 	@Singleton
-	Client provideEsClient( @Named("dataSources") Map<String,IDataSource> dataSources) {
+	Client provideEsClient( DataSourceRegistry registry) {
 		final Optional<String> dataDir = Optional.fromNullable( Strings.emptyToNull( System.getenv("KODOMONDO_DATA_DIR") ) );
 
 		final Node node = NodeBuilder.nodeBuilder().settings( ImmutableSettings.builder()
@@ -73,17 +69,8 @@ public class ServerConfig {
 		final Client c = node.client();
 
 		try {
-			final Set<String> idxNames = Sets.newHashSet();
-
 			// Can't use Batching for some reason
-			for ( IDataSource eachDS : dataSources.values()) {
-				final DataSourceMeta metadata = eachDS.getClass().getAnnotation(DataSourceMeta.class);
-				if ( metadata != null) {
-					idxNames.addAll( Arrays.asList( metadata.indexName() ) );
-				}
-			}
-
-			for ( String eachIdx : idxNames) {
+			for ( String eachIdx : registry.indexNamesUsed()) {
 				c.admin().indices().prepareCreate(eachIdx).setSettings("{}").execute().actionGet();
 			}
 		}
@@ -95,11 +82,10 @@ public class ServerConfig {
 	}
 
 	@Provides
-	@Named("dataSources")
 	@Singleton
 	@SuppressWarnings("unchecked")
-	Map<String,IDataSource> provideDataSources( @Named("configFilePath") final String configFilePath) {
-		final Map<String,IDataSource> dataSources = Maps.newHashMap();
+	DataSourceRegistry provideDataSources( @Named("configFilePath") final String configFilePath) {
+		final DataSourceRegistry dataSources = new DataSourceRegistry();
 
 		try {
 			final String pathToUse = Strings.emptyToNull(configFilePath) != null ? configFilePath : "src/main/resources/conf/ds.yaml";

@@ -26,6 +26,7 @@ import org.elasticsearch.search.highlight.HighlightField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.andrewregan.kodomondo.ds.impl.DataSourceRegistry;
 import com.andrewregan.kodomondo.modules.maven.tasks.IndexEntry;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +46,7 @@ public class SearchHandler extends AbstractHandler {
 
 	@Inject Client esClient;
 	@Inject ObjectMapper mapper;
+	@Inject DataSourceRegistry dsRegistry;
 
 	private static final List<Text> NO_HIGHLIGHTED_TEXT = Collections.emptyList();
 
@@ -66,7 +68,7 @@ public class SearchHandler extends AbstractHandler {
 			return;
 		}
 
-		SearchHit[] sh = esClient.prepareSearch("datasource.local-maven").addHighlightedField("text", 200, 2).setQuery( matchPhraseQuery( "_all", q).cutoffFrequency(0.001f) ).setSize(maxResults).execute().actionGet().getHits().hits();
+		SearchHit[] sh = esClient.prepareSearch( dsRegistry.indexNamesUsed() ).addHighlightedField("text", 200, 2).setQuery( matchPhraseQuery( "_all", q).cutoffFrequency(0.001f) ).setSize(maxResults).execute().actionGet().getHits().hits();
 //		System.out.println("DONE " + sh.length);
 
 		List<SearchResult> entries = Lists.newArrayList();

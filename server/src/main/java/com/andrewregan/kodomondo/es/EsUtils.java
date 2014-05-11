@@ -9,6 +9,7 @@ import javax.inject.Singleton;
 import org.elasticsearch.action.admin.indices.stats.IndicesStatsRequestBuilder;
 import org.elasticsearch.client.Client;
 
+import com.andrewregan.kodomondo.ds.impl.DataSourceRegistry;
 import com.google.common.base.Throwables;
 
 /**
@@ -21,10 +22,11 @@ import com.google.common.base.Throwables;
 public class EsUtils {
 
 	@Inject Client esClient;
+	@Inject DataSourceRegistry dsRegistry;
 
 	public void waitForStatus() {
 //		esClient.admin().cluster().prepareHealth("datasource.local-maven").setWaitForNodes(">=1").get();
-		esClient.admin().cluster().prepareHealth("datasource.local-maven").setWaitForYellowStatus().get();
+		esClient.admin().cluster().prepareHealth( dsRegistry.indexNamesUsed() ).setWaitForYellowStatus().get();
 //		try {
 //		do {
 //			System.out.println("HERE");
@@ -45,8 +47,8 @@ public class EsUtils {
 //		}
 	}
 
-	public void waitUntilTypesRefreshed( final String... inTypes) {
-		final IndicesStatsRequestBuilder reqBuilder = esClient.admin().indices().prepareStats("datasource.local-maven").setRefresh(true).setTypes(inTypes);
+	public void waitUntilTypesRefreshed( final String inIndex, final String... inTypes) {
+		final IndicesStatsRequestBuilder reqBuilder = esClient.admin().indices().prepareStats(inIndex).setRefresh(true).setTypes(inTypes);
 		final long currCount = reqBuilder.execute().actionGet().getTotal().getRefresh().getTotal();
 		int waitsToGo = 10;
 
