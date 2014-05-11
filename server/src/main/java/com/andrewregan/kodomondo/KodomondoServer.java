@@ -40,7 +40,7 @@ public class KodomondoServer
 	@Inject DataSourceRegistry dsRegistry;
 
 	private static ObjectGraph SERVER_GRAPH;
-	public static String[] APP_ARGS;
+	public static String[] APP_ARGS = new String[0];
 
 	private final static Logger LOG = LoggerFactory.getLogger( KodomondoServer.class );
 

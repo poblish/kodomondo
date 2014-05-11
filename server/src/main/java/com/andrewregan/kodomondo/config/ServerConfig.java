@@ -88,9 +88,7 @@ public class ServerConfig {
 		final DataSourceRegistry dataSources = new DataSourceRegistry();
 
 		try {
-			final String pathToUse = Strings.emptyToNull(configFilePath) != null ? configFilePath : "src/main/resources/conf/ds.yaml";
-
-			for ( Object eachEntry : new Yaml().loadAll( Files.toString( new File(pathToUse), Charset.forName("utf-8")))) {
+			for ( Object eachEntry : new Yaml().loadAll( Files.toString( new File(configFilePath), Charset.forName("utf-8")))) {
 				Map<String,Object> eachDsEntry = (Map<String,Object>) eachEntry;
 
 				final String dsName = Strings.emptyToNull((String) eachDsEntry.get("name"));
@@ -126,10 +124,10 @@ public class ServerConfig {
 	String provdeConfigPath() {
 		for ( int i = 0; i < KodomondoServer.APP_ARGS.length; i++) {
 			if (KodomondoServer.APP_ARGS[i].equals("--config")) {
-				return KodomondoServer.APP_ARGS[i+1];
+				return Strings.emptyToNull( KodomondoServer.APP_ARGS[i+1] );
 			}
  		}
-		return null;
+		return "src/main/resources/conf/ds.yaml";
 	}
 
 	@Provides
